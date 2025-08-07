@@ -21,10 +21,8 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // This helps with the route group issue on Vercel
-  experimental: {
-    serverComponentsExternalPackages: [],
-  },
+  // External packages for server components
+  serverExternalPackages: [],
 
   // Output standalone build for better compatibility with Vercel
   output: 'standalone',
