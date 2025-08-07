@@ -11,7 +11,7 @@ const navigation = [
   { name: 'Home', href: '#home', icon: Home },
   { name: 'Projects', href: '#projects', icon: Briefcase },
   { name: 'About', href: '#about', icon: User },
-  { name: 'Reviews', href: '/reviews', icon: Star, isExternal: true },
+  { name: 'Reviews', href: '#reviews', icon: Star },
   { name: 'Contact', href: '#contact', icon: Mail },
 ];
 
@@ -86,9 +86,9 @@ export default function Header() {
           <nav className="hidden md:flex space-x-8">
             {navigation.map((item) => {
               const Icon = item.icon;
-              const isActive = !item.isExternal && activeSection === item.href.substring(1);
+              const isActive = !(item as any).isExternal && activeSection === item.href.substring(1);
 
-              if (item.isExternal) {
+              if ((item as any).isExternal) {
                 return (
                   <Link key={item.name} href={item.href}>
                     <motion.div
@@ -110,7 +110,7 @@ export default function Header() {
               return (
                 <motion.button
                   key={item.name}
-                  onClick={() => handleNavigation(item.href, item.isExternal)}
+                  onClick={() => handleNavigation(item.href, (item as any).isExternal)}
                   whileHover={{ y: -2 }}
                   whileTap={{ y: 0 }}
                   className={cn(
@@ -149,9 +149,9 @@ export default function Header() {
           <nav className="py-4 space-y-2">
             {navigation.map((item) => {
               const Icon = item.icon;
-              const isActive = !item.isExternal && activeSection === item.href.substring(1);
+              const isActive = !(item as any).isExternal && activeSection === item.href.substring(1);
 
-              if (item.isExternal) {
+              if ((item as any).isExternal) {
                 return (
                   <Link key={item.name} href={item.href}>
                     <motion.div
@@ -171,7 +171,7 @@ export default function Header() {
               return (
                 <motion.button
                   key={item.name}
-                  onClick={() => handleNavigation(item.href, item.isExternal)}
+                  onClick={() => handleNavigation(item.href, (item as any).isExternal)}
                   whileHover={{ x: 4 }}
                   className={cn(
                     'flex items-center space-x-3 w-full px-4 py-3 rounded-lg transition-all duration-200',

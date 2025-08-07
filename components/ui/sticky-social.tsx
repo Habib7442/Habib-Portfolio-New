@@ -18,7 +18,7 @@ const socialLinks = [
   },
   {
     name: 'X (Twitter)',
-    url: 'https://x.com/habib_tanwir',
+    url: 'https://x.com/TanwirHabib',
     icon: X,
     color: 'hover:bg-black'
   }
