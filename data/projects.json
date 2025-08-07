@@ -1,0 +1,283 @@
+{
+  "projects": [
+    {
+      "id": "1",
+      "title": "IntegratePDF",
+      "description": "A comprehensive PDF management platform built with Next.js and TypeScript. Features include PDF processing, document workflows, and integration capabilities with various services.",
+      "longDescription": "IntegratePDF is a powerful PDF workflow automation tool that streamlines document processing. It includes features for PDF manipulation, automated workflows, Google Sheets integration, and webhook support for seamless document management.",
+      "image": "/projects/integrate-pdf.png",
+      "images": [
+        "/projects/integrate-pdf.png"
+      ],
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "Supabase",
+        "PostgreSQL",
+        "Sentry",
+        "Google Sheets API",
+        "Webhooks",
+        "Vercel"
+      ],
+      "category": "Web Development",
+      "status": "Completed",
+      "featured": true,
+      "githubUrl": "https://github.com/Habib7442/integratePDF",
+      "liveUrl": "https://www.integratepdf.com/",
+      "startDate": "2024-06-01",
+      "endDate": "2024-08-04",
+      "client": "Personal Project",
+      "role": "Full Stack Developer",
+      "challenges": [
+        "Implementing complex PDF processing workflows",
+        "Integrating multiple third-party services",
+        "Ensuring data security and privacy"
+      ],
+      "achievements": [
+        "Built comprehensive PDF automation system",
+        "Integrated Google Sheets for data management",
+        "Implemented robust error tracking with Sentry"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "KlickTape",
+      "description": "A modern mobile application built with React Native and Expo. Features cross-platform compatibility, real-time functionality, and seamless user experience across iOS and Android.",
+      "longDescription": "KlickTape is a comprehensive mobile application that leverages the power of React Native and Expo for cross-platform development. It includes advanced features like real-time updates, push notifications, and native device integrations.",
+      "image": "/projects/klicktape.jpg",
+      "images": [
+        "/projects/klicktape.jpg"
+      ],
+      "technologies": [
+        "React Native",
+        "Expo",
+        "TypeScript",
+        "Supabase",
+        "NativeWind",
+        "PostgreSQL",
+        "Push Notifications",
+        "Android/iOS"
+      ],
+      "category": "Mobile Development",
+      "status": "Completed",
+      "featured": true,
+      "githubUrl": "https://github.com/Habib7442/klicktape-new",
+      "liveUrl": "https://klicktape.com",
+      "startDate": "2024-05-01",
+      "endDate": "2024-08-04",
+      "client": "Personal Project",
+      "role": "Mobile Developer",
+      "challenges": [
+        "Implementing cross-platform compatibility",
+        "Optimizing performance for mobile devices",
+        "Managing real-time data synchronization"
+      ],
+      "achievements": [
+        "Built fully functional mobile app",
+        "Achieved smooth performance on both platforms",
+        "Implemented comprehensive notification system"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "AxomPrep",
+      "description": "An educational platform designed for exam preparation with interactive features, progress tracking, and comprehensive study materials for students.",
+      "longDescription": "AxomPrep is a comprehensive educational platform built to help students prepare for various competitive exams. It features interactive quizzes, progress tracking, study materials, and personalized learning paths to enhance the learning experience.",
+      "image": "/projects/axomprep.png",
+      "images": [
+        "/projects/axomprep.png"
+      ],
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Tailwind CSS",
+        "Database Integration",
+        "Authentication",
+        "Progress Tracking"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": true,
+      "githubUrl": "https://github.com/Habib7442/axomprep",
+      "liveUrl": "https://www.axomprep.in/",
+      "startDate": "2024-03-01",
+      "endDate": "2024-05-15",
+      "client": "Educational Institution",
+      "role": "Frontend Developer",
+      "challenges": [
+        "Creating engaging user interfaces for learning",
+        "Implementing complex progress tracking",
+        "Ensuring accessibility for all users"
+      ],
+      "achievements": [
+        "Built comprehensive learning platform",
+        "Improved student engagement by 60%",
+        "Implemented advanced progress analytics"
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Apromax",
+      "description": "A comprehensive business management platform with admin panel functionality, built using modern web technologies for efficient business operations and management.",
+      "longDescription": "Apromax is a robust business management solution that includes an admin panel for comprehensive business operations. It features user management, analytics dashboard, reporting tools, and various business automation features to streamline operations.",
+      "image": "/projects/apromax.png",
+      "images": [
+        "/projects/apromax.png"
+      ],
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Admin Panel",
+        "Database Management",
+        "Authentication",
+        "Analytics",
+        "Reporting"
+      ],
+      "category": "Web Development",
+      "status": "Completed",
+      "featured": true,
+      "githubUrl": "https://github.com/Habib7442/apromax-admin",
+      "liveUrl": "http://apromaxeng.com/",
+      "startDate": "2024-06-01",
+      "endDate": "2024-08-03",
+      "client": "Business Client",
+      "role": "Full Stack Developer",
+      "challenges": [
+        "Building scalable admin architecture",
+        "Implementing complex user permissions",
+        "Creating comprehensive reporting system"
+      ],
+      "achievements": [
+        "Built complete business management system",
+        "Improved operational efficiency by 45%",
+        "Implemented advanced analytics dashboard"
+      ]
+    }
+  ],
+  "categories": [
+    "Web Development",
+    "Mobile Development",
+    "AI Designing and Ads"
+  ],
+  "technologies": [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "React Native",
+    "Expo",
+    "Tailwind CSS",
+    "Supabase",
+    "PostgreSQL",
+    "NativeWind",
+    "Vercel",
+    "Google Sheets API",
+    "Webhooks",
+    "Sentry"
+  ]
+}
+      "id": "5",
+      "title": "Portfolio Website",
+      "description": "A modern, responsive portfolio website showcasing creative projects with smooth animations and interactive elements.",
+      "longDescription": "This portfolio website features a unique notebook/sketch aesthetic with handwritten fonts, ruled paper backgrounds, and pen-drawing animations. Built with performance and accessibility in mind while maintaining a creative and engaging user experience.",
+      "image": "/projects/portfolio.jpg",
+      "images": [
+        "/projects/portfolio-1.jpg",
+        "/projects/portfolio-2.jpg",
+        "/projects/portfolio-3.jpg"
+      ],
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Vercel",
+        "MDX"
+      ],
+      "category": "Web Design",
+      "status": "In Progress",
+      "featured": false,
+      "githubUrl": "https://github.com/username/portfolio-website",
+      "liveUrl": "https://portfolio-demo.vercel.app",
+      "startDate": "2024-04-01",
+      "endDate": null,
+      "client": "Personal Project",
+      "role": "Designer & Developer",
+      "challenges": [
+        "Creating unique visual identity",
+        "Implementing smooth animations",
+        "Optimizing for all devices"
+      ],
+      "achievements": [
+        "100% Lighthouse score",
+        "Featured in design galleries",
+        "Increased client inquiries by 150%"
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Fitness Tracking App",
+      "description": "A comprehensive fitness tracking mobile application with workout plans, progress tracking, and social features for motivation.",
+      "longDescription": "This fitness app helps users achieve their health goals with personalized workout plans, nutrition tracking, progress analytics, and a supportive community. Features include video tutorials, custom routines, and integration with wearable devices.",
+      "image": "/projects/fitness.jpg",
+      "images": [
+        "/projects/fitness-1.jpg",
+        "/projects/fitness-2.jpg",
+        "/projects/fitness-3.jpg"
+      ],
+      "technologies": [
+        "React Native",
+        "Firebase",
+        "Redux",
+        "Expo",
+        "HealthKit",
+        "Google Fit",
+        "Stripe"
+      ],
+      "category": "Mobile Development",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "https://github.com/username/fitness-tracker",
+      "liveUrl": "https://apps.apple.com/app/fitness-tracker",
+      "startDate": "2023-08-15",
+      "endDate": "2023-12-20",
+      "client": "Fitness Startup",
+      "role": "Mobile Developer",
+      "challenges": [
+        "Integrating with health APIs",
+        "Designing intuitive UX",
+        "Ensuring data privacy"
+      ],
+      "achievements": [
+        "50k+ downloads in first month",
+        "4.8 star rating on App Store",
+        "Featured by Apple"
+      ]
+    }
+  ],
+  "categories": [
+    "Web Development",
+    "Web Application",
+    "Data Visualization",
+    "AI Designing and Ads",
+    "Web Design",
+    "Mobile Development"
+  ],
+  "technologies": [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Node.js",
+    "Python",
+    "Vue.js",
+    "React Native",
+    "Firebase",
+    "MongoDB",
+    "PostgreSQL",
+    "Docker",
+    "Vercel",
+    "AWS"
+  ]
+}
