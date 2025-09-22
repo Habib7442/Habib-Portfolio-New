@@ -13,14 +13,19 @@ const personalInfo = {
   title: 'Full Stack Developer & Mobile App Developer',
   location: 'India',
   experience: '3+ years',
-  description: 'Passionate Full Stack Developer specializing in React, Next.js, and React Native. Expert in creating dynamic, user-friendly web applications and mobile apps with modern technologies and best practices. Currently building DevCrush - Tinder for developers.',
+  description: 'Passionate Full Stack Developer specializing in React, Next.js, and React Native. Expert in creating dynamic, user-friendly web applications and mobile apps with modern technologies and best practices.',
   avatar: '/avatar.png',
   resumeUrl: '/resume.pdf',
   products: [
     {
-      name: 'IntegratePDF',
-      url: 'https://www.integratepdf.com/',
-      description: 'PDF workflow automation tool'
+      name: 'ImageStudioLab',
+      url: 'https://www.imagestudiolab.com/',
+      description: 'AI-Powered Image Studio'
+    },
+    {
+      name: 'Link4Coders',
+      url: 'https://www.link4coders.in/',
+      description: 'Developer-first bio platform'
     }
   ]
 };
@@ -106,16 +111,24 @@ export default function Hero() {
                 <p className="text-lg text-sketch-orange font-medium handwritten">
                   Creator of{' '}
                   <a
-                    href="https://www.integratepdf.com/"
+                    href="https://www.imagestudiolab.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sketch-blue hover:text-sketch-purple transition-colors duration-200 underline decoration-sketch-blue hover:decoration-sketch-purple"
                   >
-                    IntegratePDF.com
+                    ImageStudioLab.com
                   </a>
                 </p>
                 <p className="text-lg text-sketch-purple font-medium handwritten">
-                  Currently building DevCrush - Tinder for developers
+                  Creator of{' '}
+                  <a
+                    href="https://www.link4coders.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sketch-blue hover:text-sketch-purple transition-colors duration-200 underline decoration-sketch-blue hover:decoration-sketch-purple"
+                  >
+                    Link4Coders.in
+                  </a>
                 </p>
               </div>
             </motion.div>

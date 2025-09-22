@@ -16,15 +16,15 @@ import Image from 'next/image';
 const data = projectsData as ProjectData;
 
 export default function Projects() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [selectedStatus, setSelectedStatus] = useState<string>('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>('Web Development');
+  const [selectedStatus, setSelectedStatus] = useState<string>('Completed');
   const [viewMode, setViewMode] = useState<'grid' | 'carousel' | 'bento'>('bento');
 
   // Filter projects based on selected filters
   const filteredProjects = useMemo(() => {
     return data.projects.filter(project => {
-      const categoryMatch = selectedCategory === 'All' || project.category === selectedCategory;
-      const statusMatch = selectedStatus === 'All' || project.status === selectedStatus;
+      const categoryMatch = project.category === selectedCategory;
+      const statusMatch = project.status === selectedStatus;
       return categoryMatch && statusMatch;
     });
   }, [selectedCategory, selectedStatus]);
@@ -38,8 +38,8 @@ export default function Projects() {
     alt: project.title
   }));
 
-  const categories = ['All', ...data.categories];
-  const statuses = ['All', 'Completed', 'In Progress', 'Planning'];
+  const categories = data.categories;
+  const statuses = ['Completed', 'In Progress', 'Planning'];
 
   return (
     <section id="projects" className="py-20 bg-background">
@@ -213,7 +213,55 @@ export default function Projects() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.4 }}
             viewport={{ once: true }}
           >
-            {viewMode === 'bento' ? (
+            {/* Special display for AI Designing and Ads */}
+            {selectedCategory === 'AI Designing and Ads' ? (
+              <div className="space-y-12">
+                {filteredProjects.map((project, index) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="space-y-6"
+                  >
+                    <h3 className="text-3xl font-bold handwritten text-sketch-blue text-center">
+                      {project.title}
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr">
+                      {project.images.map((imagePath, imgIndex) => {
+                        const isVideo = imagePath.endsWith('.mp4');
+                        return (
+                          <motion.div
+                            key={imgIndex}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.3 }}
+                            className="relative w-full h-80 rounded-lg overflow-hidden border border-notebook-line sketch-border bg-background shadow-lg"
+                          >
+                            {isVideo ? (
+                              <video
+                                src={imagePath}
+                                className="w-full h-full object-cover"
+                                controls
+                                preload="metadata"
+                              />
+                            ) : (
+                              <Image
+                                src={imagePath}
+                                alt={`${project.title} - Image ${imgIndex + 1}`}
+                                fill
+                                className="object-contain hover:object-cover transition-all duration-300"
+                                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                              />
+                            )}
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : viewMode === 'bento' ? (
               <BentoGrid className="max-w-4xl mx-auto">
                 {filteredProjects.map((project, index) => (
                   <BentoGridItem
@@ -305,8 +353,8 @@ export default function Projects() {
           >
             <p className="text-foreground/60">
               Showing {filteredProjects.length} of {data.projects.length} projects
-              {selectedCategory !== 'All' && ` in ${selectedCategory}`}
-              {selectedStatus !== 'All' && ` with status ${selectedStatus}`}
+              {` in ${selectedCategory}`}
+              {` with status ${selectedStatus}`}
             </p>
           </motion.div>
         </div>

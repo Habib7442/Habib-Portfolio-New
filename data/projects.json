@@ -2,6 +2,84 @@
   "projects": [
     {
       "id": "1",
+      "title": "ImageStudioLab",
+      "description": "AI-powered image generation platform built with Next.js and Gemini 2.5 Flash. Create stunning AI-generated images for all platforms with professional quality, instant results, and privacy-first design.",
+      "longDescription": "ImageStudioLab is a cutting-edge AI-powered image generation platform that leverages Google's Gemini 2.5 Flash technology. It offers multiple generation modes including Style My Selfie, Add Me + Product, E-commerce Enhancement, and AI Editor. The platform features a privacy-first design with secure processing, daily credits system, and instant high-resolution downloads. Built for creators who demand quality and speed, it supports various professional styles and is optimized for Instagram, YouTube, LinkedIn, and all major social platforms.",
+      "image": "/projects/imagestudiolab.png",
+      "images": ["/projects/imagestudiolab.png"],
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "Gemini 2.5 Flash",
+        "AI Integration",
+        "Privacy-First Design",
+        "Credit System",
+        "Real-time Processing",
+        "Vercel"
+      ],
+      "category": "Web Development",
+      "status": "Completed",
+      "featured": true,
+      "githubUrl": "https://github.com/Habib7442/image-studio",
+      "liveUrl": "https://www.imagestudiolab.com/",
+      "startDate": "2024-09-01",
+      "endDate": "2024-12-15",
+      "client": "Personal Project",
+      "role": "Full Stack Developer",
+      "challenges": [
+        "Integrating Google's Gemini 2.5 Flash API",
+        "Implementing privacy-first image processing",
+        "Building credit-based usage system",
+        "Ensuring instant generation performance"
+      ],
+      "achievements": [
+        "Built comprehensive AI image generation platform",
+        "Implemented secure, privacy-first architecture",
+        "Created intuitive user experience with multiple generation modes",
+        "Achieved instant image generation under 5 seconds"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Link4Coders",
+      "description": "Developer-first bio platform built with Next.js. Create professional developer profiles with GitHub integration, interactive code snippets, project showcases, and skill matrices - all in one link.",
+      "longDescription": "Link4Coders is a comprehensive developer portfolio platform designed specifically for developers to showcase their work effectively. It features GitHub integration for repository management, interactive code snippets for skill demonstration, beautiful project cards with screenshots and tech stacks, skill matrices for proficiency visualization, and blog integration. The platform offers multiple professional templates including Minimalist Pro, Cyberpunk Terminal, and GitHub Focus themes. Built with a focus on developer experience, it provides seamless project showcasing and professional networking capabilities.",
+      "image": "/projects/link4coders.png",
+      "images": ["/projects/link4coders.png"],
+      "technologies": [
+        "Next.js",
+        "TypeScript",
+        "GitHub API",
+        "Interactive Code Snippets",
+        "Project Showcase",
+        "Skill Matrix",
+        "Template System",
+        "Vercel"
+      ],
+      "category": "Web Development",
+      "status": "Completed",
+      "featured": true,
+      "githubUrl": "https://github.com/Habib7442/link4developers",
+      "liveUrl": "https://www.link4coders.in/",
+      "startDate": "2024-08-01",
+      "endDate": "2024-11-20",
+      "client": "Personal Project",
+      "role": "Full Stack Developer",
+      "challenges": [
+        "Building comprehensive GitHub integration",
+        "Creating interactive code snippet functionality",
+        "Designing multiple professional templates",
+        "Implementing skill matrix visualization"
+      ],
+      "achievements": [
+        "Built complete developer portfolio platform",
+        "Integrated seamless GitHub repository management",
+        "Created multiple professional template themes",
+        "Implemented advanced project showcasing features"
+      ]
+    },
+    {
+      "id": "3",
       "title": "IntegratePDF",
       "description": "A comprehensive PDF management platform built with Next.js and TypeScript. Features include PDF processing, document workflows, and integration capabilities with various services.",
       "longDescription": "IntegratePDF is a powerful PDF workflow automation tool that streamlines document processing. It includes features for PDF manipulation, automated workflows, Google Sheets integration, and webhook support for seamless document management.",
@@ -38,7 +116,7 @@
       ]
     },
     {
-      "id": "2",
+      "id": "4",
       "title": "KlickTape",
       "description": "A modern mobile application built with React Native and Expo. Features cross-platform compatibility, real-time functionality, and seamless user experience across iOS and Android.",
       "longDescription": "KlickTape is a comprehensive mobile application that leverages the power of React Native and Expo for cross-platform development. It includes advanced features like real-time updates, push notifications, and native device integrations.",
@@ -75,43 +153,593 @@
       ]
     },
     {
-      "id": "3",
-      "title": "AxomPrep",
-      "description": "An educational platform designed for exam preparation with interactive features, progress tracking, and comprehensive study materials for students.",
-      "longDescription": "AxomPrep is a comprehensive educational platform built to help students prepare for various competitive exams. It features interactive quizzes, progress tracking, study materials, and personalized learning paths to enhance the learning experience.",
-      "image": "/projects/axomprep.png",
-      "images": ["/projects/axomprep.png"],
+      "id": "5",
+      "title": "JJ Cosmetics Ad Campaign",
+      "description": "Comprehensive AI-generated advertising campaign for JJ Cosmetics featuring 8 unique promotional designs. Created stunning visual content for social media marketing and brand promotion.",
+      "longDescription": "A complete AI-powered advertising campaign for JJ Cosmetics featuring 8 professionally designed promotional images. The campaign includes various product showcases, lifestyle imagery, and brand-focused designs optimized for social media platforms. Each design incorporates modern aesthetics, compelling visual elements, and brand consistency to maximize engagement and conversion rates.",
+      "image": "/ads/jj cosmetics/1.png",
+      "images": [
+        "/ads/jj cosmetics/1.png",
+        "/ads/jj cosmetics/2.png",
+        "/ads/jj cosmetics/3.png",
+        "/ads/jj cosmetics/4.png",
+        "/ads/jj cosmetics/5.png",
+        "/ads/jj cosmetics/6.png",
+        "/ads/jj cosmetics/7.png",
+        "/ads/jj cosmetics/8.png"
+      ],
       "technologies": [
-        "Next.js",
-        "TypeScript",
-        "React",
-        "Tailwind CSS",
-        "Database Integration",
-        "Authentication",
-        "Progress Tracking"
+        "AI Image Generation",
+        "Adobe Creative Suite",
+        "Social Media Design",
+        "Brand Design",
+        "Marketing Graphics",
+        "Visual Storytelling"
       ],
       "category": "AI Designing and Ads",
       "status": "Completed",
       "featured": true,
-      "githubUrl": "https://github.com/Habib7442/axomprep",
-      "liveUrl": "https://www.axomprep.in/",
-      "startDate": "2024-03-01",
-      "endDate": "2024-05-15",
-      "client": "Educational Institution",
-      "role": "Frontend Developer",
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-10-01",
+      "endDate": "2024-10-15",
+      "client": "JJ Cosmetics",
+      "role": "AI Designer & Creative Director",
       "challenges": [
-        "Creating engaging user interfaces for learning",
-        "Implementing complex progress tracking",
-        "Ensuring accessibility for all users"
+        "Creating consistent brand identity across multiple designs",
+        "Optimizing visuals for different social media platforms",
+        "Balancing creativity with commercial appeal"
       ],
       "achievements": [
-        "Built comprehensive learning platform",
-        "Improved student engagement by 60%",
-        "Implemented advanced progress analytics"
+        "Delivered 8 unique promotional designs",
+        "Maintained brand consistency across all visuals",
+        "Created engaging social media content"
       ]
     },
     {
-      "id": "4",
+      "id": "7",
+      "title": "Kolkin Coffee Brand Campaign",
+      "description": "AI-powered brand campaign for Kolkin Coffee featuring elegant beach fashion photography and seamless carousel Instagram posts. Created sophisticated visual content for premium coffee brand marketing.",
+      "longDescription": "A premium AI-generated brand campaign for Kolkin Coffee featuring elegant beach fashion photography and seamless carousel Instagram posts. The campaign includes sophisticated visual storytelling with soft teal color schemes, elegant beach fashion aesthetics, and seamless carousel designs optimized for Instagram marketing. Each design captures the premium, lifestyle-focused brand positioning of Kolkin Coffee.",
+      "image": "/ads/kolkin-coffee/ChatGPT Image Sep 2, 2025, 07_59_58 AM.png",
+      "images": [
+        "/ads/kolkin-coffee/ChatGPT Image Sep 2, 2025, 07_59_58 AM.png",
+        "/ads/kolkin-coffee/Soft Teal Elegant Beach Fashion Photos Seamless Carousel Instagram Post/1.png",
+        "/ads/kolkin-coffee/Soft Teal Elegant Beach Fashion Photos Seamless Carousel Instagram Post/2.png",
+        "/ads/kolkin-coffee/Soft Teal Elegant Beach Fashion Photos Seamless Carousel Instagram Post/3.png",
+        "/ads/kolkin-coffee/Soft Teal Elegant Beach Fashion Photos Seamless Carousel Instagram Post/4.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Instagram Design",
+        "Carousel Creation",
+        "Brand Photography",
+        "Lifestyle Marketing",
+        "Visual Branding"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": true,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-11-01",
+      "endDate": "2024-11-10",
+      "client": "Kolkin Coffee",
+      "role": "AI Designer & Brand Strategist",
+      "challenges": [
+        "Creating seamless carousel designs for Instagram",
+        "Maintaining elegant aesthetic across multiple visuals",
+        "Balancing lifestyle appeal with product focus"
+      ],
+      "achievements": [
+        "Created sophisticated brand campaign",
+        "Designed seamless Instagram carousel posts",
+        "Established premium brand visual identity"
+      ]
+    },
+    {
+      "id": "8",
+      "title": "Royals Biryani Video Campaign",
+      "description": "AI-powered video and image campaign for Royals Biryani Silchar featuring dynamic promotional content including video ads and safety guideline graphics for food service marketing.",
+      "longDescription": "A comprehensive AI-generated marketing campaign for Royals Biryani Silchar featuring dynamic promotional content including video advertisements and safety guideline graphics. The campaign combines visual storytelling with food service marketing, creating engaging content that highlights the restaurant's offerings while maintaining professional safety and hygiene standards. Includes both static promotional images and dynamic video content optimized for social media and digital marketing platforms.",
+      "image": "/ads/Royals Biryani Silchar/1.png",
+      "images": [
+        "/ads/Royals Biryani Silchar/1.png",
+        "/ads/Royals Biryani Silchar/2.png",
+        "/ads/Royals Biryani Silchar/3.png",
+        "/ads/Royals Biryani Silchar/4.mp4"
+      ],
+      "technologies": [
+        "AI Video Generation",
+        "AI Image Generation",
+        "Food Photography",
+        "Video Marketing",
+        "Safety Graphics",
+        "Restaurant Marketing"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": true,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-09-15",
+      "endDate": "2024-09-30",
+      "client": "Royals Biryani Silchar",
+      "role": "AI Designer & Video Creator",
+      "challenges": [
+        "Creating appetizing food visuals",
+        "Integrating safety guidelines into marketing content",
+        "Producing both static and video content"
+      ],
+      "achievements": [
+        "Delivered comprehensive video and image campaign",
+        "Created engaging food service marketing content",
+        "Integrated safety guidelines into promotional materials"
+      ]
+    },
+    {
+      "id": "9",
+      "title": "BB Cosmetics Ad Campaign",
+      "description": "AI-generated advertising campaign for BB Cosmetics featuring 3 unique promotional designs. Created modern beauty-focused visual content for social media marketing and brand promotion.",
+      "longDescription": "A comprehensive AI-powered advertising campaign for BB Cosmetics featuring 3 professionally designed promotional images. The campaign includes beauty product showcases, lifestyle imagery, and brand-focused designs optimized for social media platforms. Each design incorporates modern beauty aesthetics, compelling visual elements, and brand consistency to maximize engagement in the cosmetics market.",
+      "image": "/ads/bb-cosmetics/1.png",
+      "images": [
+        "/ads/bb-cosmetics/1.png",
+        "/ads/bb-cosmetics/2.png",
+        "/ads/bb-cosmetics/3.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Beauty Photography",
+        "Social Media Design",
+        "Brand Design",
+        "Marketing Graphics",
+        "Visual Storytelling"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-10-15",
+      "endDate": "2024-10-20",
+      "client": "BB Cosmetics",
+      "role": "AI Designer & Creative Director",
+      "challenges": [
+        "Creating appealing beauty product visuals",
+        "Maintaining brand consistency across designs",
+        "Optimizing for beauty industry standards"
+      ],
+      "achievements": [
+        "Delivered 3 unique beauty promotional designs",
+        "Created engaging cosmetics marketing content",
+        "Maintained professional beauty industry aesthetics"
+      ]
+    },
+    {
+      "id": "10",
+      "title": "CC Brew Coffee Campaign",
+      "description": "AI-powered coffee brand campaign for CC Brew featuring 3 promotional designs. Created sophisticated visual content showcasing premium coffee products and lifestyle branding.",
+      "longDescription": "A premium AI-generated brand campaign for CC Brew featuring 3 professionally designed promotional images. The campaign includes coffee product showcases, lifestyle imagery, and brand-focused designs that capture the essence of premium coffee culture. Each design incorporates warm, inviting aesthetics and compelling visual elements optimized for coffee industry marketing.",
+      "image": "/ads/cc-brew/1.png",
+      "images": [
+        "/ads/cc-brew/1.png",
+        "/ads/cc-brew/2.png",
+        "/ads/cc-brew/3.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Food Photography",
+        "Brand Design",
+        "Coffee Marketing",
+        "Lifestyle Photography",
+        "Visual Branding"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-11-15",
+      "endDate": "2024-11-20",
+      "client": "CC Brew",
+      "role": "AI Designer & Brand Strategist",
+      "challenges": [
+        "Creating appetizing coffee visuals",
+        "Balancing product focus with lifestyle appeal",
+        "Maintaining premium brand positioning"
+      ],
+      "achievements": [
+        "Created sophisticated coffee brand campaign",
+        "Delivered 3 unique promotional designs",
+        "Established premium coffee visual identity"
+      ]
+    },
+    {
+      "id": "11",
+      "title": "Dada Boudi Restaurant Campaign",
+      "description": "AI-generated restaurant marketing campaign for Dada Boudi featuring 2 promotional designs. Created appetizing food visuals and restaurant branding for local food service marketing.",
+      "longDescription": "A comprehensive AI-powered marketing campaign for Dada Boudi restaurant featuring 2 professionally designed promotional images. The campaign includes appetizing food photography, restaurant branding, and local food service marketing content. Each design incorporates warm, inviting aesthetics that highlight the restaurant's offerings and create an appealing visual presence for local customers.",
+      "image": "/ads/dada boudi/1.png",
+      "images": [
+        "/ads/dada boudi/1.png",
+        "/ads/dada boudi/2.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Food Photography",
+        "Restaurant Marketing",
+        "Local Business Design",
+        "Brand Design",
+        "Visual Storytelling"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-09-01",
+      "endDate": "2024-09-05",
+      "client": "Dada Boudi Restaurant",
+      "role": "AI Designer & Marketing Specialist",
+      "challenges": [
+        "Creating appetizing food visuals",
+        "Appealing to local customer base",
+        "Balancing authenticity with marketing appeal"
+      ],
+      "achievements": [
+        "Delivered 2 unique restaurant promotional designs",
+        "Created engaging local food service content",
+        "Established appealing restaurant visual identity"
+      ]
+    },
+    {
+      "id": "12",
+      "title": "Dutta Jewellers Campaign",
+      "description": "AI-powered jewelry marketing campaign for Dutta Jewellers featuring 2 promotional designs. Created elegant jewelry showcases and luxury brand visuals for jewelry marketing.",
+      "longDescription": "A premium AI-generated marketing campaign for Dutta Jewellers featuring 2 professionally designed promotional images. The campaign includes elegant jewelry showcases, luxury brand visuals, and sophisticated designs that highlight the craftsmanship and beauty of jewelry pieces. Each design incorporates luxury aesthetics and compelling visual elements optimized for jewelry industry marketing.",
+      "image": "/ads/dutta jewellers/1.png",
+      "images": [
+        "/ads/dutta jewellers/1.png",
+        "/ads/dutta jewellers/2.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Jewelry Photography",
+        "Luxury Brand Design",
+        "Product Photography",
+        "Marketing Graphics",
+        "Visual Branding"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-08-15",
+      "endDate": "2024-08-20",
+      "client": "Dutta Jewellers",
+      "role": "AI Designer & Luxury Brand Specialist",
+      "challenges": [
+        "Creating elegant jewelry visuals",
+        "Maintaining luxury brand aesthetics",
+        "Highlighting product details and craftsmanship"
+      ],
+      "achievements": [
+        "Delivered 2 unique jewelry promotional designs",
+        "Created sophisticated luxury brand content",
+        "Established elegant jewelry visual identity"
+      ]
+    },
+    {
+      "id": "13",
+      "title": "Gopinath Brand Campaign",
+      "description": "AI-generated brand campaign for Gopinath featuring 2 promotional designs. Created professional brand visuals and marketing content for business promotion.",
+      "longDescription": "A comprehensive AI-powered brand campaign for Gopinath featuring 2 professionally designed promotional images. The campaign includes brand-focused designs, professional marketing content, and visual elements that establish a strong brand presence. Each design incorporates modern business aesthetics and compelling visual elements optimized for brand marketing and promotion.",
+      "image": "/ads/gopinath/1.png",
+      "images": [
+        "/ads/gopinath/1.png",
+        "/ads/gopinath/2.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Brand Design",
+        "Business Marketing",
+        "Corporate Design",
+        "Marketing Graphics",
+        "Visual Branding"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-08-01",
+      "endDate": "2024-08-05",
+      "client": "Gopinath",
+      "role": "AI Designer & Brand Strategist",
+      "challenges": [
+        "Creating professional brand visuals",
+        "Establishing brand identity",
+        "Balancing creativity with business appeal"
+      ],
+      "achievements": [
+        "Delivered 2 unique brand promotional designs",
+        "Created professional business marketing content",
+        "Established strong brand visual identity"
+      ]
+    },
+    {
+      "id": "14",
+      "title": "Hair Oil Product Campaign",
+      "description": "AI-powered hair care product campaign featuring 3 promotional designs. Created appealing hair care visuals and product marketing content for beauty industry promotion.",
+      "longDescription": "A comprehensive AI-generated product campaign for hair oil featuring 3 professionally designed promotional images. The campaign includes hair care product showcases, beauty-focused imagery, and marketing content that highlights the benefits and appeal of hair care products. Each design incorporates beauty industry aesthetics and compelling visual elements optimized for hair care marketing.",
+      "image": "/ads/hair oil/1.png",
+      "images": [
+        "/ads/hair oil/1.png",
+        "/ads/hair oil/2.png",
+        "/ads/hair oil/3.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Beauty Photography",
+        "Product Marketing",
+        "Hair Care Design",
+        "Marketing Graphics",
+        "Visual Storytelling"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-10-20",
+      "endDate": "2024-10-25",
+      "client": "Hair Oil Brand",
+      "role": "AI Designer & Product Marketing Specialist",
+      "challenges": [
+        "Creating appealing hair care visuals",
+        "Highlighting product benefits",
+        "Maintaining beauty industry standards"
+      ],
+      "achievements": [
+        "Delivered 3 unique hair care promotional designs",
+        "Created engaging beauty product content",
+        "Established appealing hair care visual identity"
+      ]
+    },
+    {
+      "id": "15",
+      "title": "Radha Gopinath Campaign",
+      "description": "AI-generated brand campaign for Radha Gopinath featuring 2 promotional designs. Created professional brand visuals and marketing content for business promotion.",
+      "longDescription": "A comprehensive AI-powered brand campaign for Radha Gopinath featuring 2 professionally designed promotional images. The campaign includes brand-focused designs, professional marketing content, and visual elements that establish a strong brand presence. Each design incorporates modern business aesthetics and compelling visual elements optimized for brand marketing and promotion.",
+      "image": "/ads/radhagopinath/1.png",
+      "images": [
+        "/ads/radhagopinath/1.png",
+        "/ads/radhagopinath/2.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Brand Design",
+        "Business Marketing",
+        "Corporate Design",
+        "Marketing Graphics",
+        "Visual Branding"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-07-15",
+      "endDate": "2024-07-20",
+      "client": "Radha Gopinath",
+      "role": "AI Designer & Brand Strategist",
+      "challenges": [
+        "Creating professional brand visuals",
+        "Establishing brand identity",
+        "Balancing creativity with business appeal"
+      ],
+      "achievements": [
+        "Delivered 2 unique brand promotional designs",
+        "Created professional business marketing content",
+        "Established strong brand visual identity"
+      ]
+    },
+    {
+      "id": "16",
+      "title": "Resin Lilly Campaign",
+      "description": "AI-powered brand campaign for Resin Lilly featuring 2 promotional designs. Created artistic and creative brand visuals for resin art and craft marketing.",
+      "longDescription": "A creative AI-generated brand campaign for Resin Lilly featuring 2 professionally designed promotional images. The campaign includes artistic resin craft showcases, creative brand visuals, and marketing content that highlights the artistic and creative aspects of resin art. Each design incorporates artistic aesthetics and compelling visual elements optimized for craft and art industry marketing.",
+      "image": "/ads/resinlilly/1.png",
+      "images": [
+        "/ads/resinlilly/1.png",
+        "/ads/resinlilly/2.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Art Photography",
+        "Craft Marketing",
+        "Creative Design",
+        "Artistic Branding",
+        "Visual Storytelling"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-09-20",
+      "endDate": "2024-09-25",
+      "client": "Resin Lilly",
+      "role": "AI Designer & Creative Specialist",
+      "challenges": [
+        "Creating artistic resin craft visuals",
+        "Highlighting creative aspects",
+        "Appealing to art and craft enthusiasts"
+      ],
+      "achievements": [
+        "Delivered 2 unique artistic promotional designs",
+        "Created engaging craft marketing content",
+        "Established creative artistic visual identity"
+      ]
+    },
+    {
+      "id": "17",
+      "title": "Sneaker Store Campaign",
+      "description": "AI-powered sneaker retail campaign featuring promotional design and video content. Created dynamic sneaker marketing visuals for retail promotion.",
+      "longDescription": "A dynamic AI-generated retail campaign for sneaker store featuring promotional design and video content. The campaign includes sneaker product showcases, retail marketing visuals, and dynamic content that highlights the latest sneaker trends and products. Each design incorporates modern retail aesthetics and compelling visual elements optimized for sneaker retail marketing.",
+      "image": "/ads/sneaker store/1-p.png",
+      "images": [
+        "/ads/sneaker store/1-p.png",
+        "/ads/sneaker store/1-v.mp4"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "AI Video Generation",
+        "Retail Marketing",
+        "Product Photography",
+        "Video Marketing",
+        "Fashion Branding"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-11-25",
+      "endDate": "2024-11-30",
+      "client": "Sneaker Store",
+      "role": "AI Designer & Retail Marketing Specialist",
+      "challenges": [
+        "Creating appealing sneaker visuals",
+        "Producing both static and video content",
+        "Appealing to sneaker enthusiasts"
+      ],
+      "achievements": [
+        "Delivered promotional design and video content",
+        "Created engaging sneaker retail marketing",
+        "Established dynamic sneaker visual identity"
+      ]
+    },
+    {
+      "id": "18",
+      "title": "Town Jewellers Campaign",
+      "description": "AI-powered jewelry marketing campaign for Town Jewellers featuring 2 promotional designs. Created elegant jewelry showcases and luxury brand visuals for jewelry marketing.",
+      "longDescription": "A premium AI-generated marketing campaign for Town Jewellers featuring 2 professionally designed promotional images. The campaign includes elegant jewelry showcases, luxury brand visuals, and sophisticated designs that highlight the craftsmanship and beauty of jewelry pieces. Each design incorporates luxury aesthetics and compelling visual elements optimized for jewelry industry marketing.",
+      "image": "/ads/town-jewellers/1.png",
+      "images": [
+        "/ads/town-jewellers/1.png",
+        "/ads/town-jewellers/2.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Jewelry Photography",
+        "Luxury Brand Design",
+        "Product Photography",
+        "Marketing Graphics",
+        "Visual Branding"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-08-25",
+      "endDate": "2024-08-30",
+      "client": "Town Jewellers",
+      "role": "AI Designer & Luxury Brand Specialist",
+      "challenges": [
+        "Creating elegant jewelry visuals",
+        "Maintaining luxury brand aesthetics",
+        "Highlighting product details and craftsmanship"
+      ],
+      "achievements": [
+        "Delivered 2 unique jewelry promotional designs",
+        "Created sophisticated luxury brand content",
+        "Established elegant jewelry visual identity"
+      ]
+    },
+    {
+      "id": "19",
+      "title": "Watch House Campaign",
+      "description": "AI-powered watch retail campaign for Watch House featuring 4 promotional poster designs. Created sophisticated watch marketing visuals and luxury timepiece branding.",
+      "longDescription": "A premium AI-generated retail campaign for Watch House featuring 4 professionally designed promotional poster images. The campaign includes luxury watch showcases, sophisticated timepiece visuals, and elegant designs that highlight the craftsmanship and luxury appeal of watches. Each design incorporates luxury watch aesthetics and compelling visual elements optimized for timepiece retail marketing.",
+      "image": "/ads/watch-house/poster1.png",
+      "images": [
+        "/ads/watch-house/poster1.png",
+        "/ads/watch-house/poster-2.png",
+        "/ads/watch-house/poster-3.png",
+        "/ads/watch-house/poster-4.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Luxury Photography",
+        "Watch Marketing",
+        "Product Photography",
+        "Luxury Branding",
+        "Visual Storytelling"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-12-01",
+      "endDate": "2024-12-05",
+      "client": "Watch House",
+      "role": "AI Designer & Luxury Retail Specialist",
+      "challenges": [
+        "Creating elegant watch visuals",
+        "Maintaining luxury timepiece aesthetics",
+        "Highlighting craftsmanship and quality"
+      ],
+      "achievements": [
+        "Delivered 4 unique watch promotional designs",
+        "Created sophisticated luxury watch content",
+        "Established elegant timepiece visual identity"
+      ]
+    },
+    {
+      "id": "20",
+      "title": "Alnoor Furniture Campaign",
+      "description": "AI-powered furniture marketing campaign for Alnoor Furniture featuring 2 promotional designs. Created appealing furniture showcases and home decor marketing visuals.",
+      "longDescription": "A comprehensive AI-generated marketing campaign for Alnoor Furniture featuring 2 professionally designed promotional images. The campaign includes furniture showcases, home decor visuals, and interior design marketing content that highlights the quality and appeal of furniture pieces. Each design incorporates home decor aesthetics and compelling visual elements optimized for furniture retail marketing.",
+      "image": "/ads/alnoor furniture/1.png",
+      "images": [
+        "/ads/alnoor furniture/1.png",
+        "/ads/alnoor furniture/2.png"
+      ],
+      "technologies": [
+        "AI Image Generation",
+        "Interior Photography",
+        "Furniture Marketing",
+        "Home Decor Design",
+        "Product Photography",
+        "Visual Branding"
+      ],
+      "category": "AI Designing and Ads",
+      "status": "Completed",
+      "featured": false,
+      "githubUrl": "",
+      "liveUrl": "",
+      "startDate": "2024-07-01",
+      "endDate": "2024-07-05",
+      "client": "Alnoor Furniture",
+      "role": "AI Designer & Interior Marketing Specialist",
+      "challenges": [
+        "Creating appealing furniture visuals",
+        "Highlighting home decor appeal",
+        "Balancing product focus with lifestyle appeal"
+      ],
+      "achievements": [
+        "Delivered 2 unique furniture promotional designs",
+        "Created engaging home decor marketing content",
+        "Established appealing furniture visual identity"
+      ]
+    },
+    {
+      "id": "6",
       "title": "Apromax",
       "description": "A comprehensive business management platform with admin panel functionality, built using modern web technologies for efficient business operations and management.",
       "longDescription": "Apromax is a robust business management solution that includes an admin panel for comprehensive business operations. It features user management, analytics dashboard, reporting tools, and various business automation features to streamline operations.",
@@ -151,8 +779,7 @@
   "categories": [
     "Web Development",
     "Mobile Development",
-    "AI Designing and Ads",
-    "Web Design"
+    "AI Designing and Ads"
   ],
   "technologies": [
     "Next.js",

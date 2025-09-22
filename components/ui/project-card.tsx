@@ -121,13 +121,13 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
         <div className="p-6 space-y-4">
         {/* Header */}
         <div className="space-y-2">
-          <div className="flex items-start justify-between">
-            <h3 className="text-xl font-bold handwritten text-foreground group-hover:text-blue-500 transition-colors">
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-xl font-bold handwritten text-foreground group-hover:text-blue-500 transition-colors flex-1 min-w-0">
               {project.title}
             </h3>
             <Badge 
               variant="outline" 
-              className={cn("text-xs", statusColors[project.status])}
+              className={cn("text-xs flex-shrink-0", statusColors[project.status])}
             >
               {project.status}
             </Badge>
@@ -152,19 +152,20 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
         {/* Technologies */}
         <div className="space-y-2">
           <h4 className="text-sm font-semibold text-foreground/80">Technologies:</h4>
-          <div className="flex flex-wrap gap-1">
-            {project.technologies.slice(0, 4).map((tech) => (
+          <div className="flex flex-wrap gap-1 max-w-full overflow-hidden">
+            {project.technologies.slice(0, 3).map((tech) => (
               <Badge 
                 key={tech} 
                 variant="outline" 
-                className="text-xs bg-foreground/5 hover:bg-foreground/10 transition-colors"
+                className="text-xs bg-foreground/5 hover:bg-foreground/10 transition-colors flex-shrink-0 max-w-[120px] truncate"
+                title={tech}
               >
-                {tech}
+                {tech.length > 12 ? tech.substring(0, 12) + '...' : tech}
               </Badge>
             ))}
-            {project.technologies.length > 4 && (
-              <Badge variant="outline" className="text-xs bg-foreground/5">
-                +{project.technologies.length - 4} more
+            {project.technologies.length > 3 && (
+              <Badge variant="outline" className="text-xs bg-foreground/5 flex-shrink-0">
+                +{project.technologies.length - 3}
               </Badge>
             )}
           </div>
@@ -172,7 +173,7 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
 
           {/* Category and Action Buttons */}
           <div className="pt-2 border-t border-border space-y-3">
-            <span className="text-xs font-medium text-blue-500 bg-blue-500/10 px-2 py-1 rounded-full">
+            <span className="text-xs font-medium text-blue-500 bg-blue-500/10 px-2 py-1 rounded-full inline-block max-w-full truncate">
               {project.category}
             </span>
 
