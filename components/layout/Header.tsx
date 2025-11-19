@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Menu, X, Home, User, Briefcase, Mail, Star } from 'lucide-react';
+import { Menu, X, Home, User, Briefcase, Mail, Star, Terminal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navigation = [
@@ -61,29 +61,26 @@ export default function Header() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-notebook-line"
+      className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-neon-blue/30"
     >
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <motion.div
-            whileHover={{ rotate: 2, scale: 1.05 }}
+            whileHover={{ scale: 1.05, filter: "drop-shadow(0 0 8px var(--neon-pink))" }}
             className="flex-shrink-0"
           >
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/logo.png"
-                alt="Portfolio Logo"
-                width={60}
-                height={60}
-                className="object-contain"
-                priority
-              />
+            <Link href="/" className="flex items-center group">
+              <div className="relative w-12 h-12 flex items-center justify-center border-2 border-neon-pink bg-black/50 rounded-none group-hover:border-neon-blue transition-colors duration-300">
+                <span className="text-2xl font-bold font-orbitron text-neon-pink group-hover:text-neon-blue transition-colors duration-300">H</span>
+                <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-neon-blue" />
+                <div className="absolute -top-1 -left-1 w-2 h-2 bg-neon-pink" />
+              </div>
             </Link>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-2">
             {navigation.map((item) => {
               const Icon = item.icon;
               const isActive = !(item as any).isExternal && activeSection === item.href.substring(1);
@@ -95,13 +92,13 @@ export default function Header() {
                       whileHover={{ y: -2 }}
                       whileTap={{ y: 0 }}
                       className={cn(
-                        'flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200',
-                        'hover:bg-sketch-blue/10 hover:text-sketch-blue',
-                        'sketch-hover text-foreground'
+                        'flex items-center space-x-2 px-4 py-2 rounded-none transition-all duration-200 border border-transparent',
+                        'hover:bg-neon-blue/10 hover:border-neon-blue/50 hover:text-neon-blue',
+                        'text-foreground/80 font-vt323 text-lg tracking-wide'
                       )}
                     >
-                      <Icon size={18} />
-                      <span className="font-medium">{item.name}</span>
+                      <Icon size={16} />
+                      <span className="uppercase">{item.name}</span>
                     </motion.div>
                   </Link>
                 );
@@ -114,16 +111,15 @@ export default function Header() {
                   whileHover={{ y: -2 }}
                   whileTap={{ y: 0 }}
                   className={cn(
-                    'flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200',
-                    'hover:bg-sketch-blue/10 hover:text-sketch-blue',
-                    'sketch-hover',
+                    'flex items-center space-x-2 px-4 py-2 rounded-none transition-all duration-200 border',
                     isActive
-                      ? 'text-sketch-blue bg-sketch-blue/10 sketch-border'
-                      : 'text-foreground'
+                      ? 'text-neon-blue bg-neon-blue/10 border-neon-blue shadow-[0_0_10px_rgba(0,255,255,0.2)]'
+                      : 'text-foreground/80 border-transparent hover:bg-neon-blue/10 hover:border-neon-blue/50 hover:text-neon-blue',
+                    'font-vt323 text-lg tracking-wide uppercase'
                   )}
                 >
-                  <Icon size={18} />
-                  <span className="font-medium">{item.name}</span>
+                  <Icon size={16} />
+                  <span>{item.name}</span>
                 </motion.button>
               );
             })}
@@ -133,7 +129,7 @@ export default function Header() {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-sketch-blue/10 transition-colors"
+            className="md:hidden p-2 rounded-none border border-neon-blue/30 text-neon-blue hover:bg-neon-blue/10 hover:border-neon-blue transition-colors"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </motion.button>
@@ -144,9 +140,9 @@ export default function Header() {
           initial={false}
           animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="md:hidden overflow-hidden"
+          className="md:hidden overflow-hidden bg-black/90 border-b border-neon-blue/30"
         >
-          <nav className="py-4 space-y-2">
+          <nav className="py-4 space-y-2 px-4">
             {navigation.map((item) => {
               const Icon = item.icon;
               const isActive = !(item as any).isExternal && activeSection === item.href.substring(1);
@@ -157,12 +153,12 @@ export default function Header() {
                     <motion.div
                       whileHover={{ x: 4 }}
                       className={cn(
-                        'flex items-center space-x-3 w-full px-4 py-3 rounded-lg transition-all duration-200',
-                        'hover:bg-sketch-blue/10 hover:text-sketch-blue text-foreground'
+                        'flex items-center space-x-3 w-full px-4 py-3 rounded-none transition-all duration-200 border-l-2 border-transparent',
+                        'hover:bg-neon-blue/10 hover:text-neon-blue hover:border-neon-blue text-foreground/80 font-vt323 text-xl uppercase tracking-wide'
                       )}
                     >
                       <Icon size={20} />
-                      <span className="font-medium">{item.name}</span>
+                      <span>{item.name}</span>
                     </motion.div>
                   </Link>
                 );
@@ -174,15 +170,15 @@ export default function Header() {
                   onClick={() => handleNavigation(item.href, (item as any).isExternal)}
                   whileHover={{ x: 4 }}
                   className={cn(
-                    'flex items-center space-x-3 w-full px-4 py-3 rounded-lg transition-all duration-200',
-                    'hover:bg-sketch-blue/10 hover:text-sketch-blue',
+                    'flex items-center space-x-3 w-full px-4 py-3 rounded-none transition-all duration-200 border-l-2',
                     isActive
-                      ? 'text-sketch-blue bg-sketch-blue/10 sketch-border'
-                      : 'text-foreground'
+                      ? 'text-neon-blue bg-neon-blue/10 border-neon-blue'
+                      : 'text-foreground/80 border-transparent hover:bg-neon-blue/10 hover:text-neon-blue hover:border-neon-blue',
+                    'font-vt323 text-xl uppercase tracking-wide'
                   )}
                 >
                   <Icon size={20} />
-                  <span className="font-medium">{item.name}</span>
+                  <span>{item.name}</span>
                 </motion.button>
               );
             })}

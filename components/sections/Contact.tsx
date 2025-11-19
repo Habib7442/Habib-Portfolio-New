@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Github, Linkedin,  X } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin,  X, Terminal } from 'lucide-react';
 import Container from '@/components/layout/Container';
 import { cn } from '@/lib/utils';
 import { db } from '@/lib/firebase';
@@ -12,7 +12,7 @@ const contactInfo = {
   email: 'habibtanwir1906@gmail.com',
   phone: '+91 7002135973',
   location: 'Assam, India',
-  availability: 'Available for freelance work'
+  availability: 'STATUS: AVAILABLE_FOR_HIRE'
 };
 
 const socialLinks = [
@@ -20,19 +20,19 @@ const socialLinks = [
     name: 'GitHub',
     href: 'https://github.com/Habib7442',
     icon: Github,
-    color: 'hover:text-gray-900 dark:hover:text-white'
+    color: 'hover:text-white'
   },
   {
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/in/habib-tanwir/',
     icon: Linkedin,
-    color: 'hover:text-blue-600'
+    color: 'hover:text-neon-blue'
   },
   {
     name: 'X (Twitter)',
     href: 'https://x.com/TanwirHabib',
     icon: X,
-    color: 'hover:text-blue-400'
+    color: 'hover:text-neon-blue'
   }
 ];
 
@@ -118,9 +118,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-20 relative overflow-hidden">
       <Container>
-        <div className="space-y-12">
+        <div className="space-y-12 relative z-10">
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -129,11 +129,11 @@ export default function Contact() {
             viewport={{ once: true }}
             className="text-center space-y-4"
           >
-            <h2 className="text-4xl md:text-5xl font-bold handwritten text-blue-500">
-              Get In Touch
+            <h2 className="text-4xl md:text-6xl font-bold font-orbitron text-neon-blue tracking-widest uppercase glitch" data-text="Initialize_Comms">
+              Initialize_Comms
             </h2>
-            <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full" />
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+            <div className="w-32 h-1 bg-neon-blue mx-auto shadow-[0_0_10px_var(--neon-blue)]" />
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto font-rajdhani">
               Have a project in mind or just want to chat? I'd love to hear from you. 
               Let's create something amazing together!
             </p>
@@ -149,10 +149,10 @@ export default function Contact() {
               className="space-y-8"
             >
               <div className="space-y-6">
-                <h3 className="text-2xl font-semibold handwritten text-green-500">
-                  Let's Connect
+                <h3 className="text-2xl font-semibold font-orbitron text-neon-yellow tracking-wider">
+                  &lt;CONNECTION_DETAILS /&gt;
                 </h3>
-                <p className="text-foreground/70 leading-relaxed">
+                <p className="text-foreground/70 leading-relaxed font-rajdhani">
                   I'm always interested in hearing about new opportunities, 
                   whether that's a full-time position, freelance work, or just a chat about technology.
                 </p>
@@ -165,16 +165,16 @@ export default function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
                   viewport={{ once: true }}
-                  className="flex items-center space-x-4 p-4 bg-card border border-border rounded-lg"
+                  className="flex items-center space-x-4 p-4 bg-black/40 border border-neon-blue/30 hover:border-neon-pink/50 transition-colors group"
                 >
-                  <div className="p-2 bg-blue-500/10 rounded-lg">
-                    <Mail size={20} className="text-blue-500" />
+                  <div className="p-2 bg-neon-blue/10 rounded-none group-hover:bg-neon-pink/10 transition-colors">
+                    <Mail size={20} className="text-neon-blue group-hover:text-neon-pink transition-colors" />
                   </div>
                   <div>
-                    <p className="font-medium">Email</p>
+                    <p className="font-medium font-vt323 text-neon-blue tracking-wide">EMAIL_ADDRESS</p>
                     <a
                       href={`mailto:${contactInfo.email}`}
-                      className="text-foreground/70 hover:text-blue-500 transition-colors"
+                      className="text-foreground/70 hover:text-neon-pink transition-colors font-rajdhani"
                     >
                       {contactInfo.email}
                     </a>
@@ -186,16 +186,16 @@ export default function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.6 }}
                   viewport={{ once: true }}
-                  className="flex items-center space-x-4 p-4 bg-background border border-notebook-line rounded-lg sketch-border"
+                  className="flex items-center space-x-4 p-4 bg-black/40 border border-neon-blue/30 hover:border-neon-pink/50 transition-colors group"
                 >
-                  <div className="p-2 bg-sketch-green/10 rounded-lg">
-                    <Phone size={20} className="text-sketch-green" />
+                  <div className="p-2 bg-neon-blue/10 rounded-none group-hover:bg-neon-pink/10 transition-colors">
+                    <Phone size={20} className="text-neon-blue group-hover:text-neon-pink transition-colors" />
                   </div>
                   <div>
-                    <p className="font-medium">Phone</p>
+                    <p className="font-medium font-vt323 text-neon-blue tracking-wide">PHONE_NUMBER</p>
                     <a 
                       href={`tel:${contactInfo.phone}`}
-                      className="text-foreground/70 hover:text-sketch-green transition-colors"
+                      className="text-foreground/70 hover:text-neon-pink transition-colors font-rajdhani"
                     >
                       {contactInfo.phone}
                     </a>
@@ -207,14 +207,14 @@ export default function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.6 }}
                   viewport={{ once: true }}
-                  className="flex items-center space-x-4 p-4 bg-background border border-notebook-line rounded-lg sketch-border"
+                  className="flex items-center space-x-4 p-4 bg-black/40 border border-neon-blue/30 hover:border-neon-pink/50 transition-colors group"
                 >
-                  <div className="p-2 bg-sketch-orange/10 rounded-lg">
-                    <MapPin size={20} className="text-sketch-orange" />
+                  <div className="p-2 bg-neon-blue/10 rounded-none group-hover:bg-neon-pink/10 transition-colors">
+                    <MapPin size={20} className="text-neon-blue group-hover:text-neon-pink transition-colors" />
                   </div>
                   <div>
-                    <p className="font-medium">Location</p>
-                    <p className="text-foreground/70">{contactInfo.location}</p>
+                    <p className="font-medium font-vt323 text-neon-blue tracking-wide">LOCATION_COORDS</p>
+                    <p className="text-foreground/70 font-rajdhani">{contactInfo.location}</p>
                   </div>
                 </motion.div>
               </div>
@@ -225,11 +225,11 @@ export default function Contact() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="p-4 bg-sketch-green/10 border border-sketch-green/20 rounded-lg"
+                className="p-4 bg-neon-green/5 border border-neon-green/30"
               >
                 <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-sketch-green rounded-full animate-pulse" />
-                  <p className="font-medium text-sketch-green">{contactInfo.availability}</p>
+                  <div className="w-3 h-3 bg-neon-green rounded-none animate-pulse shadow-[0_0_5px_var(--neon-green)]" />
+                  <p className="font-medium text-neon-green font-vt323 tracking-widest">{contactInfo.availability}</p>
                 </div>
               </motion.div>
 
@@ -241,8 +241,8 @@ export default function Contact() {
                 viewport={{ once: true }}
                 className="space-y-4"
               >
-                <h4 className="text-lg font-semibold handwritten text-sketch-purple">
-                  Follow Me
+                <h4 className="text-lg font-semibold font-orbitron text-neon-purple tracking-wider">
+                  ESTABLISH_UPLINK
                 </h4>
                 <div className="flex space-x-4">
                   {socialLinks.map((social) => {
@@ -253,12 +253,12 @@ export default function Contact() {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ y: -2, scale: 1.1 }}
+                        whileHover={{ y: -2, scale: 1.1, borderColor: "var(--neon-pink)" }}
                         whileTap={{ scale: 0.95 }}
-                        className={`p-3 bg-background border border-notebook-line rounded-lg transition-all duration-200 ${social.color} sketch-hover`}
+                        className={`p-3 bg-black/40 border border-neon-blue/30 transition-all duration-200 ${social.color} group`}
                         aria-label={social.name}
                       >
-                        <Icon size={20} />
+                        <Icon size={20} className="group-hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]" />
                       </motion.a>
                     );
                   })}
@@ -272,13 +272,18 @@ export default function Contact() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
               viewport={{ once: true }}
-              className="bg-background border border-notebook-line rounded-xl p-8 sketch-border"
+              className="bg-black/60 border border-neon-blue/30 p-8 relative"
             >
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink opacity-50" />
+              <div className="absolute top-0 left-0 bg-neon-blue/20 px-2 py-1 text-xs font-vt323 text-neon-blue">
+                TRANSMISSION_MODULE
+              </div>
+              
+              <form onSubmit={handleSubmit} className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium text-foreground/80">
-                      Name *
+                    <label htmlFor="name" className="text-xs font-medium text-neon-blue font-vt323 uppercase tracking-widest">
+                      Sender_Name *
                     </label>
                     <input
                       type="text"
@@ -287,13 +292,13 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-background border border-notebook-line rounded-lg focus:outline-none focus:ring-2 focus:ring-sketch-blue focus:border-transparent transition-all duration-200"
-                      placeholder="Your name"
+                      className="w-full px-4 py-3 bg-black/40 border border-neon-blue/30 text-foreground focus:outline-none focus:border-neon-pink focus:shadow-[0_0_10px_rgba(255,0,255,0.2)] transition-all duration-200 font-rajdhani"
+                      placeholder="ENTER_NAME"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium text-foreground/80">
-                      Email *
+                    <label htmlFor="email" className="text-xs font-medium text-neon-blue font-vt323 uppercase tracking-widest">
+                      Sender_Email *
                     </label>
                     <input
                       type="email"
@@ -302,15 +307,15 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-background border border-notebook-line rounded-lg focus:outline-none focus:ring-2 focus:ring-sketch-blue focus:border-transparent transition-all duration-200"
-                      placeholder="your.email@example.com"
+                      className="w-full px-4 py-3 bg-black/40 border border-neon-blue/30 text-foreground focus:outline-none focus:border-neon-pink focus:shadow-[0_0_10px_rgba(255,0,255,0.2)] transition-all duration-200 font-rajdhani"
+                      placeholder="ENTER_EMAIL"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium text-foreground/80">
-                    Subject *
+                  <label htmlFor="subject" className="text-xs font-medium text-neon-blue font-vt323 uppercase tracking-widest">
+                    Subject_Line *
                   </label>
                   <input
                     type="text"
@@ -319,14 +324,14 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-background border border-notebook-line rounded-lg focus:outline-none focus:ring-2 focus:ring-sketch-blue focus:border-transparent transition-all duration-200"
-                    placeholder="What's this about?"
+                    className="w-full px-4 py-3 bg-black/40 border border-neon-blue/30 text-foreground focus:outline-none focus:border-neon-pink focus:shadow-[0_0_10px_rgba(255,0,255,0.2)] transition-all duration-200 font-rajdhani"
+                    placeholder="ENTER_SUBJECT"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-foreground/80">
-                    Message *
+                  <label htmlFor="message" className="text-xs font-medium text-neon-blue font-vt323 uppercase tracking-widest">
+                    Message_Content *
                   </label>
                   <textarea
                     id="message"
@@ -335,8 +340,8 @@ export default function Contact() {
                     onChange={handleInputChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 bg-background border border-notebook-line rounded-lg focus:outline-none focus:ring-2 focus:ring-sketch-blue focus:border-transparent transition-all duration-200 resize-none"
-                    placeholder="Tell me about your project or just say hello!"
+                    className="w-full px-4 py-3 bg-black/40 border border-neon-blue/30 text-foreground focus:outline-none focus:border-neon-pink focus:shadow-[0_0_10px_rgba(255,0,255,0.2)] transition-all duration-200 resize-none font-rajdhani"
+                    placeholder="TYPE_MESSAGE_HERE..."
                   />
                 </div>
 
@@ -346,39 +351,38 @@ export default function Contact() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className={cn(
-                      "p-4 rounded-lg text-center font-medium",
+                      "p-4 border text-center font-vt323 text-lg tracking-wide",
                       submitStatus === 'success'
-                        ? "bg-sketch-green/10 text-sketch-green border border-sketch-green/20"
-                        : "bg-red-50 text-red-600 border border-red-200"
+                        ? "bg-neon-green/10 text-neon-green border-neon-green/50"
+                        : "bg-red-500/10 text-red-500 border-red-500/50"
                     )}
                   >
                     {submitStatus === 'success'
-                      ? "✅ Message sent successfully! I'll get back to you soon."
-                      : "❌ Please fill in all fields correctly and try again."}
+                      ? "> TRANSMISSION_SUCCESSFUL. STANDBY_FOR_RESPONSE."
+                      : "> ERROR: TRANSMISSION_FAILED. CHECK_INPUTS."}
                   </motion.div>
                 )}
 
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  whileHover={{ y: -2, scale: 1.02 }}
+                  whileHover={{ scale: 1.02, boxShadow: "0 0 15px var(--neon-blue)" }}
                   whileTap={{ scale: 0.98 }}
                   className={cn(
-                    "w-full px-8 py-4 bg-sketch-blue text-white rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2",
-                    "hover:bg-sketch-blue/90 focus:outline-none focus:ring-2 focus:ring-sketch-blue focus:ring-offset-2",
-                    "disabled:opacity-50 disabled:cursor-not-allowed",
-                    "sketch-hover"
+                    "w-full px-8 py-4 bg-neon-blue/10 border border-neon-blue text-neon-blue font-bold transition-all duration-200 flex items-center justify-center space-x-2 font-orbitron tracking-widest uppercase",
+                    "hover:bg-neon-blue hover:text-black",
+                    "disabled:opacity-50 disabled:cursor-not-allowed"
                   )}
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>Sending...</span>
+                      <div className="w-5 h-5 border-2 border-neon-blue border-t-transparent rounded-full animate-spin" />
+                      <span>TRANSMITTING...</span>
                     </>
                   ) : (
                     <>
                       <Send size={18} />
-                      <span>Send Message</span>
+                      <span>INITIATE_SEND</span>
                     </>
                   )}
                 </motion.button>

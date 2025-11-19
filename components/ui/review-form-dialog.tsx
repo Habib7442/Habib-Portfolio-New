@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Star, Upload, User, Send } from 'lucide-react';
+import { X, Star, Upload, User, Send, Terminal } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -128,8 +128,8 @@ export default function ReviewFormDialog({ isOpen, onClose }: ReviewFormDialogPr
           size={24}
           className={`${
             index < formData.stars 
-              ? 'text-yellow-400 fill-yellow-400' 
-              : 'text-gray-300 hover:text-yellow-300'
+              ? 'text-neon-yellow fill-neon-yellow drop-shadow-[0_0_5px_var(--neon-yellow)]' 
+              : 'text-gray-600 hover:text-neon-yellow/50'
           }`}
         />
       </button>
@@ -144,24 +144,29 @@ export default function ReviewFormDialog({ isOpen, onClose }: ReviewFormDialogPr
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50"
         onClick={onClose}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="bg-background border border-notebook-line rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto sketch-border"
+          className="bg-black/90 border border-neon-blue/50 rounded-none p-6 w-full max-w-md max-h-[90vh] overflow-y-auto relative shadow-[0_0_20px_rgba(0,255,255,0.2)]"
           onClick={(e) => e.stopPropagation()}
         >
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink" />
+          
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-bold handwritten text-sketch-blue">
-              Share Your Experience
-            </h3>
+            <div className="flex items-center space-x-2">
+              <Terminal className="text-neon-pink" size={20} />
+              <h3 className="text-2xl font-bold font-orbitron text-neon-blue tracking-wider">
+                SUBMIT_LOG
+              </h3>
+            </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-neon-blue/10 text-neon-blue rounded-none transition-colors border border-transparent hover:border-neon-blue/50"
             >
               <X size={20} />
             </button>
@@ -173,32 +178,33 @@ export default function ReviewFormDialog({ isOpen, onClose }: ReviewFormDialogPr
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-8"
             >
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Send size={32} className="text-green-600" />
+              <div className="w-16 h-16 bg-neon-green/10 border border-neon-green rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_10px_var(--neon-green)]">
+                <Send size={32} className="text-neon-green" />
               </div>
-              <h4 className="text-xl font-semibold text-green-600 mb-2">Thank You!</h4>
-              <p className="text-foreground/70">
-                Your review has been submitted and is pending approval.
+              <h4 className="text-xl font-semibold text-neon-green mb-2 font-orbitron tracking-wide">TRANSMISSION_COMPLETE</h4>
+              <p className="text-foreground/70 font-vt323 text-lg">
+                &gt; Review logged successfully. Pending admin approval.
               </p>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Profile Image Upload */}
               <div className="text-center">
-                <div className="w-20 h-20 rounded-full overflow-hidden bg-sketch-blue/10 flex items-center justify-center mx-auto mb-3">
+                <div className="w-20 h-20 rounded-full overflow-hidden bg-black/50 border border-neon-blue/30 flex items-center justify-center mx-auto mb-3 group relative">
                   {imagePreview ? (
                     <img
                       src={imagePreview}
                       alt="Preview"
-                      className="w-full h-full object-cover rounded-full"
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
                     />
                   ) : (
-                    <User size={32} className="text-sketch-blue" />
+                    <User size={32} className="text-neon-blue" />
                   )}
+                  <div className="absolute inset-0 bg-neon-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <label className="cursor-pointer inline-flex items-center space-x-2 text-sm text-sketch-blue hover:text-sketch-green transition-colors">
+                <label className="cursor-pointer inline-flex items-center space-x-2 text-sm text-neon-blue hover:text-neon-pink transition-colors font-vt323 tracking-wide uppercase">
                   <Upload size={16} />
-                  <span>Upload Photo (Optional)</span>
+                  <span>UPLOAD_AVATAR (OPTIONAL)</span>
                   <input
                     type="file"
                     accept="image/*"
@@ -206,61 +212,61 @@ export default function ReviewFormDialog({ isOpen, onClose }: ReviewFormDialogPr
                     className="hidden"
                   />
                 </label>
-                <p className="text-xs text-foreground/60 mt-1">
-                  A random avatar will be used if no photo is uploaded
+                <p className="text-xs text-foreground/40 mt-1 font-rajdhani">
+                  * Default avatar assigned if null
                 </p>
               </div>
 
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium mb-2">Name *</label>
+                <label className="block text-xs font-medium mb-2 text-neon-blue font-vt323 uppercase tracking-widest">USER_NAME *</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-2 border border-notebook-line rounded-lg focus:outline-none focus:ring-2 focus:ring-sketch-blue/50"
-                  placeholder="Your full name"
+                  className="w-full px-4 py-2 bg-black/50 border border-neon-blue/30 rounded-none focus:outline-none focus:border-neon-pink focus:shadow-[0_0_10px_rgba(255,0,255,0.2)] text-foreground font-rajdhani transition-all duration-200"
+                  placeholder="Enter full name"
                 />
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium mb-2">Email *</label>
+                <label className="block text-xs font-medium mb-2 text-neon-blue font-vt323 uppercase tracking-widest">USER_EMAIL *</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-2 border border-notebook-line rounded-lg focus:outline-none focus:ring-2 focus:ring-sketch-blue/50"
-                  placeholder="your.email@example.com"
+                  className="w-full px-4 py-2 bg-black/50 border border-neon-blue/30 rounded-none focus:outline-none focus:border-neon-pink focus:shadow-[0_0_10px_rgba(255,0,255,0.2)] text-foreground font-rajdhani transition-all duration-200"
+                  placeholder="enter.email@address.com"
                 />
               </div>
 
               {/* Rating */}
               <div>
-                <label className="block text-sm font-medium mb-2">Rating *</label>
+                <label className="block text-xs font-medium mb-2 text-neon-blue font-vt323 uppercase tracking-widest">RATING_VALUE *</label>
                 <div className="flex items-center space-x-1">
                   {renderStars()}
-                  <span className="ml-2 text-sm text-foreground/70">
-                    ({formData.stars} star{formData.stars !== 1 ? 's' : ''})
+                  <span className="ml-2 text-sm text-neon-blue/60 font-vt323">
+                    [{formData.stars}/5]
                   </span>
                 </div>
               </div>
 
               {/* Review */}
               <div>
-                <label className="block text-sm font-medium mb-2">Your Review *</label>
+                <label className="block text-xs font-medium mb-2 text-neon-blue font-vt323 uppercase tracking-widest">REVIEW_CONTENT *</label>
                 <textarea
                   name="review"
                   value={formData.review}
                   onChange={handleInputChange}
                   required
                   rows={4}
-                  className="w-full px-4 py-2 border border-notebook-line rounded-lg focus:outline-none focus:ring-2 focus:ring-sketch-blue/50 resize-none"
-                  placeholder="Share your experience working with me..."
+                  className="w-full px-4 py-2 bg-black/50 border border-neon-blue/30 rounded-none focus:outline-none focus:border-neon-pink focus:shadow-[0_0_10px_rgba(255,0,255,0.2)] text-foreground font-rajdhani transition-all duration-200 resize-none"
+                  placeholder="Input experience log..."
                 />
               </div>
 
@@ -268,24 +274,24 @@ export default function ReviewFormDialog({ isOpen, onClose }: ReviewFormDialogPr
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-6 py-3 bg-sketch-green text-white rounded-lg font-medium sketch-hover transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                className="w-full px-6 py-3 bg-neon-blue/10 border border-neon-blue text-neon-blue hover:bg-neon-blue hover:text-black rounded-none font-bold font-orbitron tracking-widest uppercase transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-[0_0_10px_rgba(0,255,255,0.1)] hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]"
               >
                 {isSubmitting ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>Submitting...</span>
+                    <div className="w-4 h-4 border-2 border-neon-blue border-t-transparent rounded-full animate-spin"></div>
+                    <span>PROCESSING...</span>
                   </>
                 ) : (
                   <>
                     <Send size={18} />
-                    <span>Submit Review</span>
+                    <span>INITIATE_UPLOAD</span>
                   </>
                 )}
               </button>
 
               {submitStatus === 'error' && (
-                <p className="text-red-500 text-sm text-center">
-                  Failed to submit review. Please try again.
+                <p className="text-red-500 text-sm text-center font-vt323">
+                  &gt; ERROR: UPLOAD_FAILED. RETRY_REQUIRED.
                 </p>
               )}
             </form>

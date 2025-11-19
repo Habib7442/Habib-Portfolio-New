@@ -16,8 +16,8 @@ export function BackgroundGrid({
         className
       )}
     >
-      <div className="absolute inset-0 h-full w-full bg-background bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-      <div className="absolute inset-0 h-full w-full bg-[radial-gradient(circle_800px_at_100%_200px,#d5c5ff20,transparent)]" />
+      <div className="absolute inset-0 h-full w-full bg-background bg-[linear-gradient(to_right,rgba(0,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
+      <div className="absolute inset-0 h-full w-full bg-[radial-gradient(circle_800px_at_100%_200px,rgba(255,0,255,0.15),transparent)]" />
       {children}
     </div>
   );
@@ -37,7 +37,7 @@ export function BackgroundGridSmall({
         className
       )}
     >
-      <div className="absolute inset-0 h-full w-full bg-background bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:14px_14px]" />
+      <div className="absolute inset-0 h-full w-full bg-background bg-[linear-gradient(to_right,rgba(0,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px]" />
       {children}
     </div>
   );

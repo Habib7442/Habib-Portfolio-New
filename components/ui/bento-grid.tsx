@@ -46,19 +46,19 @@ export const BentoGridItem = ({
   return (
     <motion.div
       className={cn(
-        "row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-card dark:border-border bg-white border border-transparent justify-between flex flex-col space-y-4",
+        "row-span-1 rounded-none group/bento hover:shadow-[0_0_15px_rgba(0,255,255,0.3)] transition duration-200 shadow-none p-4 bg-black/40 border border-neon-blue/30 justify-between flex flex-col space-y-4",
         className
       )}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -5, borderColor: "var(--neon-pink)" }}
       transition={{ duration: 0.2 }}
     >
       {header}
       <div className="group-hover/bento:translate-x-2 transition duration-200">
         {icon}
-        <div className="font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2">
+        <div className="font-orbitron font-bold text-neon-blue mb-2 mt-2 tracking-wide">
           {title}
         </div>
-        <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
+        <div className="font-rajdhani font-normal text-foreground/70 text-xs">
           {description}
         </div>
         
@@ -68,13 +68,13 @@ export const BentoGridItem = ({
             {technologies.slice(0, 3).map((tech) => (
               <span
                 key={tech}
-                className="px-2 py-1 text-xs bg-blue-500/10 text-blue-500 rounded-full"
+                className="px-2 py-1 text-xs bg-neon-blue/10 text-neon-blue border border-neon-blue/30 rounded-none font-vt323"
               >
                 {tech}
               </span>
             ))}
             {technologies.length > 3 && (
-              <span className="px-2 py-1 text-xs bg-gray-500/10 text-gray-500 rounded-full">
+              <span className="px-2 py-1 text-xs bg-white/10 text-foreground/60 border border-white/10 rounded-none font-vt323">
                 +{technologies.length - 3}
               </span>
             )}
@@ -90,7 +90,7 @@ export const BentoGridItem = ({
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 bg-blue-500/10 hover:bg-blue-500/20 rounded-lg text-blue-500 transition-colors"
+              className="p-2 bg-neon-blue/10 hover:bg-neon-blue/20 border border-neon-blue/50 hover:border-neon-blue rounded-none text-neon-blue transition-colors"
               aria-label="View live project"
             >
               <ExternalLink size={16} />
@@ -103,7 +103,7 @@ export const BentoGridItem = ({
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 bg-gray-500/10 hover:bg-gray-500/20 rounded-lg text-gray-500 transition-colors"
+              className="p-2 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/40 rounded-none text-foreground/80 transition-colors"
               aria-label="View source code"
             >
               <Github size={16} />
@@ -115,8 +115,8 @@ export const BentoGridItem = ({
       {/* Featured badge */}
       {featured && (
         <div className="absolute top-2 right-2">
-          <span className="px-2 py-1 text-xs bg-yellow-500/20 text-yellow-500 rounded-full">
-            Featured
+          <span className="px-2 py-1 text-xs bg-neon-yellow/20 text-neon-yellow border border-neon-yellow/50 rounded-none font-orbitron tracking-wider">
+            FEATURED
           </span>
         </div>
       )}
@@ -134,10 +134,11 @@ export const BentoGridHeader = ({
   return (
     <div
       className={cn(
-        "flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100",
+        "flex flex-1 w-full h-full min-h-[6rem] rounded-none bg-black/50 border-b border-neon-blue/30 overflow-hidden relative",
         className
       )}
     >
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] opacity-20" />
       {children}
     </div>
   );

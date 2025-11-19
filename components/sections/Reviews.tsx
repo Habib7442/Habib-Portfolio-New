@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Star, Quote, User, ArrowRight } from 'lucide-react';
+import { Star, Quote, User, ArrowRight, Terminal } from 'lucide-react';
 import Link from 'next/link';
 import Container from '@/components/layout/Container';
 import ReviewFormDialog from '@/components/ui/review-form-dialog';
@@ -97,8 +97,8 @@ export default function Reviews() {
         size={16}
         className={`${
           index < rating 
-            ? 'text-yellow-400 fill-yellow-400' 
-            : 'text-gray-300'
+            ? 'text-neon-yellow fill-neon-yellow drop-shadow-[0_0_5px_rgba(255,255,0,0.5)]' 
+            : 'text-gray-600'
         }`}
       />
     ));
@@ -110,8 +110,8 @@ export default function Reviews() {
         <Container>
           <div className="text-center">
             <div className="animate-pulse">
-              <div className="h-8 bg-gray-300 rounded w-48 mx-auto mb-4"></div>
-              <div className="h-4 bg-gray-300 rounded w-96 mx-auto"></div>
+              <div className="h-8 bg-neon-blue/20 rounded w-48 mx-auto mb-4"></div>
+              <div className="h-4 bg-neon-blue/10 rounded w-96 mx-auto"></div>
             </div>
           </div>
         </Container>
@@ -123,8 +123,8 @@ export default function Reviews() {
     return (
       <section id="reviews" className="py-20 bg-background">
         <Container>
-          <div className="text-center text-red-500">
-            <p>{error}</p>
+          <div className="text-center text-red-500 font-vt323 text-xl">
+            <p>ERROR: {error}</p>
           </div>
         </Container>
       </section>
@@ -136,7 +136,7 @@ export default function Reviews() {
   }
 
   return (
-    <section id="reviews" className="py-20 bg-background">
+    <section id="reviews" className="py-20 relative">
       <Container>
         <div className="space-y-16">
           {/* Section Header */}
@@ -147,11 +147,11 @@ export default function Reviews() {
             viewport={{ once: true }}
             className="text-center space-y-4"
           >
-            <h2 className="text-4xl md:text-5xl font-bold handwritten text-sketch-blue">
+            <h2 className="text-4xl md:text-6xl font-bold font-orbitron text-neon-blue tracking-widest uppercase glitch" data-text="Client Reviews">
               Client Reviews
             </h2>
-            <div className="w-24 h-1 bg-sketch-blue mx-auto rounded-full" />
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+            <div className="w-32 h-1 bg-neon-blue mx-auto shadow-[0_0_10px_var(--neon-blue)]" />
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto font-rajdhani">
               What my clients say about working with me. Here are some of the top reviews from satisfied clients.
             </p>
           </motion.div>
@@ -165,10 +165,10 @@ export default function Reviews() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-background border border-notebook-line rounded-xl p-6 sketch-border relative"
+                className="bg-black/40 border border-neon-blue/30 p-6 relative hover:border-neon-pink/50 transition-colors group"
               >
                 {/* Quote Icon */}
-                <div className="absolute top-4 right-4 text-sketch-blue/20">
+                <div className="absolute top-4 right-4 text-neon-blue/20 group-hover:text-neon-pink/20 transition-colors">
                   <Quote size={32} />
                 </div>
 
@@ -180,29 +180,29 @@ export default function Reviews() {
                   </div>
 
                   {/* Review Text */}
-                  <p className="text-foreground/80 leading-relaxed italic">
+                  <p className="text-foreground/80 leading-relaxed font-rajdhani min-h-[100px]">
                     "{review.review}"
                   </p>
 
                   {/* Reviewer Info */}
-                  <div className="flex items-center space-x-3 pt-4 border-t border-notebook-line">
-                    <div className="w-12 h-12 rounded-full overflow-hidden bg-sketch-blue/10 flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center space-x-3 pt-4 border-t border-white/10">
+                    <div className="w-12 h-12 rounded-none border border-neon-blue/50 overflow-hidden bg-black/50 flex items-center justify-center flex-shrink-0">
                       {review.imgurl ? (
                         <img
                           src={review.imgurl}
                           alt={review.name}
-                          className="w-full h-full object-cover rounded-full"
+                          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
                         />
                       ) : (
-                        <User size={24} className="text-sketch-blue" />
+                        <User size={24} className="text-neon-blue" />
                       )}
                     </div>
                     <div>
-                      <h4 className="font-semibold handwritten text-sketch-green">
+                      <h4 className="font-semibold font-vt323 text-neon-blue tracking-wide text-lg">
                         {review.name}
                       </h4>
                       {review.email && (
-                        <p className="text-sm text-foreground/60">
+                        <p className="text-xs text-foreground/50 font-orbitron tracking-wider">
                           {review.email}
                         </p>
                       )}
@@ -221,15 +221,15 @@ export default function Reviews() {
             viewport={{ once: true }}
             className="text-center space-y-6"
           >
-            <p className="text-foreground/60">
-              Want to see more reviews or share your own experience?
+            <p className="text-neon-blue/60 font-vt323 text-xl">
+              &gt; WANT TO SEE MORE REVIEWS OR SHARE YOUR OWN EXPERIENCE?
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/reviews">
                 <motion.div
-                  whileHover={{ y: -2, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center space-x-2 px-6 py-3 bg-sketch-blue text-white rounded-lg font-medium sketch-hover transition-all duration-200"
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 15px var(--neon-blue)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center space-x-2 px-6 py-3 border border-neon-blue text-neon-blue hover:bg-neon-blue hover:text-black transition-all duration-200 font-orbitron tracking-wider uppercase cursor-pointer"
                 >
                   <span>See All Reviews</span>
                   <ArrowRight size={18} />
@@ -237,9 +237,9 @@ export default function Reviews() {
               </Link>
               <motion.button
                 onClick={() => setIsFormOpen(true)}
-                whileHover={{ y: -2, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center px-6 py-3 bg-sketch-green text-white rounded-lg font-medium sketch-hover transition-all duration-200"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 15px var(--neon-pink)" }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center px-6 py-3 border border-neon-pink text-neon-pink hover:bg-neon-pink hover:text-black transition-all duration-200 font-orbitron tracking-wider uppercase"
               >
                 Share Your Experience
               </motion.button>
