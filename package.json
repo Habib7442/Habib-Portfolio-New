@@ -16,7 +16,7 @@
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.536.0",
     "mini-svg-data-uri": "^1.4.4",
-    "next": "15.4.5",
+    "next": "^16.0.7",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "simplex-noise": "^4.0.3",
