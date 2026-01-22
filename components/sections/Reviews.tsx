@@ -165,7 +165,7 @@ export default function Reviews() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-black/40 border border-neon-blue/30 p-6 relative hover:border-neon-pink/50 transition-colors group"
+                className="bg-black/40 border border-neon-blue/30 p-6 relative hover:border-neon-pink/50 transition-colors group flex flex-col h-full"
               >
                 {/* Quote Icon */}
                 <div className="absolute top-4 right-4 text-neon-blue/20 group-hover:text-neon-pink/20 transition-colors">
@@ -173,14 +173,14 @@ export default function Reviews() {
                 </div>
 
                 {/* Review Content */}
-                <div className="space-y-4">
+                <div className="space-y-4 flex-1 flex flex-col">
                   {/* Stars */}
                   <div className="flex items-center space-x-1">
                     {renderStars(review.stars)}
                   </div>
 
                   {/* Review Text */}
-                  <p className="text-foreground/80 leading-relaxed font-rajdhani min-h-[100px]">
+                  <p className="text-foreground/80 leading-relaxed font-rajdhani italic flex-1">
                     "{review.review}"
                   </p>
 
@@ -197,12 +197,12 @@ export default function Reviews() {
                         <User size={24} className="text-neon-blue" />
                       )}
                     </div>
-                    <div>
-                      <h4 className="font-semibold font-vt323 text-neon-blue tracking-wide text-lg">
+                    <div className="min-w-0">
+                      <h4 className="font-semibold font-vt323 text-neon-blue tracking-wide text-lg truncate" title={review.name}>
                         {review.name}
                       </h4>
                       {review.email && (
-                        <p className="text-xs text-foreground/50 font-orbitron tracking-wider">
+                        <p className="text-[10px] text-foreground/50 font-orbitron tracking-tight truncate" title={review.email}>
                           {review.email}
                         </p>
                       )}

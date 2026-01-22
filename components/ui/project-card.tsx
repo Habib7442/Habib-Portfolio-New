@@ -75,8 +75,9 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
               src={project.image}
               alt={project.title}
               fill
-              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+              className="object-cover transition-all duration-500"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              quality={100}
             />
             {/* Scanline overlay for image */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none" />
@@ -119,8 +120,8 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
         <div className="p-6 space-y-4">
         {/* Header */}
         <div className="space-y-2">
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="text-xl font-bold font-orbitron text-foreground group-hover:text-neon-blue transition-colors flex-1 min-w-0 tracking-wide">
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-xl font-bold font-orbitron text-foreground group-hover:text-neon-blue transition-colors flex-1 min-w-0 truncate tracking-wide" title={project.title}>
               {project.title}
             </h3>
             <Badge 

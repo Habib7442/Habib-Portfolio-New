@@ -28,8 +28,6 @@ export default function Projects() {
     });
   }, [selectedCategory, selectedStatus]);
 
-  // Get featured projects for carousel
-  const featuredProjects = data.projects.filter(project => project.featured);
 
   const categories = data.categories;
   const statuses = ['Completed', 'In Progress', 'Planning'];
@@ -56,46 +54,6 @@ export default function Projects() {
             </p>
           </motion.div>
 
-          {/* Featured Projects Carousel */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
-            <div className="text-center">
-              <h3 className="text-2xl font-semibold font-orbitron text-neon-yellow mb-4 tracking-wider">
-                &lt;FEATURED_PROJECTS&gt;
-              </h3>
-              <p className="text-foreground/60 font-vt323 text-xl">
-                // Highlighting some of my best work
-              </p>
-            </div>
-            
-            {/* Placeholder for carousel - will be replaced with actual images */}
-            <div className="bg-black/60 border border-neon-blue/50 rounded-none p-8 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-0 bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20" />
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent opacity-50" />
-              
-              <div className="text-center space-y-4 relative z-10">
-                <div className="text-6xl animate-pulse">🚀</div>
-                <h4 className="text-xl font-semibold font-vt323 text-neon-pink tracking-widest">SYSTEM_STATUS: LOADING_CAROUSEL...</h4>
-                <p className="text-foreground/60 font-rajdhani">
-                  Interactive carousel showcasing featured projects will be displayed here
-                </p>
-                <div className="flex justify-center space-x-4">
-                  {featuredProjects.slice(0, 3).map((project, index) => (
-                    <div key={project.id} className="w-16 h-16 border border-neon-blue/30 bg-neon-blue/5 flex items-center justify-center hover:border-neon-pink hover:bg-neon-pink/10 transition-all cursor-pointer">
-                      <span className="text-sm font-bold font-vt323 text-neon-blue">
-                        {project.title.split(' ').map(word => word[0]).join('').slice(0, 2)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
 
           {/* Filters and View Toggle */}
           <motion.div
@@ -209,56 +167,7 @@ export default function Projects() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.4 }}
             viewport={{ once: true }}
           >
-            {/* Special display for AI Designing and Ads */}
-            {selectedCategory === 'AI Designing and Ads' ? (
-              <div className="space-y-12">
-                {filteredProjects.map((project, index) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="space-y-6"
-                  >
-                    <h3 className="text-3xl font-bold font-orbitron text-neon-blue text-center tracking-widest">
-                      {project.title}
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr">
-                      {project.images.map((imagePath, imgIndex) => {
-                        const isVideo = imagePath.endsWith('.mp4');
-                        return (
-                          <motion.div
-                            key={imgIndex}
-                            whileHover={{ scale: 1.02, borderColor: "var(--neon-pink)" }}
-                            transition={{ duration: 0.3 }}
-                            className="relative w-full h-80 overflow-hidden border border-neon-blue/30 bg-black/50 shadow-lg group"
-                          >
-                            {isVideo ? (
-                              <video
-                                src={imagePath}
-                                className="w-full h-full object-cover"
-                                controls
-                                preload="metadata"
-                              />
-                            ) : (
-                              <Image
-                                src={imagePath}
-                                alt={`${project.title} - Image ${imgIndex + 1}`}
-                                fill
-                                className="object-contain hover:object-cover transition-all duration-300"
-                                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                              />
-                            )}
-                            <div className="absolute inset-0 bg-neon-blue/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                          </motion.div>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            ) : viewMode === 'bento' ? (
+            {viewMode === 'bento' ? (
               <BentoGrid className="max-w-5xl mx-auto">
                 {filteredProjects.map((project, index) => (
                   <BentoGridItem
@@ -271,8 +180,9 @@ export default function Projects() {
                           src={project.image}
                           alt={project.title}
                           fill
-                          className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                          className="object-cover transition-all duration-500"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          quality={100}
                         />
                         <div className="absolute inset-0 bg-neon-blue/10 mix-blend-overlay" />
                       </BentoGridHeader>

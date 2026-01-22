@@ -88,8 +88,9 @@ export default function Hero() {
                     src={personalInfo.avatar}
                     alt={personalInfo.name}
                     fill
-                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                    className="object-cover transition-all duration-300"
                     priority
+                    quality={100}
                   />
                 </motion.div>
               </div>
@@ -119,7 +120,7 @@ export default function Hero() {
                     rel="noopener noreferrer"
                     className="text-neon-blue hover:text-neon-pink transition-colors duration-200 hover:underline decoration-neon-pink underline-offset-4"
                   >
-                    axomprep.com
+                    axomprep.in
                   </a>
                 </p>
                 <p className="text-lg text-neon-yellow font-rajdhani font-medium">

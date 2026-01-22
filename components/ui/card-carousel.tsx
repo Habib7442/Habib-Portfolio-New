@@ -120,6 +120,7 @@ export const CardCarousel: React.FC<CarouselProps> = ({
                         height={500}
                         className="size-full rounded-xl"
                         alt={image.alt}
+                        quality={100}
                       />
                     </div>
                   </SwiperSlide>
@@ -133,6 +134,7 @@ export const CardCarousel: React.FC<CarouselProps> = ({
                         height={200}
                         className="size-full rounded-xl"
                         alt={image.alt}
+                        quality={100}
                       />
                     </div>
                   </SwiperSlide>
