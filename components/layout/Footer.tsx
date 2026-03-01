@@ -77,7 +77,14 @@ export default function Footer() {
                   onClick={() => {
                     const element = document.getElementById(item.toLowerCase());
                     if (element) {
-                      element.scrollIntoView({ behavior: 'smooth' });
+                      const headerHeight = 80;
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                      });
                     }
                   }}
                   className="block text-foreground/70 transition-colors duration-200 font-vt323 text-lg uppercase tracking-wide text-left"

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Star, Quote, User, Filter, Search, Plus } from 'lucide-react';
 import Container from '@/components/layout/Container';
@@ -356,10 +357,14 @@ export default function AllReviews() {
                       <div className="flex items-center space-x-3 pt-4 border-t border-notebook-line">
                         <div className="w-12 h-12 rounded-full overflow-hidden bg-sketch-blue/10 flex items-center justify-center flex-shrink-0">
                           {review.imgurl ? (
-                            <img
+                            <Image
                               src={review.imgurl}
                               alt={review.name}
+                              width={48}
+                              height={48}
                               className="w-full h-full object-cover rounded-full"
+                              quality={100}
+                              unoptimized
                             />
                           ) : (
                             <User size={24} className="text-sketch-blue" />

@@ -76,8 +76,10 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
               alt={project.title}
               fill
               className="object-cover transition-all duration-500"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="100vw"
               quality={100}
+              priority
+              unoptimized
             />
             {/* Scanline overlay for image */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none" />

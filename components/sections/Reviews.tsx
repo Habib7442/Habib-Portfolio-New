@@ -6,6 +6,7 @@ import { Star, Quote, User, ArrowRight, Terminal } from 'lucide-react';
 import Link from 'next/link';
 import Container from '@/components/layout/Container';
 import ReviewFormDialog from '@/components/ui/review-form-dialog';
+import Image from 'next/image';
 import { Review } from '@/types/review';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
@@ -188,10 +189,14 @@ export default function Reviews() {
                   <div className="flex items-center space-x-3 pt-4 border-t border-white/10">
                     <div className="w-12 h-12 rounded-none border border-neon-blue/50 overflow-hidden bg-black/50 flex items-center justify-center flex-shrink-0">
                       {review.imgurl ? (
-                        <img
+                        <Image
                           src={review.imgurl}
                           alt={review.name}
+                          width={48}
+                          height={48}
                           className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
+                          quality={100}
+                          unoptimized
                         />
                       ) : (
                         <User size={24} className="text-neon-blue" />

@@ -119,44 +119,13 @@ export default function Projects() {
               </div>
             </div>
 
-            {/* View Mode Toggle */}
+            {/* View Mode Toggle - Only keeping Bento as per user request */}
             <div className="flex items-center space-x-2 bg-black/40 border border-white/10 p-1 self-end lg:self-center">
-              <motion.button
-                onClick={() => setViewMode('bento')}
-                whileTap={{ scale: 0.95 }}
-                className={cn(
-                  "p-2 transition-all duration-200 rounded-none",
-                  viewMode === 'bento'
-                    ? "bg-neon-blue/20 text-neon-blue shadow-[0_0_5px_rgba(0,255,255,0.3)]"
-                    : "text-foreground/40 hover:text-foreground"
-                )}
+              <div
+                className="p-2 transition-all duration-200 rounded-none bg-neon-blue/20 text-neon-blue shadow-[0_0_5px_rgba(0,255,255,0.3)]"
               >
                 <LayoutGrid size={18} />
-              </motion.button>
-              <motion.button
-                onClick={() => setViewMode('grid')}
-                whileTap={{ scale: 0.95 }}
-                className={cn(
-                  "p-2 transition-all duration-200 rounded-none",
-                  viewMode === 'grid'
-                    ? "bg-neon-blue/20 text-neon-blue shadow-[0_0_5px_rgba(0,255,255,0.3)]"
-                    : "text-foreground/40 hover:text-foreground"
-                )}
-              >
-                <Grid size={18} />
-              </motion.button>
-              <motion.button
-                onClick={() => setViewMode('carousel')}
-                whileTap={{ scale: 0.95 }}
-                className={cn(
-                  "p-2 transition-all duration-200 rounded-none",
-                  viewMode === 'carousel'
-                    ? "bg-neon-blue/20 text-neon-blue shadow-[0_0_5px_rgba(0,255,255,0.3)]"
-                    : "text-foreground/40 hover:text-foreground"
-                )}
-              >
-                <List size={18} />
-              </motion.button>
+              </div>
             </div>
           </motion.div>
 
@@ -181,14 +150,16 @@ export default function Projects() {
                           alt={project.title}
                           fill
                           className="object-cover transition-all duration-500"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          sizes="100vw"
                           quality={100}
+                          priority
+                          unoptimized
                         />
                         <div className="absolute inset-0 bg-neon-blue/10 mix-blend-overlay" />
                       </BentoGridHeader>
                     }
                     className={cn(
-                      index === 0 || index === 3 || index === 6 ? "md:col-span-2" : "",
+                      "md:col-span-3",
                       project.featured ? "md:row-span-2" : "",
                       "bg-black/40 border-neon-blue/30 hover:border-neon-pink/50 transition-colors"
                     )}

@@ -43,17 +43,28 @@ export default function Header() {
   }, []);
 
   const handleNavigation = (href: string, isExternal?: boolean) => {
+    setIsOpen(false);
+    
     if (isExternal) {
-      // For external links, use Next.js router
       window.location.href = href;
     } else {
-      // For internal sections, scroll to element
-      const element = document.getElementById(href.substring(1));
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      const targetId = href.substring(1);
+      
+      // Small delay to let the menu close state update
+      setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          const headerHeight = 80; // h-20 = 80px
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 10);
     }
-    setIsOpen(false);
   };
 
   return (

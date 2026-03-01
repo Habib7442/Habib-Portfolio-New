@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, Upload, User, Send, Terminal } from 'lucide-react';
 import { db } from '@/lib/firebase';
@@ -192,10 +193,14 @@ export default function ReviewFormDialog({ isOpen, onClose }: ReviewFormDialogPr
               <div className="text-center">
                 <div className="w-20 h-20 rounded-full overflow-hidden bg-black/50 border border-neon-blue/30 flex items-center justify-center mx-auto mb-3 group relative">
                   {imagePreview ? (
-                    <img
+                    <Image
                       src={imagePreview}
                       alt="Preview"
+                      width={80}
+                      height={80}
                       className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                      quality={100}
+                      unoptimized
                     />
                   ) : (
                     <User size={32} className="text-neon-blue" />

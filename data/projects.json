@@ -3,40 +3,41 @@
     {
       "id": "1",
       "title": "ImageStudioLab",
-      "description": "Premium AI Infographics Generator built with Next.js and Gemini 2.5 Flash. Transform complex ideas into high-converting, professional vertical infographics in seconds.",
-      "longDescription": "ImageStudioLab is a state-of-the-art AI Infographics Generator that simplifies complex data and product cataloging into viral, high-converting visual content. Powered by Google's Gemini 2.5 Flash, it offers specialized modes like Topic to Visual and Product Showcase. The platform is designed for creators and businesses who need professional-grade infographics without design skills, featuring a privacy-first architecture, daily credit system, and instant high-resolution exports optimized for all social platforms.",
+      "description": "AI-native design platform for high-end luxury brands and e-commerce. Scale your brand identity with high-fidelity visual generation and identity preservation.",
+      "longDescription": "ImageStudioLab is a professional, AI-native design platform engineered specifically for luxury brands and e-commerce teams. Powered by the proprietary 'Nano Banana 2' engine, it delivers high-fidelity visual generation with strict identity preservation. The platform streamlines marketing workflows with 'One Asset. Every Format' bulk exports, AI Reel templates for high-energy video montages, and specialized luxury brand grading to meet the highest aesthetic standards.",
       "image": "/projects/imagestudiolab.png",
       "images": ["/projects/imagestudiolab.png"],
       "technologies": [
         "Next.js",
         "TypeScript",
+        "Nano Banana 2 Engine",
+        "Identity Preservation AI",
+        "High-Fidelity Rendering",
+        "Bulk Campaign Export",
+        "Luxury Brand Grading",
         "Gemini 2.5 Flash",
-        "AI Infographics",
-        "Privacy-First Design",
-        "Credit System",
-        "Vector Graphics",
         "Vercel"
       ],
       "category": "Web Development",
       "status": "Completed",
       "featured": true,
       "githubUrl": "https://github.com/Habib7442/image-studio",
-      "liveUrl": "https://www.imagestudiolab.com/",
+      "liveUrl": "https://design.imagestudiolab.com/",
       "startDate": "2024-09-01",
       "endDate": "2024-12-15",
       "client": "Personal Project",
       "role": "Full Stack Developer",
       "challenges": [
-        "Integrating Google's Gemini 2.5 Flash for complex layout generation",
-        "Implementing automated infographic layout styles",
-        "Ensuring high-resolution output for social platforms",
-        "Building a robust credit-based subscription model"
+        "Building proprietary AI engine for brand identity preservation",
+        "Implementing high-fidelity rendering for luxury brand standards",
+        "Developing 'One Asset. Every Format' automated export workflow",
+        "Creating AI Reel templates for high-energy video montages"
       ],
       "achievements": [
-        "Developed a specialized AI Infographics generation engine",
-        "Achieved near-instant generation of professional-grade visuals",
-        "Implemented intuitive 'Topic to Visual' conversion workflow",
-        "Created a privacy-focused platform with secure user data handling"
+        "Developed an AI platform tailored for the luxury e-commerce market",
+        "Engineered 'Nano Banana 2' engine for superior visual consistency",
+        "Automated the creation of multi-format marketing campaigns",
+        "Integrated pixel-perfect sync and golden-ratio composition principles"
       ]
     },
     {
@@ -79,43 +80,6 @@
       ]
     },
     {
-      "id": "3",
-      "title": "IntegratePDF",
-      "description": "A comprehensive PDF management platform built with Next.js and TypeScript. Features include PDF processing, document workflows, and integration capabilities with various services.",
-      "longDescription": "IntegratePDF is a powerful PDF workflow automation tool that streamlines document processing. It includes features for PDF manipulation, automated workflows, Google Sheets integration, and webhook support for seamless document management.",
-      "image": "/projects/integrate-pdf.png",
-      "images": ["/projects/integrate-pdf.png"],
-      "technologies": [
-        "Next.js",
-        "TypeScript",
-        "Supabase",
-        "PostgreSQL",
-        "Sentry",
-        "Google Sheets API",
-        "Webhooks",
-        "Vercel"
-      ],
-      "category": "Web Development",
-      "status": "Completed",
-      "featured": true,
-      "githubUrl": "https://github.com/Habib7442/integratePDF",
-      "liveUrl": "https://www.integratepdf.com/",
-      "startDate": "2024-06-01",
-      "endDate": "2024-08-04",
-      "client": "Personal Project",
-      "role": "Full Stack Developer",
-      "challenges": [
-        "Implementing complex PDF processing workflows",
-        "Integrating multiple third-party services",
-        "Ensuring data security and privacy"
-      ],
-      "achievements": [
-        "Built comprehensive PDF automation system",
-        "Integrated Google Sheets for data management",
-        "Implemented robust error tracking with Sentry"
-      ]
-    },
-    {
       "id": "4",
       "title": "KlickTape",
       "description": "A modern mobile application built with React Native and Expo. Features cross-platform compatibility, real-time functionality, and seamless user experience across iOS and Android.",
@@ -154,18 +118,19 @@
     },
     {
       "id": "5",
-      "title": "AxomPrep (BrainSprint)",
-      "description": "AI-powered cognitive engine for competitive exam preparation. Master Quantitative, Reasoning, and English with live speed tracking and real-time PvP study rooms.",
-      "longDescription": "AxomPrep (BrainSprint) is an ultra-fast cognitive training platform designed for competitive exam aspirants. It features AI-powered question generation, real-time speed drift tracking, and a unique PvP Study Room system where users can compete in real-time. The platform includes a Performance Radar that scans session history to detect weak points and conceptual gaps, a global leaderboard with XP multipliers, and advanced formula analysis.",
+      "title": "AxomPrep",
+      "description": "Smartest AI Study Companion for SEBA and AHSEC board exams. Create personalized Pocket Coaches in native Assamese and English for 24/7 learning.",
+      "longDescription": "AxomPrep is an AI-driven educational platform designed to transform study habits for students in Assam. It features 'Pocket Coaches' that provide hands-free, real-time voice conversations natively in Assamese and English. Students can create specialized AI coaches for any subject, access smart knowledge quizzes, and listen to educational audio stories. The platform is deeply integrated with the SEBA and AHSEC board curriculum, offering instant doubt solving and personalized coaching optimized for the 2026 board exam cycle.",
       "image": "/projects/axomprep.png",
       "images": ["/projects/axomprep.png"],
       "technologies": [
         "Next.js",
         "TypeScript",
-        "AI Topic Generation",
-        "Real-time PvP",
-        "Performance Radar",
-        "Tailwind CSS",
+        "Google Gemini AI",
+        "Native Assamese NLP",
+        "AI Voice Synthesis",
+        "Real-time Audio Processing",
+        "Adaptive Quiz Engine",
         "Supabase",
         "Vercel"
       ],
@@ -179,16 +144,16 @@
       "client": "Personal Project",
       "role": "Full Stack Developer",
       "challenges": [
-        "Implementing real-time PvP study rooms",
-        "Building AI-powered question generation engine",
-        "Developing performance radar for weak point detection",
-        "Optimizing for low-latency speed tracking"
+        "Implementing real-time AI voice synthesis in native Assamese",
+        "Building an adaptive knowledge quiz engine tailored to SEBA/AHSEC boards",
+        "Fine-tuning NLP models for regional language accuracy and context",
+        "Developing hands-free voice interaction for a 'Pocket Coach' experience"
       ],
       "achievements": [
-        "Created a comprehensive cognitive training platform",
-        "Implemented real-time competitive features for students",
-        "Developed advanced performance analytics with AI",
-        "Built a scalable architecture for thousands of concurrent users"
+        "Launched the first AI-driven study companion for students in Assam",
+        "Successfully integrated native Assamese language support with Google Gemini",
+        "Developed a scalable 'Prep Pass' premium subscription model",
+        "Created a specialized audio story and podcast system for academic English"
       ]
     },
     {
@@ -254,10 +219,15 @@
     "HealthKit",
     "Google Fit",
     "Stripe",
-    "AI Infographics",
-    "Vector Graphics",
-    "AI Topic Generation",
-    "Real-time PvP",
-    "Performance Radar"
+    "Nano Banana 2 Engine",
+    "Identity Preservation AI",
+    "High-Fidelity Rendering",
+    "Bulk Campaign Export",
+    "Luxury Brand Grading",
+    "Google Gemini AI",
+    "Native Assamese NLP",
+    "AI Voice Synthesis",
+    "Real-time Audio Processing",
+    "Adaptive Quiz Engine"
   ]
 }

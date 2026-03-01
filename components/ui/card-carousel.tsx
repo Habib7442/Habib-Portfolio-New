@@ -116,25 +116,13 @@ export const CardCarousel: React.FC<CarouselProps> = ({
                     <div className="size-full rounded-3xl">
                       <Image
                         src={image.src}
-                        width={500}
-                        height={500}
+                        width={800}
+                        height={800}
                         className="size-full rounded-xl"
                         alt={image.alt}
                         quality={100}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-                {images.map((image, index) => (
-                  <SwiperSlide key={index}>
-                    <div className="size-full rounded-3xl">
-                      <Image
-                        src={image.src}
-                        width={200}
-                        height={200}
-                        className="size-full rounded-xl"
-                        alt={image.alt}
-                        quality={100}
+                        priority={index === 0}
+                        unoptimized
                       />
                     </div>
                   </SwiperSlide>

@@ -19,8 +19,13 @@ const personalInfo = {
   products: [
     {
       name: 'ImageStudioLab',
-      url: 'https://www.imagestudiolab.com/',
-      description: 'AI-Powered Image Studio'
+      url: 'https://design.imagestudiolab.com/',
+      description: 'AI-native luxury design platform'
+    },
+    {
+      name: 'AxomPrep',
+      url: 'https://www.axomprep.in/',
+      description: 'AI-native study companion for Assam'
     },
     {
       name: 'Link4Coders',
@@ -41,7 +46,14 @@ export default function Hero() {
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const headerHeight = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
