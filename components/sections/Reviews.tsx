@@ -1,263 +1,116 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Star, Quote, User, ArrowRight, Terminal } from 'lucide-react';
-import Link from 'next/link';
-import Container from '@/components/layout/Container';
-import ReviewFormDialog from '@/components/ui/review-form-dialog';
-import Image from 'next/image';
-import { Review } from '@/types/review';
-import { db } from '@/lib/firebase';
-import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
+import { motion } from "framer-motion";
+import { Star } from "lucide-react";
 
-export default function Reviews() {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [isFormOpen, setIsFormOpen] = useState(false);
+export default function Reviews({ testimonials: dbTestimonials }: { testimonials?: any[] }) {
+  const fallbackTestimonials = [
+    {
+      client_name: "Marcus Aurelius",
+      role: "CEO at StoicLabs",
+      review: "Habib delivered a product that didn't just meet our specs—it redefined them. His attention to detail and aesthetic sensibility is top-tier. A true 10x developer.",
+      rating: 5,
+    },
+    {
+      client_name: "Elena Rodriguez",
+      role: "Founder, Flerid",
+      review: "Working with Habib has been transformative. He brings a rare combination of robust backend engineering and pixel-perfect frontend execution to the table.",
+      rating: 5,
+    },
+    {
+      client_name: "David Chen",
+      role: "CTO, NextGen Agency",
+      review: "Finding full-stack developers who actually care about user experience is rare. Habib perfectly balances performance, architecture, and beautiful, fluid design.",
+      rating: 5,
+    },
+    {
+      client_name: "Sophia Sterling",
+      role: "Head of Product, Vercast",
+      review: "His code is clean, his UI is gorgeous, and he communicates like a true professional. Worth every penny and more. Highly recommended for complex builds.",
+      rating: 5,
+    },
+    {
+      client_name: "James Thorne",
+      role: "Director, Axonic",
+      review: "Absolutely blew us away with the mobile app delivery. Smooth, fast, and gorgeous interface. Habib is an exceptionally gifted engineer.",
+      rating: 5,
+    },
+  ];
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        // Check if Firebase is configured
-        const isFirebaseConfigured = process.env.NEXT_PUBLIC_PROJECT_ID && 
-                                   process.env.NEXT_PUBLIC_API_KEY;
-
-        if (!isFirebaseConfigured) {
-          console.log('Firebase not configured, using mock data');
-          // Mock data for development
-          setReviews([
-            {
-              id: '1',
-              name: 'Dwipshikha Lodh',
-              email: 'lodhdwipshikha@gmail.com',
-              imgurl: 'https://firebasestorage.googleapis.com/v0/b/the-digital-diary.appspot.com/o/portfolio-images%2F16989105311196.jfif%3Ftoken%3Db0dfe73b-f629-4ba5-9a05-0022e89bc1a0',
-              review: 'Habib has an in-depth knowledge of the technologies he has mentioned here which also gets reflects through his work for sure & his work always reflects the passion he has in the field of development.',
-              stars: 5
-            },
-            {
-              id: '2',
-              name: 'Chinmoy Kumar Swain',
-              email: 'chinmoy@omnisiv.com',
-              imgurl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-              review: 'Habib has an in-depth understanding of web development and has a stronghold in design and aesthetics, which makes him one of the finest web developer I have worked with. Apart from his excellent tech skills, his determination and creativity is something to admire.',
-              stars: 5
-            },
-            {
-              id: '3',
-              name: 'Ashadul Islam',
-              email: 'ashadulmjh@gmail.com',
-              imgurl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
-              review: "Habib's portfolio is an absolute marvel! It presents a captivating collection of projects that highlights his exceptional skills and creativity. The design is visually stunning, capturing attention and leaving a lasting impression. A true testament to Habib's talent and expertise.",
-              stars: 4
-            }
-          ]);
-          setLoading(false);
-          return;
-        }
-
-        // Fetch from Firebase (limit to top 6 for home page)
-        const reviewsRef = collection(db, 'portfolio-reviews');
-        const q = query(reviewsRef, orderBy('stars', 'desc'), limit(6));
-        const querySnapshot = await getDocs(q);
-        
-        const fetchedReviews: Review[] = [];
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          fetchedReviews.push({
-            id: doc.id,
-            name: data.name || 'Anonymous',
-            email: data.email || '',
-            imgurl: data.imgurl || '',
-            review: data.review || '',
-            stars: Number(data.stars) || 5,
-            timestamp: data.timestamp
-          });
-        });
-
-        setReviews(fetchedReviews);
-      } catch (err) {
-        console.error('Error fetching reviews:', err);
-        setError('Failed to load reviews');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchReviews();
-  }, []);
-
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, index) => (
-      <Star
-        key={index}
-        size={16}
-        className={`${
-          index < rating 
-            ? 'text-neon-yellow fill-neon-yellow drop-shadow-[0_0_5px_rgba(255,255,0,0.5)]' 
-            : 'text-gray-600'
-        }`}
-      />
-    ));
-  };
-
-  if (loading) {
-    return (
-      <section id="reviews" className="py-20 bg-background">
-        <Container>
-          <div className="text-center">
-            <div className="animate-pulse">
-              <div className="h-8 bg-neon-blue/20 rounded w-48 mx-auto mb-4"></div>
-              <div className="h-4 bg-neon-blue/10 rounded w-96 mx-auto"></div>
-            </div>
-          </div>
-        </Container>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section id="reviews" className="py-20 bg-background">
-        <Container>
-          <div className="text-center text-red-500 font-vt323 text-xl">
-            <p>ERROR: {error}</p>
-          </div>
-        </Container>
-      </section>
-    );
-  }
-
-  if (reviews.length === 0) {
-    return null; // Don't render section if no reviews
-  }
+  const displayTestimonials = (dbTestimonials && dbTestimonials.length > 0) ? dbTestimonials : fallbackTestimonials;
+  const colors = ["bg-[#F472B6]", "bg-[#67E8F9]", "bg-[#FDE047]", "bg-[#BBF7D0]", "bg-[#C084FC]"];
 
   return (
-    <section id="reviews" className="py-20 relative">
-      <Container>
-        <div className="space-y-16">
-          {/* Section Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            viewport={{ once: true }}
-            className="text-center space-y-4"
-          >
-            <h2 className="text-4xl md:text-6xl font-bold font-orbitron text-neon-blue tracking-widest uppercase glitch" data-text="Client Reviews">
-              Client Reviews
-            </h2>
-            <div className="w-32 h-1 bg-neon-blue mx-auto shadow-[0_0_10px_var(--neon-blue)]" />
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto font-rajdhani">
-              What my clients say about working with me. Here are some of the top reviews from satisfied clients.
-            </p>
-          </motion.div>
-
-          {/* Reviews Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {reviews.map((review, index) => (
-              <motion.div
-                key={review.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-black/40 border border-neon-blue/30 p-6 relative hover:border-neon-pink/50 transition-colors group flex flex-col h-full"
-              >
-                {/* Quote Icon */}
-                <div className="absolute top-4 right-4 text-neon-blue/20 group-hover:text-neon-pink/20 transition-colors">
-                  <Quote size={32} />
-                </div>
-
-                {/* Review Content */}
-                <div className="space-y-4 flex-1 flex flex-col">
-                  {/* Stars */}
-                  <div className="flex items-center space-x-1">
-                    {renderStars(review.stars)}
-                  </div>
-
-                  {/* Review Text */}
-                  <p className="text-foreground/80 leading-relaxed font-rajdhani italic flex-1">
-                    "{review.review}"
-                  </p>
-
-                  {/* Reviewer Info */}
-                  <div className="flex items-center space-x-3 pt-4 border-t border-white/10">
-                    <div className="w-12 h-12 rounded-none border border-neon-blue/50 overflow-hidden bg-black/50 flex items-center justify-center flex-shrink-0">
-                      {review.imgurl ? (
-                        <Image
-                          src={review.imgurl}
-                          alt={review.name}
-                          width={48}
-                          height={48}
-                          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
-                          quality={100}
-                          unoptimized
-                        />
-                      ) : (
-                        <User size={24} className="text-neon-blue" />
-                      )}
-                    </div>
-                    <div className="min-w-0">
-                      <h4 className="font-semibold font-vt323 text-neon-blue tracking-wide text-lg truncate" title={review.name}>
-                        {review.name}
-                      </h4>
-                      {review.email && (
-                        <p className="text-[10px] text-foreground/50 font-orbitron tracking-tight truncate" title={review.email}>
-                          {review.email}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Call to Action */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center space-y-6"
-          >
-            <p className="text-neon-blue/60 font-vt323 text-xl">
-              &gt; WANT TO SEE MORE REVIEWS OR SHARE YOUR OWN EXPERIENCE?
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/reviews">
-                <motion.div
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 15px var(--neon-blue)" }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center space-x-2 px-6 py-3 border border-neon-blue text-neon-blue hover:bg-neon-blue hover:text-black transition-all duration-200 font-orbitron tracking-wider uppercase cursor-pointer"
-                >
-                  <span>See All Reviews</span>
-                  <ArrowRight size={18} />
-                </motion.div>
-              </Link>
-              <motion.button
-                onClick={() => setIsFormOpen(true)}
-                whileHover={{ scale: 1.05, boxShadow: "0 0 15px var(--neon-pink)" }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center px-6 py-3 border border-neon-pink text-neon-pink hover:bg-neon-pink hover:text-black transition-all duration-200 font-orbitron tracking-wider uppercase"
-              >
-                Share Your Experience
-              </motion.button>
-            </div>
-          </motion.div>
+    <section id="reviews" className="py-32 bg-[#FDFBF7] relative z-20 overflow-hidden border-t-2 border-black">
+      <div className="container mx-auto px-6 md:px-12 mb-16 relative">
+        <h2 className="text-4xl md:text-6xl font-syne font-bold text-[#111] mb-4 uppercase tracking-tighter z-10 relative">What Clients Say</h2>
+        <div className="w-32 h-[4px] bg-[#9333EA] shadow-[2px_2px_0px_#000] rotate-[-2deg]" />
+        
+        {/* Decorative elements */}
+        <div className="absolute right-10 top-0 text-5xl md:text-7xl opacity-80 rotate-[15deg] pointer-events-none drop-shadow-[4px_4px_0px_#111]">
+          💬
         </div>
-      </Container>
+      </div>
 
-      {/* Review Form Dialog */}
-      <ReviewFormDialog
-        isOpen={isFormOpen}
-        onClose={() => setIsFormOpen(false)}
-      />
+      <div className="relative flex overflow-hidden w-full py-8 group">
+        <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-[#FDFBF7] to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-[#FDFBF7] to-transparent z-10 pointer-events-none" />
+        
+        <motion.div
+           animate={displayTestimonials.length >= 4 ? { x: ["0%", "-50%"] } : { x: "0%" }}
+           transition={{
+             duration: 40,
+             repeat: Infinity,
+             ease: "linear",
+             repeatType: "loop",
+           }}
+           className={`flex gap-8 px-4 ${displayTestimonials.length >= 4 ? 'w-max group-hover:[animation-play-state:paused]' : 'w-full justify-center flex-wrap'}`}
+        >
+          {(displayTestimonials.length >= 4 ? [...displayTestimonials, ...displayTestimonials] : displayTestimonials).map((testimonial, idx) => {
+            const themeColor = colors[idx % colors.length];
+            return (
+              <div
+                key={idx}
+                className={`flex-shrink-0 w-[280px] sm:w-[400px] md:w-[500px] bg-white border-3 border-black rounded-3xl p-8 shadow-[8px_8px_0px_#111] hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_#111] transition-all duration-300 relative overflow-hidden`}
+              >
+                <div className={`absolute top-0 right-0 w-24 h-24 ${themeColor} border-l-3 border-b-3 border-black rounded-bl-full opacity-30 pointer-events-none`}></div>
+                
+                <div className="flex text-[#FDE047] mb-6 drop-shadow-[2px_2px_0px_#111]">
+                  {[...Array(testimonial.rating || 5)].map((_, i) => (
+                    <Star key={i} size={24} fill="currentColor" strokeWidth={1} className="stroke-black" />
+                  ))}
+                </div>
+                <p className="font-inter text-[#222] text-lg leading-relaxed mb-8 italic relative z-10 font-bold whitespace-pre-wrap">
+                  "{testimonial.review}"
+                </p>
+                <div className="flex items-center gap-4 mt-auto">
+                  <div className={`w-14 h-14 rounded-full ${themeColor} flex items-center justify-center font-syne font-bold text-xl text-[#111] border-2 border-black shadow-[2px_2px_0px_#000]`}>
+                    {testimonial.client_name ? testimonial.client_name.charAt(0) : "A"}
+                  </div>
+                  <div>
+                    <h4 className="font-syne font-bold text-[#111] text-xl tracking-tighter">
+                      {testimonial.client_name}
+                    </h4>
+                    <p className="font-mono text-xs text-[#555] uppercase tracking-widest mt-1 font-bold">
+                      {testimonial.role || "Client"}
+                      {testimonial.company ? ` at ${testimonial.company}` : ""}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </motion.div>
+      </div>
+
+      <div className="container mx-auto px-6 md:px-12 mt-8 flex justify-center">
+        <a 
+          href="/leave-review" 
+          className="neo-btn text-[#111] font-bold py-3 px-8 shadow-[4px_4px_0px_#000] hover:shadow-[6px_6px_0px_#000] hover:-translate-y-1 hover:-translate-x-1 transition-all"
+        >
+          Leave a Review
+        </a>
+      </div>
     </section>
   );
 }

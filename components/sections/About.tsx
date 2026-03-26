@@ -1,211 +1,100 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Code, Palette, Zap, Heart, Coffee, Music, Cpu, Terminal } from 'lucide-react';
-import Container from '@/components/layout/Container';
-import { BackgroundGridSmall } from '@/components/ui/background-grid';
+import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
-const skills = [
-  {
-    category: 'Frontend_Module',
-    icon: Code,
-    color: 'text-neon-blue',
-    borderColor: 'border-neon-blue',
-    technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'JavaScript']
-  },
-  {
-    category: 'Mobile_Unit',
-    icon: Zap,
-    color: 'text-neon-yellow',
-    borderColor: 'border-neon-yellow',
-    technologies: ['React Native', 'Expo', 'NativeWind', 'Android', 'iOS']
-  },
-  {
-    category: 'Backend_Core',
-    icon: Palette,
-    color: 'text-neon-pink',
-    borderColor: 'border-neon-pink',
-    technologies: ['Supabase', 'PostgreSQL', 'Node.js', 'APIs', 'Webhooks']
-  }
-];
+const AnimatedCounter = ({ value, duration = 2 }: { value: number; duration?: number }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const [current, setCurrent] = useState(0);
 
-const interests = [
-  { name: 'Coffee.exe', icon: Coffee, color: 'text-amber-500' },
-  { name: 'Music.wav', icon: Music, color: 'text-purple-500' },
-  { name: 'OpenSource.git', icon: Heart, color: 'text-red-500' }
-];
+  useEffect(() => {
+    if (isInView) {
+      let start = 0;
+      const stepTime = Math.abs(Math.floor((duration * 1000) / value));
+      const timer = setInterval(() => {
+        start += 1;
+        setCurrent(start);
+        if (start === value) clearInterval(timer);
+      }, stepTime);
+      return () => clearInterval(timer);
+    }
+  }, [value, duration, isInView]);
 
-const aboutText = [
-  "Hello! I'm Habib Tanwir, a passionate frontend developer and mobile app developer based in India. I love creating dynamic and user-friendly web applications that provide exceptional user experiences.",
-  "My journey in web development started 3 years ago during my B.Tech studies. Since then, I've been constantly learning and evolving, mastering technologies like React, Next.js, React Native, and TypeScript.",
-  "I believe in writing clean, maintainable code and creating applications that solve real-world problems. Every project is an opportunity to learn something new and make a positive impact through technology.",
-  "When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or working on personal projects. I'm always excited to collaborate on interesting projects and connect with fellow developers!"
-];
+  return <span ref={ref}>{current}</span>;
+};
 
 export default function About() {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  const statColors = ["bg-[#F472B6]", "bg-[#67E8F9]", "bg-[#FDE047]", "bg-[#BBF7D0]"];
+
   return (
-    <section id="about" className="py-20 relative overflow-hidden">
-      <BackgroundGridSmall className="absolute inset-0 opacity-20" />
-      <Container className="relative z-10">
-        <div className="space-y-16">
-          {/* Section Header */}
+    <section id="about" className="py-32 bg-[#FDFBF7] relative z-10 border-t-2 border-black" ref={sectionRef}>
+      <div className="container mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            viewport={{ once: true }}
-            className="text-center space-y-4"
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <h2 className="text-4xl md:text-6xl font-bold font-orbitron text-neon-purple tracking-widest uppercase glitch" data-text="About Me">
-              About Me
+            <div className="mb-6 inline-block">
+               <span className="px-4 py-2 bg-[#FDE047] border-2 border-black shadow-[4px_4px_0px_#000] font-mono text-sm font-bold uppercase tracking-widest text-[#111] rotate-[-2deg] inline-block">
+                 About Me
+               </span>
+            </div>
+            
+            <h2 className="text-4xl md:text-6xl font-syne font-bold mb-8 text-[#111] leading-tight">
+              Building things <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9333EA] to-[#06B6D4] filter drop-shadow-[2px_2px_0px_#111]">
+                that matter.
+              </span>
             </h2>
-            <div className="w-32 h-1 bg-neon-purple mx-auto shadow-[0_0_10px_var(--neon-purple)]" />
-          </motion.div>
+            <p className="text-[#444] text-lg md:text-xl font-inter leading-relaxed mb-12 max-w-lg font-medium">
+              I'm a full stack developer who obsesses over the gap between good
+              enough and exceptional. From scalable web platforms to polished
+              mobile apps, I build products that work beautifully and feel even
+              better. Every pixel and line of code is an opportunity to craft a
+              category-defining digital experience.
+            </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            {/* Left Column - About Text */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <div className="bg-black/40 border border-neon-blue/30 p-6 relative rounded-none">
-                <div className="absolute top-0 left-0 bg-neon-blue/20 px-2 py-1 text-xs font-vt323 text-neon-blue">
-                  USER_BIO_LOG
-                </div>
-                {aboutText.map((paragraph, index) => (
-                  <motion.p
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.2, duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="text-lg text-foreground/80 leading-relaxed font-rajdhani mb-4 last:mb-0"
-                  >
-                    <span className="text-neon-blue mr-2">&gt;</span>
-                    {paragraph}
-                  </motion.p>
-                ))}
-              </div>
-
-              {/* Interests */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-                viewport={{ once: true }}
-                className="pt-6"
-              >
-                <h3 className="text-xl font-semibold font-orbitron text-neon-yellow mb-4 tracking-wider">
-                  &lt;THINGS_I_LOVE /&gt;
-                </h3>
-                <div className="flex flex-wrap gap-4">
-                  {interests.map((interest, index) => {
-                    const Icon = interest.icon;
-                    return (
-                      <motion.div
-                        key={interest.name}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1 + index * 0.1, duration: 0.4 }}
-                        viewport={{ once: true }}
-                        whileHover={{ y: -2, scale: 1.05 }}
-                        className="flex items-center space-x-2 px-4 py-2 bg-black/40 border border-white/10 hover:border-neon-yellow/50 transition-colors cursor-pointer group"
-                      >
-                        <Icon size={18} className={`${interest.color} group-hover:animate-pulse`} />
-                        <span className="font-medium font-vt323 text-lg tracking-wide">{interest.name}</span>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Right Column - Skills */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-              <h3 className="text-2xl font-semibold font-orbitron text-neon-pink tracking-widest uppercase">
-                System_Modules
-              </h3>
-
-              <div className="space-y-6">
-                {skills.map((skill, index) => {
-                  const Icon = skill.icon;
-                  return (
-                    <motion.div
-                      key={skill.category}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.2, duration: 0.6 }}
-                      viewport={{ once: true }}
-                      className={`p-6 bg-black/40 border ${skill.borderColor} border-opacity-30 hover:border-opacity-80 transition-all duration-300 relative group`}
-                    >
-                      {/* Corner accents */}
-                      <div className={`absolute top-0 right-0 w-2 h-2 ${skill.borderColor.replace('border', 'bg')} opacity-50`} />
-                      <div className={`absolute bottom-0 left-0 w-2 h-2 ${skill.borderColor.replace('border', 'bg')} opacity-50`} />
-                      
-                      <div className="flex items-center space-x-3 mb-4 border-b border-white/5 pb-2">
-                        <div className={`p-2 rounded-none bg-white/5`}>
-                          <Icon size={24} className={skill.color} />
-                        </div>
-                        <h4 className="text-xl font-semibold font-vt323 tracking-widest uppercase">
-                          {skill.category}
-                        </h4>
-                      </div>
-                      
-                      <div className="flex flex-wrap gap-2">
-                        {skill.technologies.map((tech, techIndex) => (
-                          <motion.span
-                            key={tech}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ 
-                              delay: index * 0.2 + techIndex * 0.1, 
-                              duration: 0.3 
-                            }}
-                            viewport={{ once: true }}
-                            whileHover={{ scale: 1.05 }}
-                            className={`px-3 py-1 text-xs bg-transparent border ${skill.borderColor} border-opacity-30 text-foreground/80 font-medium hover:bg-white/5 hover:text-${skill.color.replace('text-', '')} transition-colors duration-200 font-orbitron tracking-wider`}
-                          >
-                            {tech}
-                          </motion.span>
-                        ))}
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Decorative Quote */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            viewport={{ once: true }}
-            className="text-center py-12"
-          >
-            <div className="inline-block border-l-4 border-neon-blue pl-6 py-2 bg-black/20 pr-6">
-              <blockquote className="text-xl md:text-2xl font-vt323 text-neon-blue italic max-w-3xl mx-auto leading-relaxed tracking-wide">
-                "The best way to predict the future is to create it."
-              </blockquote>
-              <cite className="text-sm text-neon-pink mt-2 block font-orbitron uppercase tracking-widest">
-                — Peter Drucker
-              </cite>
+            {/* Neo Brutalism Decorative Box */}
+            <div className="relative w-full aspect-video border-4 border-black rounded-2xl bg-[#C084FC] overflow-hidden group shadow-[8px_8px_0px_#111] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[12px_12px_0px_#111] transition-all flex items-center justify-center">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-[#67E8F9] border-l-4 border-b-4 border-black rounded-bl-full opacity-80 rotate-[-15deg] translate-x-10 -translate-y-10 group-hover:rotate-0 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500"></div>
+               <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#FDE047] border-r-4 border-t-4 border-black rounded-tr-full opacity-80 translate-y-10 -translate-x-10 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500 delay-100"></div>
+               <div className="z-10 font-syne font-bold text-3xl md:text-5xl text-white drop-shadow-[4px_4px_0px_#111] tracking-tighter mix-blend-overlay">
+                 DESIGN X CODE
+               </div>
             </div>
           </motion.div>
 
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10">
+            {[
+              { label: "Projects", value: 20, suffix: "+" },
+              { label: "GitHub Repos", value: 62, suffix: "" },
+              { label: "Years Experience", value: 3, suffix: "+" },
+              { label: "Technologies", value: 15, suffix: "+" },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: 0.2 + i * 0.1, ease: "easeOut" }}
+                className={`relative flex flex-col items-start justify-center p-8 border-3 border-black rounded-2xl ${statColors[i]} shadow-[6px_6px_0px_#111] hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[10px_10px_0px_#111] transition-all duration-200 z-10`}
+              >
+                <h3 className="text-5xl md:text-6xl font-syne font-bold text-[#111] mb-2 tracking-tighter w-full drop-shadow-[2px_2px_0px_#fff]">
+                  <AnimatedCounter value={stat.value} duration={2} />
+                  <span className="text-[#111] ml-1">{stat.suffix}</span>
+                </h3>
+                <p className="font-mono text-sm md:text-base text-[#111] uppercase tracking-wider font-bold bg-white px-2 py-1 border-2 border-black rotate-[-1deg] inline-block mt-2">
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

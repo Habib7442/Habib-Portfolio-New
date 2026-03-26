@@ -1,20 +1,31 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import LenisProvider from "@/components/LenisProvider";
+import Preloader from "@/components/ui/Preloader";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Habib",
-  description: "Full Stack Developer",
+  title: "Habib Tanwir — Full Stack & Mobile Developer",
+  description: "Portfolio of Habib Tanwir, a Full Stack Developer and Mobile App Developer.",
+  openGraph: {
+    title: "Habib Tanwir — Full Stack & Mobile Developer",
+    description: "Portfolio of Habib Tanwir, a Full Stack Developer and Mobile App Developer.",
+  }
 };
 
 export default function RootLayout({
@@ -23,11 +34,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${inter.variable} ${syne.variable} ${jetbrainsMono.variable} antialiased bg-background text-foreground selection:bg-[#FDE047] selection:text-black`}
+        suppressHydrationWarning
       >
-        {children}
+        <div className="grain-overlay" />
+        <LenisProvider>
+          <Preloader />
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );

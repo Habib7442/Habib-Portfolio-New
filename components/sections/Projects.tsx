@@ -1,243 +1,138 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Filter, Grid, List, LayoutGrid, Terminal } from 'lucide-react';
-import Container from '@/components/layout/Container';
-import ProjectCard from '@/components/ui/project-card';
-import { Badge } from '@/components/ui/badge';
-import { ProjectData } from '@/types/project';
-import projectsData from '@/data/projects.json';
-import { cn } from '@/lib/utils';
-import { BentoGrid, BentoGridItem, BentoGridHeader } from '@/components/ui/bento-grid';
-import Image from 'next/image';
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import Link from "next/link";
+import { ArrowRight, ExternalLink, Github } from "lucide-react";
 
-const data = projectsData as ProjectData;
+export default function Projects({ projects }: { projects: any[] }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-export default function Projects() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('Web Development');
-  const [selectedStatus, setSelectedStatus] = useState<string>('Completed');
-  const [viewMode, setViewMode] = useState<'grid' | 'carousel' | 'bento'>('bento');
+  if (!projects || projects.length === 0) return null;
 
-  // Filter projects based on selected filters
-  const filteredProjects = useMemo(() => {
-    return data.projects.filter(project => {
-      const categoryMatch = project.category === selectedCategory;
-      const statusMatch = project.status === selectedStatus;
-      return categoryMatch && statusMatch;
-    });
-  }, [selectedCategory, selectedStatus]);
+  const topProjects = projects.slice(0, 5);
 
-
-  const categories = data.categories;
-  const statuses = ['Completed', 'In Progress', 'Planning'];
+  const colors = ["bg-[#FDE047]", "bg-[#67E8F9]", "bg-[#F472B6]", "bg-[#C084FC]", "bg-[#BBF7D0]"];
 
   return (
-    <section id="projects" className="py-20 relative">
-      <Container>
-        <div className="space-y-16">
-          {/* Section Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            viewport={{ once: true }}
-            className="text-center space-y-4"
-          >
-            <h2 className="text-4xl md:text-6xl font-bold font-orbitron text-neon-blue tracking-widest uppercase glitch" data-text="My Projects">
-              My Projects
+    <section id="projects" className="py-32 bg-[#FDFBF7] relative z-20 border-t-2 border-black" ref={ref}>
+      <div className="container mx-auto px-6 md:px-12 flex flex-col items-center">
+        <motion.div
+           initial={{ opacity: 0, y: 50 }}
+           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+           transition={{ duration: 0.8, ease: "easeOut" }}
+           className="w-full md:max-w-[80%] mb-20 px-6 md:px-0 flex flex-col items-start"
+        >
+          <div className="flex items-center gap-4 mb-4">
+            <h2 className="text-4xl md:text-6xl font-syne font-bold text-[#111] uppercase tracking-tighter">
+              Featured Work
             </h2>
-            <div className="w-32 h-1 bg-neon-pink mx-auto shadow-[0_0_10px_var(--neon-pink)]" />
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto font-rajdhani">
-              A collection of projects I've worked on, showcasing my skills in web development, 
-              design, and problem-solving. Each project represents a unique challenge and learning experience.
-            </p>
-          </motion.div>
-
-
-          {/* Filters and View Toggle */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}
-            viewport={{ once: true }}
-            className="flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0"
-          >
-            {/* Filters */}
-            <div className="space-y-4 w-full lg:w-auto">
-              <div className="flex items-center space-x-2">
-                <Filter size={18} className="text-neon-blue" />
-                <span className="font-medium font-orbitron text-neon-blue tracking-wider">FILTER_BY:</span>
-              </div>
-              
-              <div className="space-y-4">
-                {/* Category Filter */}
-                <div className="space-y-2">
-                  <label className="text-xs font-medium text-foreground/60 font-vt323 uppercase tracking-widest">Category:</label>
-                  <div className="flex flex-wrap gap-2">
-                    {categories.map((category) => (
-                      <motion.button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={cn(
-                          "px-3 py-1 text-xs font-vt323 tracking-wider uppercase border transition-all duration-200 rounded-none",
-                          selectedCategory === category
-                            ? "bg-neon-blue/20 text-neon-blue border-neon-blue shadow-[0_0_10px_rgba(0,255,255,0.3)]"
-                            : "bg-transparent text-foreground/60 border-white/10 hover:border-neon-blue/50 hover:text-neon-blue"
-                        )}
-                      >
-                        {category}
-                      </motion.button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Status Filter */}
-                <div className="space-y-2">
-                  <label className="text-xs font-medium text-foreground/60 font-vt323 uppercase tracking-widest">Status:</label>
-                  <div className="flex flex-wrap gap-2">
-                    {statuses.map((status) => (
-                      <motion.button
-                        key={status}
-                        onClick={() => setSelectedStatus(status)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={cn(
-                          "px-3 py-1 text-xs font-vt323 tracking-wider uppercase border transition-all duration-200 rounded-none",
-                          selectedStatus === status
-                            ? "bg-neon-green/20 text-neon-yellow border-neon-yellow shadow-[0_0_10px_rgba(255,255,0,0.3)]"
-                            : "bg-transparent text-foreground/60 border-white/10 hover:border-neon-yellow/50 hover:text-neon-yellow"
-                        )}
-                      >
-                        {status}
-                      </motion.button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <div className="h-12 w-12 md:h-16 md:w-16 bg-[#67E8F9] rounded-full border-2 border-black shadow-[2px_2px_0px_#000] rotate-6 flex items-center justify-center">
+              <span className="text-2xl md:text-3xl">🚀</span>
             </div>
+          </div>
+          <div className="w-48 h-[4px] bg-[#111] shadow-[2px_2px_0px_#000] rounded-sm" />
+        </motion.div>
 
-            {/* View Mode Toggle - Only keeping Bento as per user request */}
-            <div className="flex items-center space-x-2 bg-black/40 border border-white/10 p-1 self-end lg:self-center">
-              <div
-                className="p-2 transition-all duration-200 rounded-none bg-neon-blue/20 text-neon-blue shadow-[0_0_5px_rgba(0,255,255,0.3)]"
+        <div className="w-full md:max-w-[80%] flex flex-col gap-16 px-6 md:px-0">
+          {topProjects.map((project, index) => {
+            const isEven = index % 2 === 0;
+            const themeColor = colors[index % colors.length];
+
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 100 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+                transition={{ duration: 0.8, delay: index * 0.15, ease: "easeOut" }}
+                className={`relative group flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-stretch gap-8 bg-[#fff] border-3 border-black rounded-3xl p-6 lg:p-8 shadow-[8px_8px_0px_#111] hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_#111] transition-all duration-300 z-10`}
               >
-                <LayoutGrid size={18} />
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Projects Display */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            {viewMode === 'bento' ? (
-              <BentoGrid className="max-w-5xl mx-auto">
-                {filteredProjects.map((project, index) => (
-                  <BentoGridItem
-                    key={project.id}
-                    title={project.title}
-                    description={project.description}
-                    header={
-                      <BentoGridHeader className="flex flex-1 w-full h-full min-h-[6rem] overflow-hidden relative border-b border-neon-blue/20">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover transition-all duration-500"
-                          sizes="100vw"
-                          quality={100}
-                          priority
-                          unoptimized
-                        />
-                        <div className="absolute inset-0 bg-neon-blue/10 mix-blend-overlay" />
-                      </BentoGridHeader>
-                    }
-                    className={cn(
-                      "md:col-span-3",
-                      project.featured ? "md:row-span-2" : "",
-                      "bg-black/40 border-neon-blue/30 hover:border-neon-pink/50 transition-colors"
-                    )}
-                    technologies={project.technologies}
-                    liveUrl={project.liveUrl}
-                    githubUrl={project.githubUrl}
-                    featured={project.featured}
-                  />
-                ))}
-              </BentoGrid>
-            ) : viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProjects.map((project, index) => (
-                  <ProjectCard
-                    key={project.id}
-                    project={project}
-                    index={index}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {filteredProjects.map((project, index) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="bg-black/40 border border-neon-blue/30 p-6 hover:border-neon-pink/50 transition-colors group"
-                  >
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                      <div className="lg:col-span-2 space-y-4">
-                        <div className="flex items-start justify-between">
-                          <h3 className="text-xl font-bold font-orbitron text-neon-blue group-hover:text-neon-pink transition-colors tracking-wide">
-                            {project.title}
-                          </h3>
-                          <Badge variant="outline" className="text-xs font-vt323 rounded-none border-neon-blue/50 text-neon-blue">
-                            {project.status}
-                          </Badge>
-                        </div>
-                        <p className="text-foreground/70 leading-relaxed font-rajdhani">
-                          {project.description}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {project.technologies.slice(0, 6).map((tech) => (
-                            <Badge key={tech} variant="outline" className="text-xs border-white/10 text-foreground/60 rounded-none font-vt323">
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex justify-center lg:justify-end">
-                        <ProjectCard project={project} index={index} />
-                      </div>
+                {/* Project Image Panel */}
+                <div className={`w-full lg:w-[45%] rounded-2xl overflow-hidden relative border-2 border-black shadow-[4px_4px_0px_#111] flex items-center justify-center ${themeColor} group-hover:scale-[1.02] transition-transform duration-300 p-4 aspect-[4/3] lg:aspect-auto`}>
+                  
+                  {project.thumbnail_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={project.thumbnail_url} alt={project.title} className="w-full h-full object-cover rounded-xl border-2 border-black shadow-[2px_2px_0px_#000]" />
+                  ) : (
+                    <div className="font-syne font-bold text-4xl text-[#111] select-none tracking-tighter drop-shadow-md bg-white px-6 py-4 border-2 border-black rounded-xl rotate-[-2deg]">
+                      {project.title.substring(0, 3).toUpperCase()}
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
-          </motion.div>
+                  )}
 
-          {/* Results Summary */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <p className="text-neon-blue/60 font-vt323 text-lg">
-              &gt; DISPLAYING {filteredProjects.length} OF {data.projects.length} PROJECTS
-              {` [CATEGORY: ${selectedCategory.toUpperCase()}]`}
-              {` [STATUS: ${selectedStatus.toUpperCase()}]`}
-            </p>
-          </motion.div>
+                  <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/40 backdrop-blur-sm pointer-events-none">
+                    <span className="neo-btn pointer-events-auto shadow-[4px_4px_0px_#000]">
+                      <Link href={project.live_url || "#"} target="_blank" className="flex items-center gap-2">
+                        View Live <ExternalLink size={16} />
+                      </Link>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Project Details */}
+                <div className="w-full lg:w-[55%] flex flex-col items-start justify-center pt-2">
+                  <div className="flex items-center gap-3 mb-4">
+                    {project.category && (
+                      <span className="px-3 py-1 bg-white border-2 border-black shadow-[2px_2px_0px_#000] font-mono text-xs font-bold font-bold uppercase tracking-wider text-[#111] rotate-[-2deg]">
+                        {project.category}
+                      </span>
+                    )}
+                    {project.status === 'in_progress' && (
+                      <span className="px-3 py-1 bg-[#FDE047] border-2 border-black shadow-[2px_2px_0px_#000] font-mono text-xs font-bold uppercase tracking-wider text-[#111] rotate-[1deg]">
+                        In Progress
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-syne font-bold text-[#111] mb-4 break-words">
+                    {project.title}
+                  </h3>
+                  
+                  <p className="font-inter text-[#444] text-lg leading-relaxed mb-6 font-medium">
+                    {project.short_description || project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {project.tech_stack && project.tech_stack.length > 0 ? (
+                      project.tech_stack.map((tech: string) => (
+                        <span key={tech} className="px-3 py-1 rounded-sm border-2 border-black bg-[#E2E8F0] shadow-[2px_2px_0px_#000] font-mono text-xs font-bold uppercase text-[#111]">
+                          {tech}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="px-3 py-1 rounded-sm border-2 border-black bg-[#E2E8F0] shadow-[2px_2px_0px_#000] font-mono text-xs font-bold uppercase text-[#111]">Next.js</span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-4 mt-auto">
+                    {project.live_url && (
+                      <Link href={project.live_url} target="_blank" className="neo-btn py-3 px-6 text-sm">
+                        Live site <ArrowRight size={16} />
+                      </Link>
+                    )}
+                    {project.github_url && (
+                      <Link href={project.github_url} target="_blank" className="w-12 h-12 bg-white flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#000] rounded-lg hover:shadow-[4px_4px_0px_#000] hover:-translate-y-1 transition-all text-[#111]">
+                        <Github size={20} />
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-      </Container>
+
+        <motion.div
+           initial={{ opacity: 0, y: 30 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.8 }}
+           className="mt-24"
+        >
+          <Link href="/projects" className="neo-btn text-lg py-5 px-10 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:-translate-x-1 hover:-translate-y-1">
+            Explore All Projects <ArrowRight size={24} className="ml-2" />
+          </Link>
+        </motion.div>
+      </div>
     </section>
   );
 }
