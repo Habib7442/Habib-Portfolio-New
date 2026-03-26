@@ -84,8 +84,12 @@ export default function Reviews({ testimonials: dbTestimonials }: { testimonials
                   "{testimonial.review}"
                 </p>
                 <div className="flex items-center gap-4 mt-auto">
-                  <div className={`w-14 h-14 rounded-full ${themeColor} flex items-center justify-center font-syne font-bold text-xl text-[#111] border-2 border-black shadow-[2px_2px_0px_#000]`}>
-                    {testimonial.client_name ? testimonial.client_name.charAt(0) : "A"}
+                  <div className={`w-14 h-14 rounded-full ${themeColor} flex items-center justify-center font-syne font-bold text-xl text-[#111] border-2 border-black shadow-[2px_2px_0px_#000] overflow-hidden`}>
+                    {testimonial.avatar_url ? (
+                      <img src={testimonial.avatar_url} alt={testimonial.client_name} className="w-full h-full object-cover" />
+                    ) : (
+                      testimonial.client_name ? testimonial.client_name.charAt(0) : "A"
+                    )}
                   </div>
                   <div>
                     <h4 className="font-syne font-bold text-[#111] text-xl tracking-tighter">

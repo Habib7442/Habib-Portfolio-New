@@ -4,7 +4,7 @@ import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { createClient } from "@/lib/supabase";
-import { Send, CheckCircle2 } from "lucide-react";
+import { Send, CheckCircle2, Upload } from "lucide-react";
 
 export default function LeaveReviewPage() {
   const [formData, setFormData] = useState({
@@ -14,11 +14,21 @@ export default function LeaveReviewPage() {
     review: "",
     rating: 5,
   });
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
 
   const supabase = createClient();
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setAvatarFile(file);
+      setAvatarPreview(URL.createObjectURL(file));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +36,29 @@ export default function LeaveReviewPage() {
     setError("");
 
     try {
+      let avatar_url = "";
+
+      // Upload avatar to Supabase Storage if user selected an image
+      if (avatarFile) {
+        const fileExt = avatarFile.name.split('.').pop();
+        const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('avatars')
+          .upload(fileName, avatarFile);
+
+        if (uploadError) {
+          console.error("Upload error:", uploadError);
+          throw new Error("Failed to upload avatar image.");
+        }
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('avatars')
+          .getPublicUrl(fileName);
+
+        avatar_url = publicUrl;
+      }
+
       const { error: insertError } = await supabase
         .from("testimonials")
         .insert([
@@ -36,6 +69,7 @@ export default function LeaveReviewPage() {
             review: formData.review,
             rating: formData.rating,
             featured: false,
+            avatar_url: avatar_url || null,
           },
         ]);
 
@@ -43,9 +77,11 @@ export default function LeaveReviewPage() {
 
       setIsSuccess(true);
       setFormData({ client_name: "", role: "", company: "", review: "", rating: 5 });
+      setAvatarFile(null);
+      setAvatarPreview(null);
     } catch (err: any) {
       console.error("Error submitting review:", err.message);
-      setError("Something went wrong. Please try again.");
+      setError(err.message || "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -95,6 +131,26 @@ export default function LeaveReviewPage() {
                       {error}
                     </div>
                   )}
+
+                  {/* Avatar Upload */}
+                  <div className="flex flex-col items-center mb-4">
+                    <label className="font-syne font-bold text-lg mb-4 text-center">Profile Photo (Optional)</label>
+                    <div className="relative group cursor-pointer">
+                      <div className="w-24 h-24 rounded-full border-3 border-black shadow-[4px_4px_0px_#111] overflow-hidden bg-[#FDFBF7] flex items-center justify-center group-hover:bg-[#C084FC] transition-colors">
+                        {avatarPreview ? (
+                          <img src={avatarPreview} alt="Avatar Preview" className="w-full h-full object-cover" />
+                        ) : (
+                          <Upload size={32} className="text-[#111] group-hover:text-white transition-colors" />
+                        )}
+                      </div>
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleFileChange}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      />
+                    </div>
+                  </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-2">
