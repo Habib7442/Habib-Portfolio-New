@@ -42,6 +42,21 @@ export async function getBlogs() {
   return data;
 }
 
+export async function getBlogBySlug(slug: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('blogs')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+    
+  if (error) {
+    console.error('Error fetching blog by slug:', error);
+    return null;
+  }
+  return data;
+}
+
 export async function getTestimonials() {
   const supabase = await createClient();
   const { data, error } = await supabase

@@ -20,6 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.habibfolio.tech"),
   title: "Habib Tanwir | Full Stack Developer & AI Designer",
   description: "I build category-defining digital experiences. From scalable web platforms to polished mobile apps and AI design, Habib Tanwir is a Full Stack Developer producing exceptional products.",
   keywords: [
