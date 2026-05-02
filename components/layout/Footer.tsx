@@ -1,54 +1,66 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Linkedin, Twitter } from "lucide-react";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="relative bg-[#FDFBF7] z-20 py-8 border-t-2 border-black">
-      <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Left: HT Monogram */}
-        <Link 
-          href="/#home" 
-          className="text-2xl font-syne font-bold tracking-tighter text-[#111] hover:text-[#9333EA] transition-colors drop-shadow-[1px_1px_0px_#fff]"
-        >
-          HT<span className="text-[#9333EA]">.</span>
-        </Link>
+    <footer className="relative bg-[#FAFAF7] dark:bg-[#0E0E0C] z-20 pb-12" style={{ backgroundColor: "var(--bg)" }}>
+      <div className="container-editorial">
+        <div className="w-full h-px bg-[#E1DED5] dark:bg-[#2D2C28] mb-8" />
         
-        {/* Center: Copyright */}
-        <p className="font-mono text-xs text-[#111] uppercase tracking-widest text-center font-bold">
-          © {new Date().getFullYear()} Habib Tanwir — All Rights Reserved
-        </p>
-        
-        {/* Right: Social Links minimal */}
-        <div className="flex items-center gap-6">
-          <a
-            href="https://github.com/Habib7442"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#111] hover:text-[#9333EA] hover:-translate-y-1 transition-all"
-            aria-label="GitHub"
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 eyebrow" style={{ fontSize: "10px" }}>
+          {/* Left: HT Monogram */}
+          <div className="flex items-center gap-6">
+            <span style={{ color: "var(--fg)" }}>HT</span>
+            <span style={{ color: "var(--fg-subtle)" }}>©{currentYear}</span>
+          </div>
+          
+          {/* Center: Social Links mono strip */}
+          <div className="flex items-center gap-6">
+            <a
+              href="https://github.com/Habib7442"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[var(--fg)] transition-colors"
+            >
+              GITHUB
+            </a>
+            <span style={{ color: "var(--border-strong)" }}>·</span>
+            <a
+              href="https://linkedin.com/in/habib-tanwir"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[var(--fg)] transition-colors"
+            >
+              LINKEDIN
+            </a>
+            <span style={{ color: "var(--border-strong)" }}>·</span>
+            <a
+              href="https://x.com/TanwirHabib"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[var(--fg)] transition-colors"
+            >
+              X
+            </a>
+            <span style={{ color: "var(--border-strong)" }}>·</span>
+            <a
+              href="#"
+              className="hover:text-[var(--fg)] transition-colors"
+            >
+              READ.CV
+            </a>
+          </div>
+          
+          {/* Right: Back to Top */}
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="hover:text-[var(--fg)] transition-colors flex items-center gap-2"
           >
-            <Github size={20} />
-          </a>
-          <a
-            href="https://linkedin.com/in/habib-tanwir"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#111] hover:text-[#06B6D4] hover:-translate-y-1 transition-all"
-            aria-label="LinkedIn"
-          >
-            <Linkedin size={20} />
-          </a>
-          <a
-            href="https://x.com/TanwirHabib"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#111] hover:text-[#F472B6] hover:-translate-y-1 transition-all"
-            aria-label="Twitter"
-          >
-            <Twitter size={20} />
-          </a>
+            ↑ TOP
+          </button>
         </div>
       </div>
     </footer>

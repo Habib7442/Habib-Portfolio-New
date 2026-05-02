@@ -1,98 +1,94 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-
-const AnimatedCounter = ({ value, duration = 2 }: { value: number; duration?: number }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    if (isInView) {
-      let start = 0;
-      const stepTime = Math.abs(Math.floor((duration * 1000) / value));
-      const timer = setInterval(() => {
-        start += 1;
-        setCurrent(start);
-        if (start === value) clearInterval(timer);
-      }, stepTime);
-      return () => clearInterval(timer);
-    }
-  }, [value, duration, isInView]);
-
-  return <span ref={ref}>{current}</span>;
-};
+import { useRef } from "react";
 
 export default function About() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
-  const statColors = ["bg-[#F472B6]", "bg-[#67E8F9]", "bg-[#FDE047]", "bg-[#BBF7D0]"];
-
   return (
-    <section id="about" className="py-32 bg-[#FDFBF7] relative z-10 border-t-2 border-black" ref={sectionRef}>
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="mb-6 inline-block">
-               <span className="px-4 py-2 bg-[#FDE047] border-2 border-black shadow-[4px_4px_0px_#000] font-mono text-sm font-bold uppercase tracking-widest text-[#111] rotate-[-2deg] inline-block">
-                 About Me
-               </span>
-            </div>
-            
-            <h2 className="text-4xl md:text-6xl font-syne font-bold mb-8 text-[#111] leading-tight">
-              Building things <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9333EA] to-[#06B6D4] filter drop-shadow-[2px_2px_0px_#111]">
-                that matter.
-              </span>
-            </h2>
-            <p className="text-[#444] text-lg md:text-xl font-inter leading-relaxed mb-12 max-w-lg font-medium">
-              I'm a full stack developer who obsesses over the gap between good
-              enough and exceptional. From scalable web platforms to polished
-              mobile apps, I build products that work beautifully and feel even
-              better. Every pixel and line of code is an opportunity to craft a
-              category-defining digital experience.
-            </p>
+    <section
+      id="about"
+      className="py-16 md:py-24 bg-[#FAFAF7] dark:bg-[#0E0E0C] relative z-10 border-t border-[#E1DED5] dark:border-[#2D2C28]"
+      ref={sectionRef}
+      style={{
+        backgroundColor: "var(--bg)",
+      }}
+    >
+      <div className="container-editorial">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-12"
+        >
+          <p className="eyebrow">04 / About</p>
+        </motion.div>
 
-            {/* Neo Brutalism Decorative Box */}
-            <div className="relative w-full aspect-video border-4 border-black rounded-2xl bg-[#C084FC] overflow-hidden group shadow-[8px_8px_0px_#111] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[12px_12px_0px_#111] transition-all flex items-center justify-center">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-[#67E8F9] border-l-4 border-b-4 border-black rounded-bl-full opacity-80 rotate-[-15deg] translate-x-10 -translate-y-10 group-hover:rotate-0 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500"></div>
-               <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#FDE047] border-r-4 border-t-4 border-black rounded-tr-full opacity-80 translate-y-10 -translate-x-10 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500 delay-100"></div>
-               <div className="z-10 font-syne font-bold text-3xl md:text-5xl text-white drop-shadow-[4px_4px_0px_#111] tracking-tighter mix-blend-overlay">
-                 DESIGN X CODE
-               </div>
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* Left: Portrait Image */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full aspect-[4/5] bg-[#F2F1EC] dark:bg-[#1E1D1A] overflow-hidden group"
+            style={{ borderRadius: "4px", border: "1px solid var(--border-color)" }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img 
+              src="/habib.png" 
+              alt="Habib Tanwir" 
+              className="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-[1.02]"
+            />
+            <div className="grain-overlay opacity-[0.08] pointer-events-none" />
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10">
-            {[
-              { label: "Projects", value: 20, suffix: "+" },
-              { label: "GitHub Repos", value: 62, suffix: "" },
-              { label: "Years Experience", value: 3, suffix: "+" },
-              { label: "Technologies", value: 15, suffix: "+" },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.6, delay: 0.2 + i * 0.1, ease: "easeOut" }}
-                className={`relative flex flex-col items-start justify-center p-8 border-3 border-black rounded-2xl ${statColors[i]} shadow-[6px_6px_0px_#111] hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[10px_10px_0px_#111] transition-all duration-200 z-10`}
-              >
-                <h3 className="text-5xl md:text-6xl font-syne font-bold text-[#111] mb-2 tracking-tighter w-full drop-shadow-[2px_2px_0px_#fff]">
-                  <AnimatedCounter value={stat.value} duration={2} />
-                  <span className="text-[#111] ml-1">{stat.suffix}</span>
-                </h3>
-                <p className="font-mono text-sm md:text-base text-[#111] uppercase tracking-wider font-bold bg-white px-2 py-1 border-2 border-black rotate-[-1deg] inline-block mt-2">
-                  {stat.label}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+          {/* Right: Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col gap-6"
+          >
+            <h2 className="text-3xl md:text-4xl font-display italic leading-tight" style={{ color: "var(--fg)" }}>
+              Engineering products with <br /> an editorial eye.
+            </h2>
+
+            <div className="flex flex-col gap-6 text-lg leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+              <p>
+                For the past two years, I’ve specialized in building high-performance AI-powered SaaS and scalable systems. My work focuses on bridging the gap between sophisticated engineering and intentional, minimalist design. 
+              </p>
+              <p>
+                I operate at the intersection of TypeScript, Next.js, and Supabase, building products like IntegratePDF — a Voice-AI orchestration platform designed for high-density information environments. To me, both engineering and design are exercises in restraint — the art of knowing exactly what to leave out.
+              </p>
+            </div>
+
+            {/* Meta Block */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12 pt-8 border-t border-[var(--border-color)]">
+              <div className="flex flex-col gap-1">
+                <p className="eyebrow" style={{ fontSize: "10px" }}>Current Focus</p>
+                <p className="text-sm font-medium" style={{ color: "var(--fg)" }}>AI Orchestration & SaaS Architecture</p>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="eyebrow" style={{ fontSize: "10px" }}>Availability</p>
+                <p className="text-sm font-medium" style={{ color: "var(--fg)" }}>Open for Select Senior Roles</p>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="eyebrow" style={{ fontSize: "10px" }}>Core Stack</p>
+                <p className="text-sm font-medium" style={{ color: "var(--fg)" }}>TypeScript · Next.js · Supabase · React Native</p>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="eyebrow" style={{ fontSize: "10px" }}>Elsewhere</p>
+                <div className="flex gap-3 text-sm font-medium" style={{ color: "var(--fg)" }}>
+                  <a href="https://github.com/Habib7442" className="hover:text-[var(--accent)] transition-colors">GH</a>
+                  <a href="https://linkedin.com/in/habib-tanwir" className="hover:text-[var(--accent)] transition-colors">LI</a>
+                  <a href="https://x.com/TanwirHabib" className="hover:text-[var(--accent)] transition-colors">X</a>
+                  <a href="mailto:habibtanwir1906@gmail.com" className="hover:text-[var(--accent)] transition-colors">Email</a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
