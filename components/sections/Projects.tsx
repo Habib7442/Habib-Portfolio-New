@@ -10,42 +10,48 @@ export default function Projects({ projects }: { projects: any[] }) {
 
   if (!projects || projects.length === 0) return null;
 
-  const topProjects = projects.slice(0, 6);
+  // Show top 5 projects for more editorial focus
+  const topProjects = projects.slice(0, 5);
 
   return (
     <section
       id="work"
       ref={ref}
-      style={{
-        backgroundColor: "var(--bg)",
-        paddingTop: "64px",
-        paddingBottom: "64px",
-        borderTop: "1px solid var(--border-color)",
-      }}
+      className="bg-bg py-24 lg:py-32 border-t border-border"
     >
       <div className="container-editorial">
-        {/* Section eyebrow */}
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="eyebrow mb-12"
-        >
-          02 / Selected Work
-        </motion.p>
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 lg:mb-24">
+          <div className="max-w-2xl">
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="eyebrow mb-6"
+            >
+              02 / SELECTED WORK
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 15 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="text-display-lg leading-[1.1] italic text-fg"
+            >
+              Engineering products that bridge utility and aesthetics.
+            </motion.h2>
+          </div>
+        </div>
 
-        {/* Project list — one card per row */}
-        <div className="flex flex-col w-full">
+        {/* Project list — Project Card 4.0 */}
+        <div className="flex flex-col w-full border-t border-border">
           {topProjects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 24 }}
-              animate={
-                isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }
-              }
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
               transition={{
-                duration: 0.6,
-                delay: index * 0.08,
+                duration: 0.8,
+                delay: index * 0.1,
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
@@ -57,11 +63,11 @@ export default function Projects({ projects }: { projects: any[] }) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12"
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-16 flex justify-center md:justify-start"
         >
-          <Link href="/work" className="arrow-link">
-            View full work archive <span>→</span>
+          <Link href="/work" className="group flex items-center gap-3 text-sm font-medium text-fg-muted hover:text-fg transition-colors">
+            VIEW FULL ARCHIVE <span className="text-accent group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </motion.div>
       </div>
@@ -72,129 +78,69 @@ export default function Projects({ projects }: { projects: any[] }) {
 function ProjectCard({ project }: { project: any }) {
   const year = project.created_at
     ? new Date(project.created_at).getFullYear()
-    : project.year || "2026";
+    : project.year || "2024";
 
   const techStack = project.tech_stack || [];
   const imageUrl = project.thumbnail_url || project.image_url;
 
   return (
-    <div
-      className="group block py-10 transition-colors"
-      style={{
-        borderBottom: "1px solid var(--border-color)",
-      }}
-    >
-      <div className="flex flex-col md:flex-row items-start gap-8 md:gap-12">
-        {/* Left: Year + Thumbnail (Desktop) */}
-        <div className="flex items-start gap-8 shrink-0">
-          <span
-            className="font-mono text-sm pt-1"
-            style={{ color: "var(--fg-subtle)", width: "40px" }}
-          >
+    <div className="group relative block py-12 lg:py-16 transition-all border-b border-border">
+      <div className="flex flex-col lg:grid lg:grid-cols-[80px_1fr_400px_40px] items-start gap-8 lg:gap-12">
+        
+        {/* 1. Year */}
+        <div className="pt-2">
+          <span className="font-mono text-[11px] font-medium text-fg-subtle tracking-widest">
             {year}
           </span>
-          
-          {imageUrl && (
-            <div 
-              className="hidden md:block w-32 aspect-video bg-[var(--bg-muted)] overflow-hidden"
-              style={{ border: "1px solid var(--border-color)", borderRadius: "2px" }}
-            >
-              <img 
-                src={imageUrl} 
-                alt={project.title}
-                className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
-              />
-            </div>
-          )}
         </div>
 
-        {/* Right: Content */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-4 mb-4">
-            <div className="min-w-0 flex-1">
-              {project.live_url ? (
-                <Link
-                  href={project.live_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-display text-2xl md:text-4xl transition-colors"
-                  style={{
-                    color: "var(--fg)",
-                    letterSpacing: "-0.02em",
-                    lineHeight: "1.1",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "var(--accent)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "var(--fg)";
-                  }}
-                >
-                  {project.title}
-                </Link>
-              ) : (
-                <h3
-                  className="font-display text-2xl md:text-4xl"
-                  style={{
-                    color: "var(--fg)",
-                    letterSpacing: "-0.02em",
-                    lineHeight: "1.1",
-                  }}
-                >
-                  {project.title}
-                </h3>
-              )}
-            </div>
-
-            {project.live_url && (
+        {/* 2. Brand & Title */}
+        <div className="flex flex-col gap-4 min-w-0">
+          <div className="flex items-center gap-4 flex-wrap">
+            {project.live_url ? (
               <Link
                 href={project.live_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shrink-0 mt-2 transition-colors text-xl"
-                style={{ color: "var(--fg-subtle)" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "var(--accent)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "var(--fg-subtle)")
-                }
-                aria-label={`Visit ${project.title}`}
+                className="font-display text-4xl lg:text-5xl text-fg hover:text-accent transition-colors leading-[1.1] tracking-tight"
               >
-                →
+                {project.title}
               </Link>
+            ) : (
+              <h3 className="font-display text-4xl lg:text-5xl text-fg leading-[1.1] tracking-tight">
+                {project.title}
+              </h3>
             )}
           </div>
-
-          {/* Tech tags */}
-          {techStack.length > 0 && (
-            <div className="flex items-center gap-1 mb-4 flex-wrap">
-              {techStack.map((tech: string, i: number) => (
-                <span key={tech}>
-                  <span className="tech-tag">{tech}</span>
-                  {i < techStack.length - 1 && (
-                    <span
-                      className="tech-tag mx-1"
-                      style={{ color: "var(--border-strong)" }}
-                    >
-                      ·
-                    </span>
-                  )}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Description */}
-          {(project.short_description || project.description) && (
-            <p
-              className="text-base md:text-lg leading-relaxed text-[var(--fg-muted)]"
-            >
-              {project.short_description || project.description}
-            </p>
-          )}
+          
+          {/* Tech Stack Pills (refined) */}
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
+            {techStack.map((tech: string) => (
+              <span key={tech} className="font-mono text-[10px] text-fg-subtle tracking-[0.1em] uppercase">
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
+
+        {/* 3. Description */}
+        <div className="lg:pt-2">
+          <p className="text-text-md leading-relaxed text-fg-muted max-w-md">
+            {project.short_description || project.description}
+          </p>
+        </div>
+
+        {/* 4. Arrow Link (right-aligned) */}
+        <div className="hidden lg:flex items-start justify-end pt-2">
+          <div className="text-fg-subtle group-hover:text-accent group-hover:translate-x-1 transition-all duration-300 text-2xl">
+            →
+          </div>
+        </div>
+
       </div>
+
+      {/* Hover Background Accent */}
+      <div className="absolute inset-x-[-24px] inset-y-0 bg-bg-subtle/0 group-hover:bg-bg-subtle/50 -z-10 transition-colors duration-300 rounded-lg lg:block hidden" />
     </div>
   );
 }

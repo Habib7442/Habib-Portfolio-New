@@ -1,139 +1,103 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useRef } from "react";
 import Link from "next/link";
-import { FreeMode, Mousewheel, Keyboard } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/free-mode";
 
 export default function Designs({ designs }: { designs: any[] }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   if (!designs || designs.length === 0) return null;
+
+  // Limit to 6 items for the home page showcase
+  const displayDesigns = designs.slice(0, 6);
 
   return (
     <section
       id="designs"
       ref={ref}
-      className="relative z-20 overflow-hidden"
-      style={{
-        backgroundColor: "var(--bg)",
-        paddingTop: "64px",
-        paddingBottom: "64px",
-        borderTop: "1px solid var(--border-color)",
-      }}
+      className="bg-bg py-24 lg:py-32 border-t border-border"
     >
-      <div className="container-editorial mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <p className="eyebrow mb-4">03 / Visual &amp; AI Design</p>
-          <p
-            className="text-base max-w-md"
-            style={{ color: "var(--fg-muted)" }}
-          >
-            Posters, brand systems, and AI compositing work. Some commissioned,
-            some experiments.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <Link href="/work" className="arrow-link">
-            View archive <span>→</span>
-          </Link>
-        </motion.div>
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, x: 40 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
-        transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        className="pl-6 md:pl-8 cursor-grab active:cursor-grabbing"
-        onMouseDown={() => setHasInteracted(true)}
-        onTouchStart={() => setHasInteracted(true)}
-      >
-        <Swiper
-          modules={[FreeMode, Mousewheel, Keyboard]}
-          spaceBetween={20}
-          slidesPerView="auto"
-          freeMode={true}
-          keyboard={{ enabled: true }}
-          mousewheel={{
-            forceToAxis: true,
-          }}
-          className="!overflow-visible"
-        >
-          {designs.slice(0, 10).map((design) => (
-            <SwiperSlide
-              key={design.id}
-              className="!w-[260px] md:!w-[360px]"
+      <div className="container-editorial">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 lg:mb-24">
+          <div className="max-w-2xl">
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="eyebrow mb-6"
             >
-              <div className="group flex flex-col gap-3">
-                {/* Image container */}
-                <div
-                  className="w-full aspect-[4/5] overflow-hidden relative"
-                  style={{
-                    borderRadius: "8px",
-                    border: "1px solid var(--border-color)",
-                  }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={design.image_url}
-                    alt={design.description || design.title}
-                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                    loading="lazy"
-                  />
+              03 / VISUAL & BRANDING
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 15 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="text-display-lg leading-[1.1] italic text-fg"
+            >
+              Exploring the intersection of brand identity and AI design.
+            </motion.h2>
+          </div>
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <Link href="/work" className="group flex items-center gap-3 text-sm font-medium text-fg-muted hover:text-fg transition-colors">
+              VIEW BRAND ARCHIVE <span className="text-accent group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+          </motion.div>
+        </div>
 
-                  {/* Category tag */}
-                  {design.category && (
-                    <span
-                      className="absolute top-3 left-3 eyebrow px-2 py-1"
-                      style={{
-                        backgroundColor: "var(--bg)",
-                        borderRadius: "4px",
-                        fontSize: "10px",
-                      }}
-                    >
+        {/* Masonry-style Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+          {displayDesigns.map((design, index) => (
+            <motion.div
+              key={design.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2 + index * 0.1,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="group"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden bg-bg-muted border border-border rounded-sm mb-6">
+                <img
+                  src={design.image_url}
+                  alt={design.title}
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+                
+                {/* Category Badge */}
+                {design.category && (
+                  <div className="absolute top-4 left-4">
+                    <span className="font-mono text-[9px] font-bold tracking-[0.2em] uppercase bg-bg/90 backdrop-blur-md text-fg px-2 py-1 rounded-sm border border-border">
                       {design.category}
                     </span>
-                  )}
-                </div>
+                  </div>
+                )}
+              </div>
 
-                {/* Title */}
-                <h3
-                  className="font-display text-lg leading-tight"
-                  style={{ color: "var(--fg)", letterSpacing: "-0.01em" }}
-                >
+              <div className="space-y-1">
+                <h3 className="font-display italic text-2xl text-fg leading-tight">
                   {design.title}
                 </h3>
+                {design.description && (
+                  <p className="text-sm text-fg-subtle line-clamp-2">
+                    {design.description}
+                  </p>
+                )}
               </div>
-            </SwiperSlide>
+            </motion.div>
           ))}
-        </Swiper>
-      </motion.div>
-
-      {/* Drag affordance */}
-      <motion.div
-        initial={{ opacity: 1 }}
-        animate={{ opacity: hasInteracted ? 0 : 1 }}
-        transition={{ duration: 0.4 }}
-        className="container-editorial mt-6"
-      >
-        <p className="eyebrow" style={{ fontSize: "10px" }}>
-          drag →
-        </p>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

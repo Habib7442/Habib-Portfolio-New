@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
-import LenisProvider from "@/components/LenisProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -42,6 +41,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Habib Tanwir" }],
   creator: "Habib Tanwir",
+  alternates: {
+    canonical: "https://www.habibfolio.tech/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -88,6 +90,32 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Schema.org Person JSON-LD — Entity Fusion */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Habib Tanwir",
+              "alternateName": "Habib Tanwir Laskar",
+              "url": "https://www.habibfolio.tech",
+              "image": "https://www.habibfolio.tech/og.png",
+              "jobTitle": "Engineer & Designer",
+              "description": "Full-stack engineer and designer building AI-powered SaaS products and brand identity.",
+              "knowsAbout": ["TypeScript", "Next.js", "Supabase", "React Native", "AI Orchestration", "Brand Identity"],
+              "worksFor": {
+                "@type": "Organization",
+                "name": "Flerid Technologies"
+              },
+              "sameAs": [
+                "https://github.com/Habib7442",
+                "https://in.linkedin.com/in/habib-tanwir",
+                "https://twitter.com/TanwirHabib"
+              ]
+            })
+          }}
+        />
         {/* Prevent theme flash — set data-theme before first paint */}
         <script
           dangerouslySetInnerHTML={{
@@ -113,10 +141,8 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider>
-          <LenisProvider>
-            <div className="grain-overlay" />
-            {children}
-          </LenisProvider>
+          <div className="grain-overlay" />
+          {children}
         </ThemeProvider>
       </body>
     </html>

@@ -27,62 +27,78 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
     <section 
       id="testimonials"
       ref={sectionRef}
-      className="py-24 md:py-32 border-t border-[var(--border-color)]"
-      style={{ backgroundColor: "var(--bg)" }}
+      className="bg-bg py-24 lg:py-32 border-t border-border"
     >
       <div className="container-editorial">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-20"
-        >
-          <p className="eyebrow mb-6">06 / Kind Words</p>
-          <h2 className="text-display-lg font-display italic leading-tight" style={{ color: "var(--fg)" }}>
-            Trust & Collaborative Impact
-          </h2>
-        </motion.div>
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 lg:mb-24">
+          <div className="max-w-2xl">
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="eyebrow mb-6"
+            >
+              06 / TRUST & TESTIMONY
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 15 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="text-display-lg leading-[1.1] italic text-fg"
+            >
+              Kind words from founders and <br className="hidden md:block" /> product leaders.
+            </motion.h2>
+          </div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+        {/* Testimonial Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
-              initial={{ opacity: 0, y: 24 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-              transition={{ duration: 0.8, delay: 0.1 * index, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col gap-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.8, delay: 0.2 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col gap-10 p-8 lg:p-12 bg-bg-subtle/30 border border-border rounded-sm relative"
             >
-              {/* Stars */}
-              <div className="flex gap-1">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <span key={i} className="text-[10px]" style={{ color: "var(--accent)" }}>★</span>
-                ))}
-              </div>
+              {/* Quote Mark (Subtle) */}
+              <span className="absolute top-8 left-8 text-6xl font-display italic text-accent/10 pointer-events-none">
+                &ldquo;
+              </span>
 
-              {/* Review */}
-              <blockquote className="relative">
-                <span className="absolute -top-6 -left-4 text-6xl font-serif opacity-10 pointer-events-none" style={{ color: "var(--fg)" }}>"</span>
-                <p className="text-xl leading-relaxed italic font-display" style={{ color: "var(--fg-muted)" }}>
+              {/* Review Text */}
+              <blockquote className="relative z-10">
+                <p className="text-text-xl leading-relaxed italic font-display text-fg-muted">
                   {testimonial.review}
                 </p>
               </blockquote>
 
-              {/* Author */}
-              <div className="flex items-center gap-4 mt-auto">
+              {/* Author Info */}
+              <div className="flex items-center gap-5 mt-auto pt-8 border-t border-border/50">
                 {testimonial.avatar_url ? (
-                  <div className="w-10 h-10 rounded-full overflow-hidden border border-[var(--border-color)]">
-                    <img src={testimonial.avatar_url} alt={testimonial.client_name} className="w-full h-full object-cover" />
+                  <div className="w-12 h-12 rounded-full overflow-hidden border border-border grayscale hover:grayscale-0 transition-all duration-500">
+                    <img 
+                      src={testimonial.avatar_url} 
+                      alt={testimonial.client_name} 
+                      className="w-full h-full object-cover" 
+                      loading="lazy"
+                    />
                   </div>
                 ) : (
-                  <div className="w-10 h-10 rounded-full bg-[var(--bg-card)] border border-[var(--border-color)] flex items-center justify-center">
-                    <span className="eyebrow" style={{ fontSize: "10px" }}>{testimonial.client_name.charAt(0)}</span>
+                  <div className="w-12 h-12 rounded-full bg-bg-muted border border-border flex items-center justify-center">
+                    <span className="font-mono text-[10px] font-bold text-fg-subtle">
+                      {testimonial.client_name.charAt(0)}
+                    </span>
                   </div>
                 )}
                 <div className="flex flex-col">
-                  <cite className="not-italic font-medium text-sm" style={{ color: "var(--fg)" }}>{testimonial.client_name}</cite>
+                  <cite className="not-italic font-display italic text-lg text-fg tracking-tight">
+                    {testimonial.client_name}
+                  </cite>
                   {(testimonial.role || testimonial.company) && (
-                    <span className="text-xs uppercase tracking-wider" style={{ color: "var(--fg-subtle)", fontSize: "9px" }}>
-                      {testimonial.role}{testimonial.company ? ` @ ${testimonial.company}` : ''}
+                    <span className="font-mono text-[9px] font-bold tracking-[0.2em] text-fg-subtle uppercase">
+                      {testimonial.role}{testimonial.company ? ` / ${testimonial.company}` : ''}
                     </span>
                   )}
                 </div>

@@ -12,20 +12,25 @@ html {
    ────────────────────────────────────────────── */
 
 @theme inline {
-  /* Typography scale — clamp-based fluid sizes */
-  --font-size-display-2xl: clamp(3.5rem, 8vw, 6rem);
-  --font-size-display-xl: clamp(2.75rem, 5vw, 4.5rem);
-  --font-size-display-lg: clamp(2rem, 3.5vw, 3rem);
-  --font-size-text-xl: clamp(1.25rem, 2vw, 1.5rem);
+  /* Typography scale — modular scale from PRD */
+  --font-size-display-2xl: clamp(4.5rem, 12vw, 10rem); /* Significantly larger */
+  --font-size-display-xl: clamp(3.25rem, 7vw, 6rem);
+  --font-size-display-lg: clamp(2.5rem, 5vw, 4rem);
+  --font-size-text-xl: clamp(1.5rem, 2.5vw, 2rem); /* Larger pitch text */
+  --font-size-text-lg: 1.25rem; /* 20px */
+  --font-size-text-md: 1.125rem; /* 18px */
+  --font-size-text-sm: 1rem; /* 16px */
+  --font-size-mono-sm: 0.9375rem; /* 15px */
+  --font-size-mono-xs: 0.8125rem; /* 13px */
 
-  /* Spacing scale */
-  --spacing-section-y-mobile: 64px;
-  --spacing-section-y-desktop: 100px;
+  /* Spacing scale — modular based on 4px base */
+  --spacing-section-y-mobile: 96px;
+  --spacing-section-y-desktop: 160px;
 
   /* Container */
   --container-max: 1140px;
 
-  /* Radius */
+  /* Radius — tight senior aesthetic */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
@@ -38,12 +43,12 @@ html {
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  /* Semantic color tokens (referenced via rgb() in Tailwind) */
+  /* Semantic color tokens */
   --color-bg: var(--bg);
   --color-bg-elevated: var(--bg-elevated);
   --color-bg-subtle: var(--bg-subtle);
   --color-bg-muted: var(--bg-muted);
-  --color-border: var(--border-color);
+  --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
@@ -58,35 +63,18 @@ html {
    ────────────────────────────────────────────── */
 :root,
 [data-theme="light"] {
-  /* Refined Paper & Ink Palette */
-  --paper-bg: #FBFBFA;
-  --paper-fg: #151513;
-  --paper-fg-muted: #5C5C54;
-  --paper-fg-subtle: #96968C;
-  --paper-border: #E8E8E1;
-  --paper-border-strong: #D6D6CC;
-
-  --ink-bg: #0C0C0B;
-  --ink-fg: #F1F1EE;
-  --ink-fg-muted: #A3A39C;
-  --ink-fg-subtle: #6D6D66;
-  --ink-border: #242421;
-  --ink-border-strong: #363632;
-
-  --accent: #E67E22; /* Richer Saffron */
-  --accent-soft: rgba(230, 126, 34, 0.1);
-
-  --bg: var(--paper-bg);
+  --bg: #FAFAF7;
   --bg-elevated: #FFFFFF;
   --bg-subtle: #F2F1EC;
   --bg-muted: #E9E7E0;
-  --border-color: var(--paper-border);
-  --border-strong: var(--paper-border-strong);
-  --fg: var(--paper-fg);
-  --fg-muted: var(--paper-fg-muted);
-  --fg-subtle: var(--paper-fg-subtle);
+  --border: #E1DED5;
+  --border-strong: #C7C2B6;
+  --fg: #1A1A1A;
+  --fg-muted: #5C5A55;
+  --fg-subtle: #8A8780;
+  --accent: #E07A29;
   --accent-hover: #C8651A;
-  --accent-subtle: var(--accent-soft);
+  --accent-subtle: #FBE6D2;
 
   color-scheme: light;
 }
@@ -95,18 +83,18 @@ html {
    Dark Theme — "Ink"
    ────────────────────────────────────────────── */
 [data-theme="dark"] {
-  --bg: #0A0A09;
-  --bg-elevated: #121210;
-  --bg-subtle: #181815;
-  --bg-muted: #242420;
-  --border-color: #1F1F1C;
-  --border-strong: #2D2D28;
-  --fg: #F8F8F2;
-  --fg-muted: #A1A196;
-  --fg-subtle: #6B6B60;
-  --accent: #FF9F43;
-  --accent-hover: #FFAF66;
-  --accent-subtle: rgba(255, 159, 67, 0.1);
+  --bg: #0E0E0C;
+  --bg-elevated: #161613;
+  --bg-subtle: #1E1D1A;
+  --bg-muted: #2A2925;
+  --border: #2D2C28;
+  --border-strong: #454340;
+  --fg: #F5F4F0;
+  --fg-muted: #A8A59E;
+  --fg-subtle: #73706A;
+  --accent: #F08A3A;
+  --accent-hover: #FF9D4D;
+  --accent-subtle: #3A2516;
   
   color-scheme: dark;
 }
@@ -201,10 +189,10 @@ h4, h5, h6 {
 /* Section eyebrow label */
 .eyebrow {
   font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
-  font-size: 11px;
-  line-height: 16px;
+  font-size: var(--font-size-mono-xs);
+  line-height: 1.4;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-subtle);
 }
@@ -232,12 +220,15 @@ h4, h5, h6 {
   background-color: color-mix(in srgb, var(--bg) 80%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
 }
 
 /* Container — Universal editorial alignment */
 .container-editorial {
   width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: 24px;
   padding-right: 24px;
 }
@@ -409,7 +400,7 @@ h4, h5, h6 {
   margin: 2.5rem 0;
   border: none;
   height: 1px;
-  background-color: var(--border-color);
+  background-color: var(--border);
 }
 
 /* ──────────────────────────────────────────────
@@ -470,7 +461,7 @@ h4, h5, h6 {
 
 .prose-editorial img {
   border-radius: 2px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   margin: 3rem 0;
 }
 

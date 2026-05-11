@@ -7,84 +7,81 @@ export default function About() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
+  const metaData = [
+    { label: "CURRENT FOCUS", value: "AI Orchestration & SaaS Architecture" },
+    { label: "AVAILABILITY", value: "Open for Select Senior Roles" },
+    { label: "CORE STACK", value: "TypeScript · Next.js · Supabase · React Native" },
+  ];
+
   return (
     <section
       id="about"
-      className="py-16 md:py-24 bg-[#FAFAF7] dark:bg-[#0E0E0C] relative z-10 border-t border-[#E1DED5] dark:border-[#2D2C28]"
       ref={sectionRef}
-      style={{
-        backgroundColor: "var(--bg)",
-      }}
+      className="bg-bg py-24 lg:py-32 border-t border-border overflow-hidden"
     >
       <div className="container-editorial">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 8 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-12"
+          className="mb-16 lg:mb-24"
         >
-          <p className="eyebrow">04 / About</p>
+          <p className="eyebrow">04 / ABOUT THE MANIFESTO</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           {/* Left: Portrait Image */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full aspect-[4/5] bg-[#F2F1EC] dark:bg-[#1E1D1A] overflow-hidden group"
-            style={{ borderRadius: "4px", border: "1px solid var(--border-color)" }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full aspect-[4/5] bg-bg-muted overflow-hidden border border-border rounded-sm group"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/habib.png" 
               alt="Habib Tanwir" 
-              className="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-[1.02]"
+              className="w-full h-full object-cover transition-all duration-1000 ease-in-out group-hover:scale-[1.03]"
             />
-            <div className="grain-overlay opacity-[0.08] pointer-events-none" />
+            {/* Subtle grain overlay */}
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-repeat" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
           </motion.div>
 
           {/* Right: Content */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col gap-6"
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+            transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col gap-8 lg:gap-12"
           >
-            <h2 className="text-3xl md:text-4xl font-display italic leading-tight" style={{ color: "var(--fg)" }}>
-              Engineering products with <br /> an editorial eye.
+            <h2 className="text-display-lg font-display italic leading-[1.1] text-fg">
+              Engineering digital products <br className="hidden md:block" /> with an editorial eye.
             </h2>
 
-            <div className="flex flex-col gap-6 text-lg leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+            <div className="flex flex-col gap-8 text-text-xl leading-relaxed text-fg-muted">
               <p>
-                For the past two years, I’ve specialized in building high-performance AI-powered SaaS and scalable systems. My work focuses on bridging the gap between sophisticated engineering and intentional, minimalist design. 
+                I specialize in architecting high-performance AI-powered SaaS and scalable brand systems. My work focuses on bridging the gap between sophisticated full-stack engineering and intentional, minimalist design. 
               </p>
               <p>
-                I operate at the intersection of TypeScript, Next.js, and Supabase, building products like IntegratePDF — a Voice-AI orchestration platform designed for high-density information environments. To me, both engineering and design are exercises in restraint — the art of knowing exactly what to leave out.
+                As a Founder and Lead Engineer at Flerid Technologies, I build products like IntegratePDF — a Voice-AI orchestration platform designed for high-density information environments. To me, both engineering and design are exercises in restraint — the art of knowing exactly what to leave out.
               </p>
             </div>
 
             {/* Meta Block */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12 pt-8 border-t border-[var(--border-color)]">
-              <div className="flex flex-col gap-1">
-                <p className="eyebrow" style={{ fontSize: "10px" }}>Current Focus</p>
-                <p className="text-sm font-medium" style={{ color: "var(--fg)" }}>AI Orchestration & SaaS Architecture</p>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="eyebrow" style={{ fontSize: "10px" }}>Availability</p>
-                <p className="text-sm font-medium" style={{ color: "var(--fg)" }}>Open for Select Senior Roles</p>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="eyebrow" style={{ fontSize: "10px" }}>Core Stack</p>
-                <p className="text-sm font-medium" style={{ color: "var(--fg)" }}>TypeScript · Next.js · Supabase · React Native</p>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="eyebrow" style={{ fontSize: "10px" }}>Elsewhere</p>
-                <div className="flex gap-3 text-sm font-medium" style={{ color: "var(--fg)" }}>
-                  <a href="https://github.com/Habib7442" className="hover:text-[var(--accent)] transition-colors">GH</a>
-                  <a href="https://linkedin.com/in/habib-tanwir" className="hover:text-[var(--accent)] transition-colors">LI</a>
-                  <a href="https://x.com/TanwirHabib" className="hover:text-[var(--accent)] transition-colors">X</a>
-                  <a href="mailto:habibtanwir1906@gmail.com" className="hover:text-[var(--accent)] transition-colors">Email</a>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 gap-x-12 pt-12 border-t border-border mt-4">
+              {metaData.map((item) => (
+                <div key={item.label} className="flex flex-col gap-2">
+                  <p className="font-mono text-[10px] font-bold tracking-[0.2em] text-fg-subtle uppercase">{item.label}</p>
+                  <p className="text-sm font-medium text-fg">{item.value}</p>
+                </div>
+              ))}
+              
+              <div className="flex flex-col gap-2">
+                <p className="font-mono text-[10px] font-bold tracking-[0.2em] text-fg-subtle uppercase">ELSEWHERE</p>
+                <div className="flex gap-4 text-sm font-medium text-fg">
+                  <a href="https://github.com/Habib7442" className="hover:text-accent transition-colors">GITHUB</a>
+                  <a href="https://linkedin.com/in/habib-tanwir" className="hover:text-accent transition-colors">LINKEDIN</a>
+                  <a href="https://x.com/TanwirHabib" className="hover:text-accent transition-colors">X</a>
                 </div>
               </div>
             </div>

@@ -5,61 +5,60 @@ import Link from "next/link";
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const socialLinks = [
+    { name: "GITHUB", href: "https://github.com/Habib7442" },
+    { name: "LINKEDIN", href: "https://linkedin.com/in/habib-tanwir" },
+    { name: "X", href: "https://x.com/TanwirHabib" },
+    { name: "READ.CV", href: "#" },
+  ];
+
   return (
-    <footer className="relative bg-[#FAFAF7] dark:bg-[#0E0E0C] z-20 pb-12" style={{ backgroundColor: "var(--bg)" }}>
+    <footer className="relative bg-bg z-20 pb-12">
       <div className="container-editorial">
-        <div className="w-full h-px bg-[#E1DED5] dark:bg-[#2D2C28] mb-8" />
+        <div className="w-full h-px bg-border mb-8" />
         
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 eyebrow" style={{ fontSize: "10px" }}>
-          {/* Left: HT Monogram */}
-          <div className="flex items-center gap-6">
-            <span style={{ color: "var(--fg)" }}>HT</span>
-            <span style={{ color: "var(--fg-subtle)" }}>©{currentYear}</span>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <Link href="/#home" className="flex items-center gap-3 group">
+              <div className="w-8 h-8 rounded-full overflow-hidden border border-border bg-bg-elevated flex-shrink-0">
+                <img 
+                  src="/logo.png" 
+                  alt="HT" 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+              <span className="font-display text-xl text-fg">Habib Tanwir</span>
+            </Link>
+            <span className="font-mono text-[10px] font-medium tracking-widest text-fg-subtle uppercase">
+              ©{currentYear} ALL RIGHTS RESERVED
+            </span>
           </div>
           
           {/* Center: Social Links mono strip */}
-          <div className="flex items-center gap-6">
-            <a
-              href="https://github.com/Habib7442"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[var(--fg)] transition-colors"
-            >
-              GITHUB
-            </a>
-            <span style={{ color: "var(--border-strong)" }}>·</span>
-            <a
-              href="https://linkedin.com/in/habib-tanwir"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[var(--fg)] transition-colors"
-            >
-              LINKEDIN
-            </a>
-            <span style={{ color: "var(--border-strong)" }}>·</span>
-            <a
-              href="https://x.com/TanwirHabib"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[var(--fg)] transition-colors"
-            >
-              X
-            </a>
-            <span style={{ color: "var(--border-strong)" }}>·</span>
-            <a
-              href="#"
-              className="hover:text-[var(--fg)] transition-colors"
-            >
-              READ.CV
-            </a>
+          <div className="flex items-center gap-5 text-[10px] font-mono font-medium tracking-[0.1em]">
+            {socialLinks.map((link, i) => (
+              <div key={link.name} className="flex items-center gap-5">
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fg-muted hover:text-accent transition-colors"
+                >
+                  {link.name}
+                </a>
+                {i < socialLinks.length - 1 && (
+                  <span className="text-border-strong">·</span>
+                )}
+              </div>
+            ))}
           </div>
           
           {/* Right: Back to Top */}
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="hover:text-[var(--fg)] transition-colors flex items-center gap-2"
+            className="text-[10px] font-mono font-medium tracking-widest text-fg-muted hover:text-fg transition-colors flex items-center gap-2 group"
           >
-            ↑ TOP
+            <span className="group-hover:-translate-y-0.5 transition-transform">↑</span> BACK TO TOP
           </button>
         </div>
       </div>
