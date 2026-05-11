@@ -104,10 +104,6 @@ export default function RootLayout({
               "jobTitle": "Engineer & Designer",
               "description": "Full-stack engineer and designer building AI-powered SaaS products and brand identity.",
               "knowsAbout": ["TypeScript", "Next.js", "Supabase", "React Native", "AI Orchestration", "Brand Identity"],
-              "worksFor": {
-                "@type": "Organization",
-                "name": "Flerid Technologies"
-              },
               "sameAs": [
                 "https://github.com/Habib7442",
                 "https://in.linkedin.com/in/habib-tanwir",

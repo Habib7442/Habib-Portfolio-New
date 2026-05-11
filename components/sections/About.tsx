@@ -66,7 +66,7 @@ export default function About() {
                 I specialize in architecting high-performance AI-powered SaaS and scalable brand systems. My work focuses on bridging the gap between sophisticated full-stack engineering and intentional, minimalist design. 
               </p>
               <p>
-                As a Founder and Lead Engineer at Flerid Technologies, I build products like IntegratePDF — a Voice-AI orchestration platform designed for high-density information environments. To me, both engineering and design are exercises in restraint — the art of knowing exactly what to leave out.
+                As a Lead Engineer and Product Architect, I build products like IntegratePDF — a Voice-AI orchestration platform designed for high-density information environments. To me, both engineering and design are exercises in restraint — the art of knowing exactly what to leave out.
               </p>
             </div>
 

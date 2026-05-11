@@ -13,7 +13,7 @@ export default function Reviews({ testimonials: dbTestimonials }: { testimonials
     },
     {
       client_name: "Elena Rodriguez",
-      role: "Founder, Flerid",
+      role: "Founder & CEO",
       review: "Working with Habib has been transformative. He brings a rare combination of robust backend engineering and pixel-perfect frontend execution to the table.",
       rating: 5,
     },

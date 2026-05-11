@@ -20,7 +20,7 @@ export default function Hero({ featuredProject }: { featuredProject?: any }) {
           >
             <p className="eyebrow flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              01 / BUILDING AI SAAS AT FLERID
+              01 / BUILDING HIGH-PERFORMANCE AI SAAS
             </p>
           </motion.div>
 
