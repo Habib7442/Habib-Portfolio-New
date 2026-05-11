@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Navbar() {
@@ -42,9 +43,12 @@ export default function Navbar() {
             className="flex items-center gap-3 group"
           >
             <div className="w-10 h-10 rounded-full overflow-hidden border border-border bg-bg-elevated flex-shrink-0">
-              <img 
+              <Image 
                 src="/logo.png" 
                 alt="Habib Tanwir" 
+                width={40}
+                height={40}
+                priority
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" 
               />
             </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -21,9 +22,11 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center gap-6">
             <Link href="/#home" className="flex items-center gap-3 group">
               <div className="w-8 h-8 rounded-full overflow-hidden border border-border bg-bg-elevated flex-shrink-0">
-                <img 
+                <Image 
                   src="/logo.png" 
                   alt="HT" 
+                  width={32}
+                  height={32}
                   className="w-full h-full object-cover" 
                 />
               </div>

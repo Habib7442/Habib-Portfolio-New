@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Designs({ designs }: { designs: any[] }) {
   const ref = useRef(null);
@@ -67,11 +68,12 @@ export default function Designs({ designs }: { designs: any[] }) {
               className="group"
             >
               <div className="relative aspect-[4/5] overflow-hidden bg-bg-muted border border-border rounded-sm mb-6">
-                <img
+                <Image
                   src={design.image_url}
                   alt={design.title}
+                  fill
                   className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 
                 {/* Category Badge */}

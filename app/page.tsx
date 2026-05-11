@@ -8,6 +8,8 @@ import Writing from "@/components/sections/Writing";
 import Testimonials from "@/components/sections/Testimonials";
 import { getProjects, getDesigns, getBlogs, getTestimonials } from "@/lib/data";
 import Contact from "@/components/sections/Contact";
+import Marquee from "@/components/sections/Marquee";
+import Skills from "@/components/sections/Skills";
 
 // Set revalidate to 60 seconds
 export const revalidate = 60;
@@ -23,6 +25,7 @@ export default async function Home() {
       <Navbar />
       <main id="main-content">
         <Hero featuredProject={projects.find(p => p.title.toLowerCase().includes('integratepdf')) || projects[0]} />
+        <Marquee />
         
         {/* Selected Work (Web) */}
         <Projects projects={projects} />
@@ -32,6 +35,7 @@ export default async function Home() {
         
         {/* About */}
         <About />
+        <Skills />
         
         {/* Writing Section */}
         <Writing blogs={blogs} />

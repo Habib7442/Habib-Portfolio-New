@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 interface Testimonial {
   id: string;
@@ -78,11 +79,12 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
               <div className="flex items-center gap-5 mt-auto pt-8 border-t border-border/50">
                 {testimonial.avatar_url ? (
                   <div className="w-12 h-12 rounded-full overflow-hidden border border-border grayscale hover:grayscale-0 transition-all duration-500">
-                    <img 
+                    <Image 
                       src={testimonial.avatar_url} 
                       alt={testimonial.client_name} 
+                      width={48}
+                      height={48}
                       className="w-full h-full object-cover" 
-                      loading="lazy"
                     />
                   </div>
                 ) : (

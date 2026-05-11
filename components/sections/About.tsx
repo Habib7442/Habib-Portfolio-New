@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 export default function About() {
   const sectionRef = useRef(null);
@@ -38,13 +39,15 @@ export default function About() {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="relative w-full aspect-[4/5] bg-bg-muted overflow-hidden border border-border rounded-sm group"
           >
-            <img 
+            <Image 
               src="/habib.png" 
               alt="Habib Tanwir" 
+              width={600}
+              height={750}
               className="w-full h-full object-cover transition-all duration-1000 ease-in-out group-hover:scale-[1.03]"
             />
             {/* Subtle grain overlay */}
-            <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-repeat" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-repeat" style={{ backgroundImage: "url('data:image/svg+xml;utf8,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.65\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\"/%3E%3C/svg%3E')" }} />
           </motion.div>
 
           {/* Right: Content */}

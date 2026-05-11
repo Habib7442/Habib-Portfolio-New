@@ -2,6 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { getProjects, getDesigns } from "@/lib/data";
 import Link from "next/link";
+import Image from "next/image";
 
 export const revalidate = 60;
 
@@ -81,9 +82,10 @@ export default async function WorkPage() {
                     className="group flex flex-col gap-8"
                   >
                     <div className="aspect-[4/5] overflow-hidden rounded-sm border border-border bg-bg-muted relative">
-                      <img 
+                      <Image 
                         src={design.image_url} 
                         alt={design.title} 
+                        fill
                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
                       />
                       <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/5 transition-colors duration-500" />
