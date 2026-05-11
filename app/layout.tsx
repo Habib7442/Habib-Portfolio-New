@@ -103,7 +103,7 @@ export default function RootLayout({
               "image": "https://www.habibfolio.tech/og.png",
               "jobTitle": "Engineer & Designer",
               "description": "Full-stack engineer and designer building AI-powered SaaS products and brand identity.",
-              "knowsAbout": ["TypeScript", "Next.js", "Supabase", "React Native", "AI Orchestration", "Brand Identity"],
+              "knowsAbout": ["TypeScript", "Next.js", "Supabase", "React Native", "AI Orchestration", "Brand Identity", "Generative AI"],
               "sameAs": [
                 "https://github.com/Habib7442",
                 "https://in.linkedin.com/in/habib-tanwir",

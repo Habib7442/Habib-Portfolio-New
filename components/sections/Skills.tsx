@@ -10,15 +10,15 @@ const skillsMap = [
   },
   {
     category: "MOBILE STACK",
-    items: ["React Native", "Expo", "SwiftUI", "Mobile UX"],
+    items: ["React Native", "Expo", "Mobile UX"],
   },
   {
     category: "BACKEND & INFRA",
-    items: ["Node.js", "PostgreSQL", "Supabase", "Firebase", "Docker"],
+    items: ["Node.js", "PostgreSQL", "Supabase", "Firebase"],
   },
   {
     category: "DESIGN & IDENTITY",
-    items: ["Figma", "Branding", "UI/UX", "Adobe Suite", "Motion Design"],
+    items: ["Figma", "Branding", "Generative AI", "AI Prompting", "Motion Design"],
   },
 ];
 
