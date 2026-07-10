@@ -376,7 +376,7 @@ Section eyebrow: `06 / CONTACT`.
 
 ```
 Let's talk.
-habibtanwir1906@gmail.com
+hello@habibfolio.tech
 
 Open to senior IC roles, founding-engineer
 opportunities, and selected freelance projects.

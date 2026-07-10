@@ -47,10 +47,10 @@ export default function Contact() {
             <div className="flex flex-col gap-4">
               <p className="font-mono text-[10px] font-bold tracking-[0.2em] text-fg-subtle uppercase">DIRECT INQUIRIES</p>
               <a 
-                href="mailto:habibtanwir1906@gmail.com" 
+                href="mailto:hello@habibfolio.tech" 
                 className="text-3xl md:text-5xl font-display italic text-fg hover:text-accent transition-colors break-all"
               >
-                habibtanwir1906@gmail.com
+                hello@habibfolio.tech
               </a>
             </div>
 

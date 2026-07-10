@@ -145,10 +145,10 @@ export default function Navbar() {
                 className="mt-4"
               >
                 <a
-                  href="mailto:habibtanwir1906@gmail.com"
+                  href="mailto:hello@habibfolio.tech"
                   className="text-sm font-mono tracking-wider text-accent border-b border-accent/20 hover:border-accent transition-all"
                 >
-                  habibtanwir1906@gmail.com
+                  hello@habibfolio.tech
                 </a>
               </motion.div>
             </div>
