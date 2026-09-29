@@ -6,8 +6,9 @@ import { absoluteUrl } from "@/lib/site";
 // /review is left out on purpose: it's a form page marked noindex.
 export const revalidate = 3600;
 
-// Image sitemap entries help your work show up in Google Images.
-const img = (url?: string) => (url ? [`${url}?w=1600&auto=format`] : []);
+// Image sitemap entries help your work show up in Google Images. Plain asset URLs only: Next writes
+// image URLs into the XML unescaped, so a "?w=…&auto=…" query would break the sitemap.
+const img = (url?: string) => (url ? [url] : []);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [settings, projects, designs, landingPages, posts] = await Promise.all([
