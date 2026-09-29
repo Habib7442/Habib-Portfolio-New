@@ -1,112 +1,59 @@
-"use client";
-
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import Reveal from "@/components/ui/Reveal";
+import { imgUrl, type BlogSummary } from "@/lib/sanity";
 
-interface Blog {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  category?: string;
-  created_at: string;
+export function formatDate(iso?: string, month: "short" | "long" = "short") {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString("en-US", { month, day: "numeric", year: "numeric" });
 }
 
-interface WritingProps {
-  blogs: Blog[];
-}
-
-export default function Writing({ blogs }: WritingProps) {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
+export default function Writing({ posts }: { posts: BlogSummary[] }) {
+  if (posts.length === 0) return null;
 
   return (
-    <section 
-      id="writing"
-      ref={sectionRef}
-      className="bg-bg py-24 lg:py-32 border-t border-border"
-    >
-      <div className="container-editorial">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 lg:mb-24">
-          <div className="max-w-2xl">
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="eyebrow mb-6"
-            >
-              05 / WRITING & JOURNAL
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 15 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="text-display-lg leading-[1.1] italic text-fg"
-            >
-              Notes on engineering, design, <br className="hidden md:block" /> and the business of software.
-            </motion.h2>
+    <section className="border-t border-border bg-bg-alt py-20 md:py-28">
+      <div className="container-app">
+        <Reveal className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="eyebrow mb-4 text-accent-hover">✦ Writing</p>
+            <h2 className="font-display text-display-md font-bold leading-[1.02] tracking-tight">
+              Stay updated on
+              <br />
+              my progress
+            </h2>
           </div>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <Link href="/blogs" className="group flex items-center gap-3 text-sm font-medium text-fg-muted hover:text-fg transition-colors">
-              READ ALL ESSAYS <span className="text-accent group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          </motion.div>
-        </div>
+          <Link href="/blogs" className="eyebrow inline-flex items-center gap-1.5 text-fg hover:text-accent-hover">
+            All posts <ArrowUpRight className="size-4" />
+          </Link>
+        </Reveal>
 
-        {/* The Feed */}
-        <div className="flex flex-col border-t border-border">
-          {blogs && blogs.length > 0 ? (
-            blogs.slice(0, 4).map((blog, index) => (
-              <motion.div
-                key={blog.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-                transition={{ duration: 0.8, delay: 0.2 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <Link
-                  href={`/blogs/${blog.slug}`}
-                  className="group relative block py-10 lg:py-12 border-b border-border transition-all"
-                >
-                  <div className="flex flex-col md:grid md:grid-cols-[200px_1fr_100px] items-start md:items-center gap-6 md:gap-12 relative z-10">
-                    {/* Metadata */}
-                    <div className="flex items-center gap-4">
-                      <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-fg-subtle uppercase">
-                        {blog.category || "ENGINEERING"}
-                      </span>
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="font-display italic text-2xl lg:text-3xl text-fg group-hover:text-accent transition-colors leading-tight">
-                      {blog.title}
-                    </h3>
-
-                    {/* Date */}
-                    <div className="md:text-right">
-                      <span className="font-mono text-[11px] font-medium text-fg-subtle uppercase tracking-widest">
-                        {new Date(blog.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  {/* Subtle hover background */}
-                  <div className="absolute inset-x-[-24px] inset-y-0 bg-bg-subtle/0 group-hover:bg-bg-subtle/50 -z-0 transition-colors duration-300 rounded-lg lg:block hidden" />
-                </Link>
-              </motion.div>
-            ))
-          ) : (
-            <div className="py-24 border-b border-border">
-              <p className="text-text-xl italic text-fg-muted">
-                The journal is currently empty. Re-indexing thoughts...
-              </p>
-            </div>
-          )}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.slice(0, 3).map((post, i) => (
+            <Reveal key={post._id} delay={i * 0.06}>
+              <Link href={`/blogs/${post.slug}`} className="group block">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-bg-muted">
+                  {post.coverUrl && (
+                    <Image
+                      src={imgUrl(post.coverUrl, 700)}
+                      alt={post.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )}
+                </div>
+                <p className="eyebrow mt-5 text-fg-subtle">
+                  {[post.category, formatDate(post.publishedAt)].filter(Boolean).join("  ·  ")}
+                </p>
+                <h3 className="mt-2 font-serif text-2xl leading-snug transition-colors group-hover:text-accent-hover">
+                  {post.title}
+                </h3>
+                {post.excerpt && <p className="mt-2 line-clamp-2 text-fg-muted">{post.excerpt}</p>}
+              </Link>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

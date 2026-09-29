@@ -1,157 +1,148 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
-import ThemeToggle from "@/components/ui/ThemeToggle";
+import { X } from "lucide-react";
+import LogoMark from "@/components/ui/LogoMark";
+import ScrollLink from "@/components/ui/ScrollLink";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
+import { whatsappUrl } from "@/lib/contact";
+import { cn } from "@/lib/utils";
 
-export default function Navbar() {
+// `section` links scroll to a part of the home page without adding "#..." to the URL.
+const LINKS: { name: string; href?: string; section?: string }[] = [
+  { name: "Work", href: "/work" },
+  { name: "About", section: "about" },
+  { name: "Services", section: "services" },
+  { name: "Writing", href: "/blogs" },
+];
+
+// Every page opens on a forest-green band, so the bar starts light-on-green and
+// flips to dark-on-white once the band has scrolled away.
+export default function Navbar({ name = "Habib Tanwir" }: { name?: string }) {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 80);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Work", href: "/work" },
-    { name: "About", href: "/#about" },
-    { name: "Writing", href: "/blogs" },
-    { name: "Contact", href: "/#contact" },
-  ];
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          scrolled ? "nav-glass py-3" : "py-6"
-        }`}
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+          scrolled ? "bg-bg/85 py-3 shadow-[0_1px_0_var(--color-border)] backdrop-blur-lg" : "py-5 md:py-6"
+        )}
       >
-        <div className="container-editorial flex items-center justify-between">
-          {/* Logotype */}
+        <div className="container-app flex items-center justify-between">
           <Link
-            href="/#home"
-            className="flex items-center gap-3 group"
+            href="/"
+            aria-label={`${name} — home`}
+            className={cn("flex items-center gap-3 text-lg font-semibold tracking-tight", scrolled ? "text-fg" : "text-on-forest")}
           >
-            <div className="w-10 h-10 rounded-full overflow-hidden border border-border bg-bg-elevated flex-shrink-0">
-              <Image 
-                src="/logo.png" 
-                alt="Habib Tanwir" 
-                width={40}
-                height={40}
-                priority
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" 
-              />
-            </div>
-            <span className="font-display text-2xl tracking-tight text-fg hover:text-accent transition-colors">
-              Habib Tanwir
-            </span>
+            <LogoMark className="h-8" />
+            <span className="h-6 w-px bg-current opacity-25" aria-hidden="true" />
+            <span className="font-serif text-2xl font-normal">{name}</span>
           </Link>
 
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-8">
-            <div className="flex items-center gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="text-base font-medium text-fg-muted hover:text-fg transition-colors"
-                >
-                  {link.name}
+          <nav className="hidden items-center gap-8 md:flex">
+            {LINKS.map((l) => {
+              const cls = cn(
+                "eyebrow transition-colors",
+                scrolled ? "text-fg-muted hover:text-fg" : "text-on-forest-muted hover:text-on-forest"
+              );
+              return l.section ? (
+                <ScrollLink key={l.name} to={l.section} className={cls}>
+                  {l.name}
+                </ScrollLink>
+              ) : (
+                <Link key={l.name} href={l.href!} className={cls}>
+                  {l.name}
                 </Link>
-              ))}
-            </div>
-            <div className="w-px h-4 bg-border mx-2" />
-            <ThemeToggle />
-          </div>
-
-          {/* Mobile: toggle + hamburger */}
-          <div className="flex md:hidden items-center gap-4">
-            <ThemeToggle />
-            <button
-              className="flex flex-col justify-center items-center w-6 h-6 gap-[4px]"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open Menu"
+              );
+            })}
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noreferrer"
+              className="eyebrow inline-flex items-center gap-2 rounded-full bg-sun px-5 py-2.5 text-fg transition-transform hover:scale-[1.04] active:scale-[0.98]"
             >
-              <span className="block w-5 h-[1.5px] bg-fg" />
-              <span className="block w-5 h-[1.5px] bg-fg" />
-            </button>
-          </div>
-        </div>
-      </motion.nav>
+              <WhatsAppIcon className="size-3.5" />
+              Let&apos;s talk
+            </a>
+          </nav>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            className="fixed inset-0 z-[100] flex flex-col justify-center items-center bg-bg/95"
+          <button
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            className={cn("flex flex-col items-end gap-1.5 p-2 md:hidden", scrolled ? "text-fg" : "text-on-forest")}
           >
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-fg hover:text-accent transition-colors"
-              aria-label="Close Menu"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              >
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </button>
+            <span className="block h-0.5 w-7 rounded bg-current" />
+            <span className="block h-0.5 w-5 rounded bg-current" />
+          </button>
+        </div>
+      </header>
 
-            <div className="flex flex-col items-center gap-8">
-              {navLinks.map((link, i) => (
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[100] flex flex-col bg-forest px-6 pt-6 pb-10 text-on-forest"
+          >
+            <div className="flex items-center justify-between">
+              <span className="flex items-center gap-3 font-serif text-2xl">
+                <LogoMark className="h-8" />
+                {name}
+              </span>
+              <button onClick={() => setOpen(false)} aria-label="Close menu" className="p-2">
+                <X className="size-7" />
+              </button>
+            </div>
+            <nav className="mt-16 flex flex-col gap-6">
+              {LINKS.map((l, i) => (
                 <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: 0.1 + i * 0.05,
-                    duration: 0.4,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
+                  key={l.name}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.05 * i, duration: 0.3 }}
                 >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="font-display text-4xl text-fg hover:text-accent transition-colors"
-                  >
-                    {link.name}
-                  </Link>
+                  {l.section ? (
+                    <ScrollLink to={l.section} onNavigate={() => setOpen(false)} className="font-serif text-5xl">
+                      {l.name}
+                    </ScrollLink>
+                  ) : (
+                    <Link href={l.href!} onClick={() => setOpen(false)} className="font-serif text-5xl">
+                      {l.name}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
-              
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.4 }}
-                className="mt-4"
-              >
-                <a
-                  href="mailto:hello@habibfolio.tech"
-                  className="text-sm font-mono tracking-wider text-accent border-b border-accent/20 hover:border-accent transition-all"
-                >
-                  hello@habibfolio.tech
-                </a>
-              </motion.div>
-            </div>
+            </nav>
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setOpen(false)}
+              className="mt-auto inline-flex items-center justify-center gap-2.5 rounded-full bg-[#25D366] px-6 py-4 font-medium text-fg"
+            >
+              <WhatsAppIcon className="size-5" />
+              Chat on WhatsApp
+            </a>
           </motion.div>
         )}
       </AnimatePresence>

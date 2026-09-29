@@ -1,25 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "*",
-      },
-      {
-        protocol: "http",
-        hostname: "*",
-      },
-    ],
+    // Sanity's CDN does the resizing (see lib/image-loader.ts).
+    loader: "custom",
+    loaderFile: "./lib/image-loader.ts",
   },
-
-  // External packages for server components
-  serverExternalPackages: [],
 
   // Output standalone build for better compatibility with Vercel
   output: 'standalone',

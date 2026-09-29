@@ -1,120 +1,79 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { getBlogBySlug } from "@/lib/data";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { Metadata } from 'next';
+import PageHeader from "@/components/layout/PageHeader";
+import JsonLd from "@/components/seo/JsonLd";
+import { blogPostSchema } from "@/lib/schema";
+import { PERSON_NAME, SITE_URL } from "@/lib/site";
+import MarkdownContent from "@/components/ui/MarkdownContent";
+import { formatDate } from "@/components/sections/Writing";
+import { getSiteSettings, getBlogBySlug, imgUrl } from "@/lib/sanity";
 
-interface BlogPageProps {
-  params: Promise<{ slug: string }>;
-}
-
-export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const blog = await getBlogBySlug(slug);
-
-  if (!blog) return { title: "Blog Not Found" };
-
+  const [post, settings] = await Promise.all([getBlogBySlug(slug), getSiteSettings()]);
+  if (!post) return { title: "Post not found" };
+  const image = post.coverUrl ?? settings.shareUrl;
   return {
-    title: `${blog.seo_title || blog.title} | Habib Tanwir`,
-    description: blog.seo_description || blog.excerpt,
+    title: post.seoTitle || post.title,
+    description: post.seoDescription || post.excerpt,
+    alternates: { canonical: `/blogs/${post.slug}` },
+    authors: [{ name: PERSON_NAME, url: SITE_URL }],
     openGraph: {
-      title: blog.seo_title || blog.title,
-      description: blog.seo_description || blog.excerpt,
-      images: blog.cover_url ? [{ url: blog.cover_url }] : [],
-    }
+      type: "article",
+      url: `/blogs/${post.slug}`,
+      title: post.seoTitle || post.title,
+      description: post.seoDescription || post.excerpt,
+      ...(post.publishedAt && { publishedTime: post.publishedAt }),
+      modifiedTime: post._updatedAt,
+      authors: [PERSON_NAME],
+      images: [image ? imgUrl(image, 1200) : "/og.png"],
+    },
   };
 }
 
-export default async function BlogPage({ params }: BlogPageProps) {
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const blog = await getBlogBySlug(slug);
-
-  if (!blog) notFound();
-
-  const formattedDate = new Date(blog.created_at).toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  }).toUpperCase();
+  const [settings, post] = await Promise.all([getSiteSettings(), getBlogBySlug(slug)]);
+  if (!post) notFound();
 
   return (
     <>
-      <Navbar />
-      <main id="main-content" style={{ backgroundColor: "var(--bg)" }}>
-        <article className="pt-40 pb-32">
-          <div className="container-editorial">
-            {/* Header */}
-            <header className="max-w-4xl mb-16">
-              <div className="flex flex-wrap items-center gap-4 mb-8">
-                <Link href="/blogs" className="eyebrow hover:text-[var(--fg)] transition-colors">
-                  ← Back to Writing
-                </Link>
-                <span className="text-[var(--border-strong)]">/</span>
-                <span className="eyebrow" style={{ color: "var(--fg)" }}>
-                  {blog.category || "ENGINEERING"}
-                </span>
-                <span className="text-[var(--border-strong)]">/</span>
-                <span className="eyebrow">
-                  {formattedDate}
-                </span>
+      <JsonLd data={blogPostSchema(post)} />
+      <Navbar name={settings.name} />
+      <main id="main-content">
+        <PageHeader
+          eyebrow={[post.category, formatDate(post.publishedAt, "long")].filter(Boolean).join("  ·  ") || "Writing"}
+          title={post.title}
+          intro={post.excerpt}
+        />
+
+        {post.coverUrl && (
+          <div className="bg-forest">
+            <div className="container-app max-w-4xl">
+              <div className="relative aspect-video translate-y-10 overflow-hidden rounded-3xl shadow-2xl shadow-black/20 md:translate-y-14">
+                <Image src={imgUrl(post.coverUrl, 1400)} alt={post.title} fill sizes="(min-width: 896px) 816px, 100vw" priority className="object-cover" />
               </div>
-
-              <h1 className="text-display-xl font-display italic leading-tight mb-8" style={{ color: "var(--fg)" }}>
-                {blog.title}
-              </h1>
-
-              <p className="text-xl md:text-2xl leading-relaxed italic" style={{ color: "var(--fg-muted)" }}>
-                {blog.excerpt}
-              </p>
-            </header>
-
-            {/* Featured Image */}
-            {blog.cover_url && (
-              <div className="w-full aspect-[21/9] mb-20 overflow-hidden rounded-sm border border-[var(--border-color)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src={blog.cover_url} 
-                  alt={blog.title} 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
-
-            {/* Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-20 items-start">
-              <div 
-                className="prose-editorial"
-                dangerouslySetInnerHTML={{ __html: blog.content }}
-              />
-
-              {/* Sidebar */}
-              <aside className="hidden lg:flex flex-col gap-12 sticky top-32">
-                <div className="flex flex-col gap-4">
-                  <p className="eyebrow" style={{ fontSize: "10px" }}>Topics</p>
-                  <div className="flex flex-wrap gap-2">
-                    {blog.tags && blog.tags.map((tag: string) => (
-                      <span key={tag} className="tech-tag">#{tag}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-4 pt-8 border-t border-[var(--border-color)]">
-                  <p className="eyebrow" style={{ fontSize: "10px" }}>Ready to talk?</p>
-                  <a 
-                    href="https://wa.me/919707370886" 
-                    className="arrow-link"
-                    style={{ fontSize: "14px" }}
-                  >
-                    Book a project <span>→</span>
-                  </a>
-                </div>
-              </aside>
             </div>
           </div>
+        )}
+
+        <article className="container-app max-w-3xl pt-24 pb-24 md:pt-28">
+          <Link href="/blogs" className="eyebrow mb-10 inline-flex items-center gap-1.5 text-fg-muted hover:text-fg">
+            <ArrowLeft className="size-4" /> All writing
+          </Link>
+          {post.content ? (
+            <MarkdownContent content={post.content} />
+          ) : (
+            <p className="text-fg-muted">This post doesn&apos;t have any content yet.</p>
+          )}
         </article>
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </>
   );
 }

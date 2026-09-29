@@ -1,75 +1,173 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight, Github, Instagram, Linkedin } from "lucide-react";
+import XIcon from "@/components/ui/XIcon";
+import { SparkStar } from "@/components/ui/Marquee";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
+import { whatsappUrl } from "@/lib/contact";
+import { imgUrl, type SiteSettings } from "@/lib/sanity";
 
-export default function Hero({ featuredProject }: { featuredProject?: any }) {
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+export default function Hero({ settings }: { settings: SiteSettings }) {
+  const fullName = settings.name || "Habib Tanwir";
+  const [first, ...rest] = fullName.split(" ");
+  const tagline = settings.tagline || "I build fast products — and design the pages that sell them.";
+  const portrait = settings.profileUrl ? imgUrl(settings.profileUrl, 900) : "/habib.webp";
+
+  const socials = [
+    { href: settings.githubUrl, label: "GitHub", icon: Github },
+    { href: settings.linkedinUrl, label: "LinkedIn", icon: Linkedin },
+    { href: settings.twitterUrl, label: "X", icon: XIcon },
+    { href: settings.instagramUrl, label: "Instagram", icon: Instagram },
+  ].filter((s) => s.href);
+
   return (
-    <section
-      id="home"
-      className="relative flex flex-col justify-center overflow-hidden border-b border-border bg-bg pt-[120px] pb-[80px] lg:pt-[180px] lg:pb-[120px]"
-    >
-      <div className="container-editorial">
-        {/* 1. The Massive Headline (Spans Left/Top) */}
-        <div className="mb-10 lg:mb-14">
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-8"
-          >
-            <p className="eyebrow flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              01 / BUILDING HIGH-PERFORMANCE AI SAAS
-            </p>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className="font-display italic text-[clamp(3.5rem,8vw,8rem)] leading-[0.9] tracking-[-0.04em] -ml-[0.05em] text-fg"
-          >
-            Habib Tanwir
-          </motion.h1>
+    <section id="home" className="relative overflow-hidden bg-forest text-on-forest">
+      {/* ── Phones & small tablets: one simple centered column ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: EASE }}
+        className="container-app flex flex-col items-center pt-28 pb-16 text-center md:hidden"
+      >
+        <div className="relative aspect-[4/5] w-44 overflow-hidden rounded-t-full bg-forest-deep">
+          <Image src={portrait} alt={fullName} fill priority sizes="176px" className="object-cover object-top" />
         </div>
 
-        {/* 2. Sub-content Layout: Split for Bio & Featured Work */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-          
-          {/* Bio Column (Left) */}
-          <div className="lg:col-span-7 flex flex-col gap-12">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-              className="text-text-xl leading-relaxed text-fg-muted max-w-2xl"
-            >
-              Full-stack engineering with a designer&apos;s eye. I architect AI-powered products 
-              and the visual identities that define them. Focused on high-performance 
-              SaaS and thoughtful digital experiences.
-            </motion.p>
+        <p className="eyebrow mt-8 text-sun">Hello, I&apos;m</p>
+        <h1 className="mt-3 font-serif text-5xl leading-none">{fullName}</h1>
+        <p className="eyebrow mt-4 text-on-forest-muted">Full-stack engineer &amp; visual designer</p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
-              className="flex flex-wrap items-center gap-8 md:gap-12"
-            >
-              <Link
-                href="/#contact"
-                className="px-10 py-5 bg-accent text-white font-medium transition-all hover:bg-accent-hover hover:scale-[1.02] active:scale-[0.98] rounded-sm"
+        <p className="mt-6 max-w-xs text-lg leading-relaxed text-on-forest/85">{tagline}</p>
+
+        <div className="mt-9 flex w-full max-w-xs flex-col gap-3">
+          <a href={whatsappUrl()} target="_blank" rel="noreferrer" className="eyebrow inline-flex items-center justify-center gap-2 rounded-full bg-sun px-6 py-4 text-fg">
+            <WhatsAppIcon className="size-4" />
+            Contact me
+          </a>
+          <Link href="/work" className="eyebrow rounded-full border border-on-forest/30 px-6 py-4 text-on-forest">
+            See my work
+          </Link>
+        </div>
+
+        {socials.length > 0 && (
+          <div className="mt-8 flex justify-center gap-3">
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={s.label}
+                className="flex size-11 items-center justify-center rounded-full border border-on-forest/25 transition-colors hover:bg-on-forest hover:text-forest"
               >
-                Collaborate
-              </Link>
-              
-              <Link href="/#work" className="arrow-link group text-lg font-medium">
-                See selected work <span className="text-accent group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-            </motion.div>
+                <s.icon className="size-4" />
+              </a>
+            ))}
+          </div>
+        )}
+      </motion.div>
+
+      {/* ── Tablet & desktop: three-column editorial layout ── */}
+      <div className="container-app hidden gap-8 pt-36 pb-28 md:grid md:grid-cols-12">
+        {/* Name */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: EASE }}
+          className="col-span-4 flex flex-col justify-center"
+        >
+          <p className="eyebrow mb-5 text-sun">Hello, I&apos;m</p>
+          <h1 className="font-serif text-display-xl leading-[0.92]">
+            {first}
+            {rest.length > 0 && (
+              <>
+                <br />
+                {rest.join(" ")}
+              </>
+            )}
+          </h1>
+          <div className="mt-8 flex items-start gap-3">
+            <span className="mt-2 h-0.5 w-8 shrink-0 bg-accent" />
+            <p className="eyebrow leading-relaxed text-on-forest-muted">
+              Full-stack engineer
+              <br />
+              &amp; visual designer
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Arch portrait */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+          className="relative col-span-4"
+        >
+          <div className="relative aspect-[4/5] overflow-hidden rounded-t-full bg-forest-deep">
+            <Image src={portrait} alt={fullName} fill priority sizes="33vw" className="object-cover object-top" />
+          </div>
+          <span className="absolute -bottom-5 left-1/2 flex size-11 -translate-x-1/2 items-center justify-center rounded-full bg-bg shadow-md">
+            <SparkStar className="size-4 text-fg" />
+          </span>
+        </motion.div>
+
+        {/* Quote + contact */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+          className="col-span-4 flex flex-col justify-center gap-7"
+        >
+          <div>
+            <span className="font-serif text-6xl leading-none text-accent">&ldquo;</span>
+            <p className="-mt-3 font-serif text-[1.9rem] leading-snug">{tagline}</p>
           </div>
 
-        </div>
+          <p className="eyebrow max-w-[16rem] leading-relaxed text-on-forest-muted">
+            Open for freelance &amp; full-time work — remote, worldwide.
+          </p>
+
+          {socials.length > 0 && (
+            <div className="flex gap-3">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.label}
+                  className="flex size-10 items-center justify-center rounded-full border border-on-forest/25 transition-colors hover:bg-on-forest hover:text-forest"
+                >
+                  <s.icon className="size-4" />
+                </a>
+              ))}
+            </div>
+          )}
+
+          <a
+            href={whatsappUrl()}
+            target="_blank"
+            rel="noreferrer"
+            className="group flex items-end justify-between rounded-2xl bg-accent px-7 py-7 text-white transition-transform hover:-translate-y-1"
+          >
+            <span>
+              <span className="eyebrow mb-3 flex items-center gap-2 text-white/85">
+                <WhatsAppIcon className="size-3.5" /> WhatsApp
+              </span>
+              <span className="block font-serif text-3xl leading-tight">
+                Contact
+                <br />
+                with me
+              </span>
+            </span>
+            <ArrowUpRight className="size-7 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+          </a>
+        </motion.div>
       </div>
     </section>
   );

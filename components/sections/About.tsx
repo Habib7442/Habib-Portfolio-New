@@ -1,95 +1,53 @@
-"use client";
+import { ArrowUpRight } from "lucide-react";
+import Reveal from "@/components/ui/Reveal";
+import SkillIcons from "@/components/ui/SkillIcons";
+import type { SiteSettings } from "@/lib/sanity";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import Image from "next/image";
-
-export default function About() {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
-
-  const metaData = [
-    { label: "CURRENT FOCUS", value: "AI Orchestration & SaaS Architecture" },
-    { label: "AVAILABILITY", value: "Open for Select Senior Roles" },
-    { label: "CORE STACK", value: "TypeScript · Next.js · Supabase · React Native" },
-  ];
+export default function About({ settings }: { settings: SiteSettings }) {
+  const name = (settings.name || "Habib Tanwir").split(" ")[0];
+  const intro =
+    settings.bio ||
+    `Hi, I'm ${name}. I build websites and apps, and I design the things that go with them — landing pages, posters and social media posts.`;
 
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      className="bg-bg py-24 lg:py-32 border-t border-border overflow-hidden"
-    >
-      <div className="container-editorial">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-16 lg:mb-24"
-        >
-          <p className="eyebrow">04 / ABOUT THE MANIFESTO</p>
-        </motion.div>
+    <section id="about" className="py-20 md:py-28">
+      <div className="container-app grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <Reveal className="lg:col-span-4">
+          <p className="eyebrow mb-4 text-accent-hover">✦ About me</p>
+          <h2 className="font-serif text-display-md leading-[1.05]">A little about me</h2>
+        </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-          {/* Left: Portrait Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full aspect-[4/5] bg-bg-muted overflow-hidden border border-border rounded-sm group"
+        <Reveal delay={0.08} className="flex flex-col gap-10 lg:col-span-8">
+          <div className="flex flex-col gap-5">
+            <p className="whitespace-pre-line text-lg leading-relaxed text-fg md:text-xl">{intro}</p>
+            <p className="text-lg leading-relaxed text-fg-muted">
+            I like keeping things simple: clean code, clear design, and work that actually helps a business grow.
+            </p>
+          </div>
+
+          <a
+            href="https://www.locallifyagency.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="group flex flex-col gap-6 rounded-3xl bg-forest p-7 text-on-forest transition-transform hover:-translate-y-1 sm:flex-row sm:items-center sm:justify-between md:p-10"
           >
-            <Image 
-              src="/habib.png" 
-              alt="Habib Tanwir" 
-              width={600}
-              height={750}
-              className="w-full h-full object-cover transition-all duration-1000 ease-in-out group-hover:scale-[1.03]"
-            />
-            {/* Subtle grain overlay */}
-            <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-repeat" style={{ backgroundImage: "url('data:image/svg+xml;utf8,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.65\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\"/%3E%3C/svg%3E')" }} />
-          </motion.div>
-
-          {/* Right: Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-            transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col gap-8 lg:gap-12"
-          >
-            <h2 className="text-display-lg font-display italic leading-[1.1] text-fg">
-              Engineering digital products <br className="hidden md:block" /> with an editorial eye.
-            </h2>
-
-            <div className="flex flex-col gap-8 text-text-xl leading-relaxed text-fg-muted">
-              <p>
-                I specialize in architecting high-performance AI-powered SaaS and scalable brand systems. My work focuses on bridging the gap between sophisticated full-stack engineering and intentional, minimalist design. 
-              </p>
-              <p>
-                As a Lead Engineer and Product Architect, I build products like IntegratePDF — a Voice-AI orchestration platform designed for high-density information environments. To me, both engineering and design are exercises in restraint — the art of knowing exactly what to leave out.
+            <div>
+              <p className="eyebrow mb-2 text-sun">Founder</p>
+              <p className="font-serif text-3xl">Locallify Agency</p>
+              <p className="mt-2 max-w-md text-on-forest-muted">
+                A software studio in Silchar, Assam. We build web apps, mobile apps and AI tools for clients around the world.
               </p>
             </div>
+            <span className="eyebrow inline-flex shrink-0 items-center gap-1.5 self-start rounded-full bg-sun px-4 py-2.5 text-fg sm:self-center">
+              Visit website <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
+          </a>
 
-            {/* Meta Block */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 gap-x-12 pt-12 border-t border-border mt-4">
-              {metaData.map((item) => (
-                <div key={item.label} className="flex flex-col gap-2">
-                  <p className="font-mono text-[10px] font-bold tracking-[0.2em] text-fg-subtle uppercase">{item.label}</p>
-                  <p className="text-sm font-medium text-fg">{item.value}</p>
-                </div>
-              ))}
-              
-              <div className="flex flex-col gap-2">
-                <p className="font-mono text-[10px] font-bold tracking-[0.2em] text-fg-subtle uppercase">ELSEWHERE</p>
-                <div className="flex gap-4 text-sm font-medium text-fg">
-                  <a href="https://github.com/Habib7442" className="hover:text-accent transition-colors">GITHUB</a>
-                  <a href="https://linkedin.com/in/habib-tanwir" className="hover:text-accent transition-colors">LINKEDIN</a>
-                  <a href="https://x.com/TanwirHabib" className="hover:text-accent transition-colors">X</a>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+          <div>
+            <p className="eyebrow mb-5 text-fg-subtle">What I work with</p>
+            <SkillIcons />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

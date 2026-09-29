@@ -1,3 +1,7 @@
+> **Superseded** — see `context/progress-tracker.md` for the current "Obsidian"
+> design system. This cream/saffron "Paper" theme was replaced wholesale. Kept
+> for history only; do not implement against these tokens.
+
 # UI Context: Habibfolio Redesign
 
 ## Aesthetic: Refined Editorial-Dev
