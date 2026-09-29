@@ -55,6 +55,11 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [ogImage],
     },
     category: "technology",
+    // Ownership verification for Google Search Console / Bing Webmaster Tools (see docs/search-console.md).
+    verification: {
+      ...(process.env.GOOGLE_SITE_VERIFICATION && { google: process.env.GOOGLE_SITE_VERIFICATION }),
+      ...(process.env.BING_SITE_VERIFICATION && { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } }),
+    },
     robots: {
       index: true,
       follow: true,

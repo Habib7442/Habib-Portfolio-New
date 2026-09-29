@@ -16,6 +16,9 @@ const LINKS: { name: string; href?: string; section?: string }[] = [
   { name: "Leave a review", href: "/review" },
 ];
 
+const heading = "eyebrow mb-5 text-sun";
+const linkCls = "text-on-forest-muted transition-colors hover:text-on-forest";
+
 export default function Footer({ settings }: { settings: SiteSettings }) {
   const name = settings.name || "Habib Tanwir";
   // Social icons + resume come from admin Settings and only appear once they're filled in.
@@ -28,79 +31,89 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
 
   return (
     <footer className="overflow-hidden bg-forest-deep text-on-forest">
-      <div className="container-app grid gap-10 border-b border-on-forest/10 py-14 md:grid-cols-3 md:items-center">
-        {/* Brand */}
-        <div>
+      <div className="container-app grid gap-12 border-b border-on-forest/10 py-16 md:grid-cols-12 md:gap-8">
+        {/* Brand + contact */}
+        <div className="md:col-span-5">
           <div className="flex items-center gap-3">
             <LogoMark className="h-8" />
             <span className="h-6 w-px bg-on-forest/25" aria-hidden="true" />
             <span className="font-serif text-2xl">{name}</span>
           </div>
-          <p className="mt-3 max-w-xs text-sm text-on-forest-muted">Full-stack engineer &amp; visual designer.</p>
+          <p className="mt-4 max-w-xs text-on-forest-muted">
+            Full-stack engineer &amp; visual designer. Building fast websites, products and the visuals that sell them.
+          </p>
+          <div className="mt-7 flex flex-col items-start gap-3">
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-medium text-fg transition-transform hover:-translate-y-0.5"
+            >
+              <WhatsAppIcon className="size-4" />
+              Chat on WhatsApp
+            </a>
+            {settings.email && (
+              <a href={`mailto:${settings.email}`} className={`inline-flex items-center gap-2 text-sm ${linkCls}`}>
+                <Mail className="size-4" />
+                {settings.email}
+              </a>
+            )}
+          </div>
         </div>
 
-        {/* Links */}
-        <nav className="flex flex-wrap gap-x-7 gap-y-3 md:justify-center">
-          {LINKS.map((l) =>
-            l.section ? (
-              <ScrollLink key={l.name} to={l.section} className="eyebrow text-on-forest-muted transition-colors hover:text-on-forest">
-                {l.name}
-              </ScrollLink>
-            ) : (
-              <Link key={l.name} href={l.href!} className="eyebrow text-on-forest-muted transition-colors hover:text-on-forest">
-                {l.name}
-              </Link>
-            )
-          )}
+        {/* Pages */}
+        <nav aria-label="Footer" className="md:col-span-3 md:col-start-7">
+          <p className={heading}>Pages</p>
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-3 md:grid-cols-1">
+            {LINKS.map((l) => (
+              <li key={l.name}>
+                {l.section ? (
+                  <ScrollLink to={l.section} className={linkCls}>
+                    {l.name}
+                  </ScrollLink>
+                ) : (
+                  <Link href={l.href!} className={linkCls}>
+                    {l.name}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        {/* Contact */}
-        <div className="flex flex-wrap items-center gap-3 md:justify-end">
-          <a
-            href={whatsappUrl()}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-medium text-fg transition-transform hover:-translate-y-0.5"
-          >
-            <WhatsAppIcon className="size-4" />
-            Chat on WhatsApp
-          </a>
-          {settings.resumeUrl && (
-            <a
-              href={settings.resumeUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="eyebrow inline-flex items-center gap-1 rounded-full border border-on-forest/25 px-4 py-2.5 text-[0.64rem] text-on-forest-muted transition-colors hover:bg-on-forest hover:text-forest-deep"
-            >
-              Resume <ArrowUpRight className="size-3" />
-            </a>
-          )}
-          {settings.email && (
-            <a
-              href={`mailto:${settings.email}`}
-              aria-label={`Email ${settings.email}`}
-              title={settings.email}
-              className="flex size-10 items-center justify-center rounded-full border border-on-forest/25 text-on-forest-muted transition-colors hover:bg-on-forest hover:text-forest-deep"
-            >
-              <Mail className="size-4" />
-            </a>
-          )}
-          {socials.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={s.label}
-              className="flex size-10 items-center justify-center rounded-full border border-on-forest/25 text-on-forest-muted transition-colors hover:bg-on-forest hover:text-forest-deep"
-            >
-              <s.icon className="size-4" />
-            </a>
-          ))}
-        </div>
+        {/* Follow */}
+        {(socials.length > 0 || settings.resumeUrl) && (
+          <div className="md:col-span-3 md:col-start-10">
+            <p className={heading}>Follow</p>
+            <div className="flex flex-wrap gap-2.5">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.label}
+                  className="flex size-11 items-center justify-center rounded-full border border-on-forest/20 text-on-forest-muted transition-colors hover:border-on-forest hover:bg-on-forest hover:text-forest-deep"
+                >
+                  <s.icon className="size-4" />
+                </a>
+              ))}
+            </div>
+            {settings.resumeUrl && (
+              <a
+                href={settings.resumeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={`mt-5 inline-flex items-center gap-1 text-sm ${linkCls}`}
+              >
+                Download resume <ArrowUpRight className="size-3.5" />
+              </a>
+            )}
+          </div>
+        )}
       </div>
 
-      <div className="container-app flex flex-col-reverse gap-4 py-6 text-xs text-on-forest-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="container-app flex flex-col-reverse gap-4 py-6 text-sm text-on-forest-muted sm:flex-row sm:items-center sm:justify-between">
         <span>© {new Date().getFullYear()} {name}. All rights reserved.</span>
         <ScrollLink to="top" className="eyebrow inline-flex items-center gap-2 hover:text-sun">
           Back to top <ArrowUp className="size-3.5" />
