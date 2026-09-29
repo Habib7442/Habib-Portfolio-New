@@ -10,13 +10,15 @@ Everything search engines need is already built into the site:
 | `https://habibtanwir.com/llms.txt` | Summary for AI search engines (ChatGPT, Claude, Perplexity). |
 
 Also in place: a canonical URL on every page, structured data (Person, FAQ, projects, blog posts),
-a proper 404 page, `www.habibtanwir.com` → `habibtanwir.com` redirect, and `/review` kept out of search.
+a proper 404 page, and `/review` kept out of search.
 
 ## Do this after buying the domain and deploying
 
 ### 1. Connect the domain in Vercel
 Vercel → portfolio project → **Settings → Domains** → add `habibtanwir.com` **and** `www.habibtanwir.com`.
-Follow Vercel's DNS instructions at your domain registrar. Make `habibtanwir.com` the primary domain.
+Follow Vercel's DNS instructions at your domain registrar. Make `habibtanwir.com` (no www) the primary
+domain and set `www.habibtanwir.com` to **redirect to** it. The site's canonical URLs all use `habibtanwir.com`,
+so the primary domain must match. (Don't also add a www redirect in `next.config.ts` — that causes a loop.)
 
 ### 2. Add the site to Google Search Console
 1. Go to <https://search.google.com/search-console> → **Add property**.

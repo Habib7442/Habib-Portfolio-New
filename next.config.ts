@@ -7,17 +7,8 @@ const nextConfig: NextConfig = {
     loaderFile: "./lib/image-loader.ts",
   },
 
-  // One canonical host: send www.habibtanwir.com to habibtanwir.com (permanent 308).
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.habibtanwir.com" }],
-        destination: "https://habibtanwir.com/:path*",
-        permanent: true,
-      },
-    ];
-  },
+  // www <-> non-www redirects are configured in Vercel (Settings -> Domains), not here:
+  // doing it in both places can create a redirect loop.
 
   // Output standalone build for better compatibility with Vercel
   output: 'standalone',
