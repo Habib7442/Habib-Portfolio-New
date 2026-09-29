@@ -8,7 +8,10 @@ const client = createClient({
   perspective: 'published', // never leak Studio drafts to the public site
 })
 
-/** Public, read-only fetch with Next's ISR cache. No token: only published content is ever reachable this way. */
+/**
+ * Public, read-only fetch with Next's ISR cache (no token). Private documents (contact messages,
+ * unapproved reviews) use "private." ids, which Sanity never returns to anonymous requests.
+ */
 function sanityFetch<T>(query: string, params: Record<string, unknown> = {}): Promise<T> {
   return client.fetch<T>(query, params, {
     cache: 'force-cache',
@@ -78,6 +81,15 @@ export type Design = {
   tools: string[]
   tags: string[]
   featured: boolean
+}
+
+export type Review = {
+  _id: string
+  name: string
+  role?: string
+  rating: number
+  review: string
+  photoUrl?: string
 }
 
 export type BlogSummary = {
@@ -172,4 +184,13 @@ export async function getBlogBySlug(slug: string): Promise<Blog | null> {
 /** Appends Sanity's image-CDN resize params. `url` must be a raw asset->url. */
 export function imgUrl(url: string, width: number, quality = 80) {
   return `${url}?w=${width}&auto=format&q=${quality}`
+}
+
+/** Only reviews you've approved in the admin, from people who agreed to be shown. */
+export async function getReviews(): Promise<Review[]> {
+  return sanityFetch<Review[]>(
+    `*[_type == "review" && status == "approved" && consent == true] | order(_createdAt desc) {
+      _id, name, role, rating, review, "photoUrl": photo.asset->url
+    }`
+  )
 }

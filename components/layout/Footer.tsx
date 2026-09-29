@@ -13,6 +13,7 @@ const LINKS: { name: string; href?: string; section?: string }[] = [
   { name: "About", section: "about" },
   { name: "Services", section: "services" },
   { name: "Writing", href: "/blogs" },
+  { name: "Leave a review", href: "/review" },
 ];
 
 export default function Footer({ settings }: { settings: SiteSettings }) {

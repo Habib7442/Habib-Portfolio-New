@@ -16,6 +16,7 @@ const LINKS: { name: string; href?: string; section?: string }[] = [
   { name: "About", section: "about" },
   { name: "Services", section: "services" },
   { name: "Writing", href: "/blogs" },
+  { name: "Review", href: "/review" },
 ];
 
 // Every page opens on a forest-green band, so the bar starts light-on-green and

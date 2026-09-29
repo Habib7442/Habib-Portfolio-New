@@ -7,6 +7,7 @@ import FeaturedWork from "@/components/sections/FeaturedWork";
 import GalleryBand from "@/components/sections/GalleryBand";
 import Services, { type Service } from "@/components/sections/Services";
 import LandingShowcase from "@/components/sections/LandingShowcase";
+import Testimonials from "@/components/sections/Testimonials";
 import Writing from "@/components/sections/Writing";
 import Contact from "@/components/sections/Contact";
 import Faq from "@/components/sections/Faq";
@@ -16,17 +17,18 @@ import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqs } from "@/lib/faq";
 import { homeSchema } from "@/lib/schema";
 import type { Metadata } from "next";
-import { getSiteSettings, getProjects, getDesigns, getLandingPages, getBlogs } from "@/lib/sanity";
+import { getSiteSettings, getProjects, getDesigns, getLandingPages, getBlogs, getReviews } from "@/lib/sanity";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function HomePage() {
-  const [settings, projects, designs, landingPages, blogs] = await Promise.all([
+  const [settings, projects, designs, landingPages, blogs, reviews] = await Promise.all([
     getSiteSettings(),
     getProjects(),
     getDesigns(),
     getLandingPages(),
     getBlogs(),
+    getReviews(),
   ]);
 
   const faqs = buildFaqs({ name: settings.name, projects, designCount: designs.length, landingCount: landingPages.length });
@@ -94,6 +96,7 @@ export default async function HomePage() {
         />
         <Services services={services} />
         <LandingShowcase pages={landingPages} />
+        <Testimonials reviews={reviews} />
         <Writing posts={blogs} />
         <Faq faqs={faqs} />
         <Contact settings={settings} />
