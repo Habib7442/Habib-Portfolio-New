@@ -90,6 +90,13 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
   Projects/posts use their own cover and fall back to it. The Sanity `shareImage`
   field is no longer used for this, and the dead `/og.png` fallback is gone.
 
+## Canonical domain — 2026-09-30
+- `SITE_URL` switched to `https://www.habibtanwir.com` to match Vercel (www is
+  primary, apex 301s to it). Canonicals previously pointed at the apex, which
+  redirected back to www — conflicting signals for Google. robots.txt `Sitemap:`
+  line and `docs/search-console.md` updated to match.
+- Added `app/icon3.png` (192×192): Google prefers favicons in multiples of 48px.
+
 ## Next up
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.

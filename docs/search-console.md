@@ -4,10 +4,10 @@ Everything search engines need is already built into the site:
 
 | URL | What it is |
 |---|---|
-| `https://habibtanwir.com/sitemap.xml` | Every page, project and blog post, with last-updated dates and images. Updates itself hourly from Sanity. |
-| `https://habibtanwir.com/robots.txt` | Lets Google, Bing and AI search crawlers in, and points them to the sitemap. |
-| `https://habibtanwir.com/manifest.webmanifest` | Site name, colours and icon. |
-| `https://habibtanwir.com/llms.txt` | Summary for AI search engines (ChatGPT, Claude, Perplexity). |
+| `https://www.habibtanwir.com/sitemap.xml` | Every page, project and blog post, with last-updated dates and images. Updates itself hourly from Sanity. |
+| `https://www.habibtanwir.com/robots.txt` | Lets Google, Bing and AI search crawlers in, and points them to the sitemap. |
+| `https://www.habibtanwir.com/manifest.webmanifest` | Site name, colours and icon. |
+| `https://www.habibtanwir.com/llms.txt` | Summary for AI search engines (ChatGPT, Claude, Perplexity). |
 
 Also in place: a canonical URL on every page, structured data (Person, FAQ, projects, blog posts),
 a proper 404 page, and `/review` kept out of search.
@@ -16,9 +16,11 @@ a proper 404 page, and `/review` kept out of search.
 
 ### 1. Connect the domain in Vercel
 Vercel → portfolio project → **Settings → Domains** → add `habibtanwir.com` **and** `www.habibtanwir.com`.
-Follow Vercel's DNS instructions at your domain registrar. Make `habibtanwir.com` (no www) the primary
-domain and set `www.habibtanwir.com` to **redirect to** it. The site's canonical URLs all use `habibtanwir.com`,
-so the primary domain must match. (Don't also add a www redirect in `next.config.ts` — that causes a loop.)
+Follow Vercel's DNS instructions at your domain registrar. Make `www.habibtanwir.com` the primary
+domain and set `habibtanwir.com` (no www) to **redirect to** it. The site's canonical URLs all use
+`www.habibtanwir.com` (`SITE_URL` in `lib/site.ts`), so the primary domain must match — if you ever flip
+the primary domain in Vercel, change `SITE_URL` and the `Sitemap:` line in `app/robots.txt` too.
+(Don't also add a redirect in `next.config.ts` — that causes a loop.)
 
 ### 2. Add the site to Google Search Console
 1. Go to <https://search.google.com/search-console> → **Add property**.
@@ -35,17 +37,17 @@ Search Console → **Sitemaps** → enter `sitemap.xml` → **Submit**. Status s
 
 ### 4. Ask Google to index the main pages (optional, speeds things up)
 Search Console → **URL inspection** → paste each URL → **Request indexing**:
-- `https://habibtanwir.com/`
-- `https://habibtanwir.com/work`
-- `https://habibtanwir.com/blogs`
+- `https://www.habibtanwir.com/`
+- `https://www.habibtanwir.com/work`
+- `https://www.habibtanwir.com/blogs`
 
 ### 5. Bing Webmaster Tools (also feeds ChatGPT search and DuckDuckGo)
 Go to <https://www.bing.com/webmasters> → **Import from Google Search Console** (fastest), or add the
 site manually and verify with the meta tag: put the code in Vercel as `BING_SITE_VERIFICATION=<code>`
-and redeploy. Then submit `https://habibtanwir.com/sitemap.xml` there too.
+and redeploy. Then submit `https://www.habibtanwir.com/sitemap.xml` there too.
 
 ## Checking it works
-- `https://habibtanwir.com/robots.txt` and `/sitemap.xml` open in the browser.
+- `https://www.habibtanwir.com/robots.txt` and `/sitemap.xml` open in the browser.
 - Search Console → **Pages** starts listing indexed pages within a few days.
 - Test a page's structured data: <https://search.google.com/test/rich-results>.
 - Test the share preview: <https://www.opengraph.xyz> (paste your URL).

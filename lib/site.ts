@@ -1,5 +1,6 @@
 // Canonical domain — every absolute URL (canonical tags, sitemap, JSON-LD, llms.txt) is built from this.
-export const SITE_URL = "https://habibtanwir.com";
+// Must match Vercel's primary domain: Vercel serves www and 301s the apex to it.
+export const SITE_URL = "https://www.habibtanwir.com";
 
 export const PERSON_NAME = "Habib Tanwir";
 export const JOB_TITLE = "Full-Stack Engineer & Visual Designer";

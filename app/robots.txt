@@ -55,4 +55,4 @@ Allow: /
 # Content Signals: search indexing, AI answers (with citation) and AI training are all allowed.
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
-Sitemap: https://habibtanwir.com/sitemap.xml
+Sitemap: https://www.habibtanwir.com/sitemap.xml
