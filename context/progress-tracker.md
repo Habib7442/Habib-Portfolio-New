@@ -97,6 +97,12 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
   line and `docs/search-console.md` updated to match.
 - Added `app/icon3.png` (192×192): Google prefers favicons in multiples of 48px.
 
+## Blog Markdown tables — 2026-09-30
+- `MarkdownContent` now uses `remark-gfm` (tables, strikethrough, task lists,
+  autolinks). Without it, table rows rendered as one run-on paragraph.
+- Tables are wrapped in `.table-wrap` (rounded card, horizontal scroll on phones);
+  forest header row in the `.eyebrow` style, zebra rows, bold first column.
+
 ## Next up
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.

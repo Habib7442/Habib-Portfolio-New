@@ -197,3 +197,40 @@ body {
   text-underline-offset: 3px;
 }
 .prose-blog hr { margin: 3rem 0; border: none; height: 1px; background: var(--color-border); }
+.prose-blog del { color: var(--color-fg-subtle); }
+
+/* Tables — a rounded card with a forest header, matching the hero and code blocks */
+.prose-blog .table-wrap {
+  margin: 2rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+}
+.prose-blog table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.prose-blog thead th {
+  background: var(--color-forest);
+  color: var(--color-on-forest);
+  /* same treatment as .eyebrow */
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.prose-blog th,
+.prose-blog td {
+  padding: 0.9rem 1.25rem;
+  text-align: left;
+  vertical-align: top;
+}
+.prose-blog td { color: var(--color-fg-muted); border-top: 1px solid var(--color-border); }
+.prose-blog tbody tr:nth-child(even) td { background: var(--color-bg-muted); }
+/* First column is usually the row label (e.g. the plan name) */
+.prose-blog td:first-child { color: var(--color-fg); font-weight: 600; white-space: nowrap; }
+.prose-blog td code { white-space: nowrap; }
