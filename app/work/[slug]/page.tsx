@@ -10,14 +10,14 @@ import Tag from "@/components/ui/Tag";
 import JsonLd from "@/components/seo/JsonLd";
 import { projectSchema } from "@/lib/schema";
 import { getSiteSettings, getProjectBySlug, imgUrl } from "@/lib/sanity";
+import { OG_IMAGE } from "@/lib/site";
 
 const STATUS_LABEL: Record<string, string> = { completed: "Shipped", in_progress: "In progress", planning: "Planning" };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const [project, settings] = await Promise.all([getProjectBySlug(slug), getSiteSettings()]);
+  const project = await getProjectBySlug(slug);
   if (!project) return { title: "Project not found" };
-  const image = project.thumbnailUrl ?? settings.shareUrl;
   return {
     title: project.title,
     description: project.shortDescription,
@@ -27,8 +27,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       url: `/work/${project.slug}`,
       title: project.title,
       description: project.shortDescription,
-      images: [image ? imgUrl(image, 1200) : "/og.png"],
+      images: [project.thumbnailUrl ? imgUrl(project.thumbnailUrl, 1200) : OG_IMAGE],
     },
+    twitter: { card: "summary_large_image", images: [project.thumbnailUrl ? imgUrl(project.thumbnailUrl, 1200) : OG_IMAGE] },
   };
 }
 

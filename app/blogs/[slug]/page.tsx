@@ -8,16 +8,15 @@ import Footer from "@/components/layout/Footer";
 import PageHeader from "@/components/layout/PageHeader";
 import JsonLd from "@/components/seo/JsonLd";
 import { blogPostSchema } from "@/lib/schema";
-import { PERSON_NAME, SITE_URL } from "@/lib/site";
+import { OG_IMAGE, PERSON_NAME, SITE_URL } from "@/lib/site";
 import MarkdownContent from "@/components/ui/MarkdownContent";
 import { formatDate } from "@/components/sections/Writing";
 import { getSiteSettings, getBlogBySlug, imgUrl } from "@/lib/sanity";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const [post, settings] = await Promise.all([getBlogBySlug(slug), getSiteSettings()]);
+  const post = await getBlogBySlug(slug);
   if (!post) return { title: "Post not found" };
-  const image = post.coverUrl ?? settings.shareUrl;
   return {
     title: post.seoTitle || post.title,
     description: post.seoDescription || post.excerpt,
@@ -31,8 +30,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       ...(post.publishedAt && { publishedTime: post.publishedAt }),
       modifiedTime: post._updatedAt,
       authors: [PERSON_NAME],
-      images: [image ? imgUrl(image, 1200) : "/og.png"],
+      images: [post.coverUrl ? imgUrl(post.coverUrl, 1200) : OG_IMAGE],
     },
+    twitter: { card: "summary_large_image", images: [post.coverUrl ? imgUrl(post.coverUrl, 1200) : OG_IMAGE] },
   };
 }
 

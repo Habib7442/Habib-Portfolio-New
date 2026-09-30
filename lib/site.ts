@@ -6,6 +6,9 @@ export const JOB_TITLE = "Full-Stack Engineer & Visual Designer";
 export const DEFAULT_DESCRIPTION =
   "Habib Tanwir is a full-stack engineer and visual designer in Silchar, India. He builds web apps, SaaS products and landing pages, and designs the posters and brand visuals that sell them.";
 
+// Default social-share (Open Graph / X) card. Pages with their own cover (projects, posts) use that instead.
+export const OG_IMAGE = { url: "/habib_og.png", width: 1733, height: 907, alt: "Habib Tanwir — Web Developer & Designer" };
+
 // Stable @ids so every JSON-LD block on the site points at the same entities.
 export const PERSON_ID = `${SITE_URL}/#person`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;

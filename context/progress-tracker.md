@@ -82,6 +82,14 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
   `coalesce` arrays to `[]` (techStack, images, tools, tags) and defaults for
   category/status/featured/sortOrder, and drop gallery images with no asset.
 
+## Icons & share image — 2026-09-30
+- Favicon pack wired via Next file conventions: `app/favicon.ico`, `app/icon1.png`
+  (16), `app/icon2.png` (32), `app/apple-icon.png` (180); Android 192/512 in
+  `public/`, listed in `app/manifest.ts`.
+- Default OG/X card is `public/habib_og.png` (`OG_IMAGE` in `lib/site.ts`, 1733×907).
+  Projects/posts use their own cover and fall back to it. The Sanity `shareImage`
+  field is no longer used for this, and the dead `/og.png` fallback is gone.
+
 ## Next up
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.
