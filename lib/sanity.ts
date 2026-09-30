@@ -134,12 +134,18 @@ export async function getLandingPages(): Promise<LandingPage[]> {
   )
 }
 
+// GROQ returns null (not []) for fields never filled in; coalesce keeps the non-optional types honest.
 const PROJECT_FIELDS = `
   _id, _updatedAt, title, "slug": slug.current, shortDescription, fullDescription,
-  liveUrl, githubUrl, techStack, category, status, featured, sortOrder,
+  liveUrl, githubUrl,
+  "techStack": coalesce(techStack, []),
+  "category": coalesce(category, "other"),
+  "status": coalesce(status, "completed"),
+  "featured": coalesce(featured, false),
+  "sortOrder": coalesce(sortOrder, 0),
   "thumbnailUrl": thumbnail.asset->url,
   "thumbnailDims": thumbnail.asset->metadata.dimensions{width, height},
-  "images": images[]{ "url": asset->url }
+  "images": coalesce(images[defined(asset)]{ "url": asset->url }, [])
 `
 
 export async function getProjects(): Promise<Project[]> {
@@ -153,16 +159,22 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
 export async function getDesigns(): Promise<Design[]> {
   return sanityFetch<Design[]>(
     `*[_type == "design"] | order(_createdAt desc) {
-      _id, title, category, description, tools, tags, featured,
+      _id, title, description,
+      "category": coalesce(category, "other"),
+      "tools": coalesce(tools, []),
+      "tags": coalesce(tags, []),
+      "featured": coalesce(featured, false),
       "imageUrl": image.asset->url,
       "imageDims": image.asset->metadata.dimensions{width, height},
-      "images": images[]{ "url": asset->url }
+      "images": coalesce(images[defined(asset)]{ "url": asset->url }, [])
     }`
   )
 }
 
 const BLOG_SUMMARY_FIELDS = `
-  _id, _updatedAt, title, "slug": slug.current, excerpt, category, tags, featured, publishedAt,
+  _id, _updatedAt, title, "slug": slug.current, excerpt, category, publishedAt,
+  "tags": coalesce(tags, []),
+  "featured": coalesce(featured, false),
   "coverUrl": coverImage.asset->url
 `
 

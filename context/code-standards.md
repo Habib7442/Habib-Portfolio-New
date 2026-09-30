@@ -9,7 +9,7 @@
 ## Styling (Tailwind 4 + Vanilla CSS)
 - **Token First**: Always use theme tokens (e.g., `text-accent`, `bg-bg-elevated`) instead of arbitrary hex codes.
 - **Layout**: Use CSS Grid (`grid`) for main layouts and Flexbox (`flex`) for components.
-- **Containers**: Use the standard `container` class (max-width: 1140px) for all content.
+- **Containers**: Use the standard `container-app` class (content max-width: 1440px, fluid side padding `clamp(20px, 4vw, 64px)`) for all content.
 - **Radii**: Stick to `radius-sm` (4px) and `radius-md` (8px). Avoid large rounded corners.
 
 ## Component Structure

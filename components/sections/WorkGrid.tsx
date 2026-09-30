@@ -230,7 +230,7 @@ export default function WorkGrid({
       }
       // Real card width for this layout, so the browser downloads a sharp-enough image.
       const c = cols.length;
-      return { cols, sizes: `(min-width: 1240px) ${Math.round(1160 / c)}px, ${Math.round(100 / c)}vw` };
+      return { cols, sizes: `(min-width: 1568px) ${Math.round(1440 / c)}px, ${Math.round(100 / c)}vw` };
     };
     return [
       { ...build(1), className: "flex sm:hidden" },

@@ -27,12 +27,12 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
 
   return (
     <section id="home" className="relative overflow-hidden bg-forest text-on-forest">
-      {/* ── Phones & small tablets: one simple centered column ── */}
+      {/* ── Phones & tablets: one simple centered column ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: EASE }}
-        className="container-app flex flex-col items-center pt-28 pb-16 text-center md:hidden"
+        className="container-app flex flex-col items-center pt-28 pb-16 text-center lg:hidden"
       >
         <div className="relative aspect-[4/5] w-44 overflow-hidden rounded-t-full bg-forest-deep">
           <Image src={portrait} alt={fullName} fill priority sizes="176px" className="object-cover object-top" />
@@ -72,64 +72,97 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
         )}
       </motion.div>
 
-      {/* ── Tablet & desktop: three-column editorial layout ── */}
-      <div className="container-app hidden gap-8 pt-36 pb-28 md:grid md:grid-cols-12">
-        {/* Name */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: EASE }}
-          className="col-span-4 flex flex-col justify-center"
-        >
-          <p className="eyebrow mb-5 text-sun">Hello, I&apos;m</p>
-          <h1 className="font-serif text-display-xl leading-[0.92]">
-            {first}
-            {rest.length > 0 && (
-              <>
+      {/* ── Desktop: name / portrait / pitch, vertically centred on the portrait, then a meta strip.
+           justify-between hands leftover width out equally, so the gaps either side of the portrait always match. ── */}
+      <div className="container-app hidden pt-32 pb-16 lg:block">
+        <div className="flex items-center justify-between gap-10">
+          {/* Name */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="shrink-0"
+          >
+            <p className="eyebrow mb-5 text-sun">Hello, I&apos;m</p>
+            <h1 className="font-serif text-display-xl leading-[0.92] xl:text-[clamp(6rem,7vw,8rem)]">
+              {first}
+              {rest.length > 0 && (
+                <>
+                  <br />
+                  {rest.join(" ")}
+                </>
+              )}
+            </h1>
+            <div className="mt-8 flex items-start gap-3">
+              <span className="mt-2 h-0.5 w-8 shrink-0 bg-accent" />
+              <p className="eyebrow leading-relaxed text-on-forest-muted">
+                Full-stack engineer
                 <br />
-                {rest.join(" ")}
-              </>
-            )}
-          </h1>
-          <div className="mt-8 flex items-start gap-3">
-            <span className="mt-2 h-0.5 w-8 shrink-0 bg-accent" />
-            <p className="eyebrow leading-relaxed text-on-forest-muted">
-              Full-stack engineer
-              <br />
-              &amp; visual designer
+                &amp; visual designer
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Arch portrait */}
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+            // Width follows viewport height (4:5 arch) so the whole hero, meta strip included, fits above the fold.
+            className="relative z-10 w-[max(18rem,min(26rem,32vw,calc((100svh_-_21rem)*0.8)))] shrink-0"
+          >
+            <div className="relative aspect-[4/5] overflow-hidden rounded-t-full bg-forest-deep">
+              <Image src={portrait} alt={fullName} fill priority sizes="(min-width: 1280px) 416px, 33vw" className="object-cover object-top" />
+            </div>
+            {/* Spark rides with the portrait and lands on the meta-strip rule 4rem below (mt-16), centred under it */}
+            <span className="absolute top-[calc(100%+2.625rem)] left-1/2 flex size-11 -translate-x-1/2 items-center justify-center rounded-full bg-bg shadow-md">
+              <SparkStar className="size-4 text-fg" />
+            </span>
+          </motion.div>
+
+          {/* Pitch + actions */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+            className="min-w-0 basis-[30rem]"
+          >
+            <p className="font-serif text-[2rem] leading-snug">
+              <span className="text-accent">&ldquo;</span>
+              {tagline}
             </p>
-          </div>
-        </motion.div>
 
-        {/* Arch portrait */}
+            <div className="mt-10 flex flex-wrap gap-3">
+              <a
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noreferrer"
+                className="eyebrow inline-flex items-center gap-2 rounded-full bg-sun px-6 py-4 text-fg transition-transform hover:scale-[1.03] active:scale-[0.98]"
+              >
+                <WhatsAppIcon className="size-4" />
+                Contact me
+              </a>
+              <Link
+                href="/work"
+                className="group eyebrow inline-flex items-center gap-2 rounded-full border border-on-forest/30 px-6 py-4 text-on-forest transition-colors hover:border-on-forest"
+              >
+                See my work
+                <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Meta strip */}
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-          className="relative col-span-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.35, ease: EASE }}
+          className="mt-16 flex items-center justify-between border-t border-on-forest/15 pt-8"
         >
-          <div className="relative aspect-[4/5] overflow-hidden rounded-t-full bg-forest-deep">
-            <Image src={portrait} alt={fullName} fill priority sizes="33vw" className="object-cover object-top" />
-          </div>
-          <span className="absolute -bottom-5 left-1/2 flex size-11 -translate-x-1/2 items-center justify-center rounded-full bg-bg shadow-md">
-            <SparkStar className="size-4 text-fg" />
-          </span>
-        </motion.div>
-
-        {/* Quote + contact */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
-          className="col-span-4 flex flex-col justify-center gap-7"
-        >
-          <div>
-            <span className="font-serif text-6xl leading-none text-accent">&ldquo;</span>
-            <p className="-mt-3 font-serif text-[1.9rem] leading-snug">{tagline}</p>
-          </div>
-
-          <p className="eyebrow max-w-[16rem] leading-relaxed text-on-forest-muted">
-            Open for freelance &amp; full-time work — remote, worldwide.
+          <p className="eyebrow flex items-center gap-3 text-on-forest-muted">
+            <span className="size-2 rounded-full bg-sun" />
+            Open for freelance &amp; full-time work — remote, worldwide
           </p>
 
           {socials.length > 0 && (
@@ -148,25 +181,6 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
               ))}
             </div>
           )}
-
-          <a
-            href={whatsappUrl()}
-            target="_blank"
-            rel="noreferrer"
-            className="group flex items-end justify-between rounded-2xl bg-accent px-7 py-7 text-white transition-transform hover:-translate-y-1"
-          >
-            <span>
-              <span className="eyebrow mb-3 flex items-center gap-2 text-white/85">
-                <WhatsAppIcon className="size-3.5" /> WhatsApp
-              </span>
-              <span className="block font-serif text-3xl leading-tight">
-                Contact
-                <br />
-                with me
-              </span>
-            </span>
-            <ArrowUpRight className="size-7 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </a>
         </motion.div>
       </div>
     </section>

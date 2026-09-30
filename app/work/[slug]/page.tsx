@@ -71,7 +71,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <div className="bg-forest">
             <div className="container-app">
               <div className="relative aspect-video translate-y-10 overflow-hidden rounded-3xl shadow-2xl shadow-black/20 md:translate-y-16">
-                <Image src={imgUrl(project.thumbnailUrl, 1600)} alt={project.title} fill sizes="(min-width: 1240px) 1160px, 100vw" priority className="object-cover" />
+                <Image src={imgUrl(project.thumbnailUrl, 1600)} alt={project.title} fill sizes="(min-width: 1568px) 1440px, 100vw" priority className="object-cover" />
               </div>
             </div>
           </div>

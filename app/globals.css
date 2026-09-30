@@ -74,14 +74,12 @@ body {
   text-transform: uppercase;
 }
 
+/* Content reaches 1440px; side padding grows with the viewport (20px on phones → 64px on wide screens). */
 .container-app {
   width: 100%;
-  max-width: 1240px;
+  max-width: calc(1440px + 2 * clamp(20px, 4vw, 64px));
   margin-inline: auto;
-  padding-inline: 20px;
-}
-@media (min-width: 768px) {
-  .container-app { padding-inline: 40px; }
+  padding-inline: clamp(20px, 4vw, 64px);
 }
 
 :focus-visible {

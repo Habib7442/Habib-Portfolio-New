@@ -54,6 +54,34 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 - Dev runs on port **3001** (`npm run dev`) so it doesn't collide with the admin's
   own dev server on 3000.
 
+## Hero (forest, editorial) — layout pass, 2026-09-30
+- Desktop (`lg+`) three columns — name / arch portrait / pitch — are vertically
+  centred on the portrait, which is capped at 26rem wide so it doesn't balloon
+  after the container widening (bottom-aligning left a tall empty band above the text).
+- Portrait width now tracks viewport height (`calc((100svh - 21rem) * 0.8)`, clamped
+  18–26rem) so the whole hero incl. the meta strip fits above the fold on laptops.
+- Name grows to `clamp(6rem, 7vw, 8rem)` at `xl`.
+- Desktop row is a `flex justify-between` (not a 12-col grid): name and portrait are
+  fixed-width, the pitch has a 30rem basis and shrinks. Leftover space splits
+  equally, so the gaps either side of the portrait always match. The spark badge
+  lives inside the portrait wrapper and is offset down onto the meta-strip rule.
+- Right column slimmed to tagline + two actions (WhatsApp "Contact me", "See my
+  work"). The big orange WhatsApp card was removed; the navbar already carries it.
+- Availability line + socials moved to a divider strip under the columns; the spark
+  badge sits on that rule, centred under the portrait.
+- Tablets (`md`, 768–1023px) now use the single centred column; the three-column
+  layout was too cramped there.
+
+## Container width — 2026-09-30
+- `.container-app` content max widened 1160px → 1440px; side padding is now fluid
+  `clamp(20px, 4vw, 64px)` (was 20px / 40px). Wide laptops no longer get ~190px
+  empty gutters. Image `sizes` hints updated to match (WorkGrid, work/[slug]).
+
+## Sanity null-safety — 2026-09-30
+- GROQ returns `null` for never-filled fields. Queries in `lib/sanity.ts` now
+  `coalesce` arrays to `[]` (techStack, images, tools, tags) and defaults for
+  category/status/featured/sortOrder, and drop gallery images with no asset.
+
 ## Next up
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.
