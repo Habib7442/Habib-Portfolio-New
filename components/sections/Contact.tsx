@@ -37,7 +37,7 @@ export default function Contact({ settings }: { settings: SiteSettings }) {
 
         <Reveal delay={0.08} className="lg:col-span-7">
           <div className="rounded-[28px] bg-bg-elevated p-6 text-fg md:p-10">
-            <p className="eyebrow mb-6 text-accent-hover">✦ Send a message on WhatsApp</p>
+            <p className="eyebrow mb-6 text-sun">✦ Send a message on WhatsApp</p>
             <ContactForm />
           </div>
         </Reveal>

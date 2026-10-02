@@ -23,7 +23,7 @@
   --color-fg-subtle: #6b7280;
 
   --color-accent: #ff5a36;
-  --color-accent-hover: #e8491f;
+  --color-accent-hover: #c2380f; /* darker than accent so small text clears WCAG AA (≥4.5:1 on white and bg-alt) */
   --color-accent-ink: #14201a;
   --color-sun: #ffc83d;
   --color-gold: #f2a900;
