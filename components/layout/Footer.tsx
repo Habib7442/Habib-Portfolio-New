@@ -40,7 +40,7 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
             <span className="font-serif text-2xl">{name}</span>
           </div>
           <p className="mt-4 max-w-xs text-on-forest-muted">
-            Full-stack engineer &amp; visual designer. Building fast websites, products and the visuals that sell them.
+            Web developer &amp; designer. Helping business owners get more customers with websites that actually sell.
           </p>
           <div className="mt-7 flex flex-col items-start gap-3">
             <a

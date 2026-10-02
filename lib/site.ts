@@ -3,9 +3,11 @@
 export const SITE_URL = "https://www.habibtanwir.com";
 
 export const PERSON_NAME = "Habib Tanwir";
-export const JOB_TITLE = "Full-Stack Engineer & Visual Designer";
+export const JOB_TITLE = "Web Developer & Designer";
+// Default page title — kept separate from JOB_TITLE so role copy can change without touching the indexed title.
+export const SITE_TITLE = `${PERSON_NAME} — Full-Stack Engineer & Visual Designer`;
 export const DEFAULT_DESCRIPTION =
-  "Habib Tanwir is a full-stack engineer and visual designer in Silchar, India. He builds web apps, SaaS products and landing pages, and designs the posters and brand visuals that sell them.";
+  "Habib Tanwir is a web developer and designer in Silchar, India, helping business owners get more customers with fast websites that actually sell.";
 
 // Default social-share (Open Graph / X) card. Pages with their own cover (projects, posts) use that instead.
 export const OG_IMAGE = { url: "/habib_og.png", width: 1733, height: 907, alt: "Habib Tanwir — Web Developer & Designer" };

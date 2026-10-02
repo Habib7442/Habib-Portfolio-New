@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { DEFAULT_DESCRIPTION, JOB_TITLE, PERSON_NAME } from "@/lib/site";
+import { DEFAULT_DESCRIPTION, PERSON_NAME, SITE_TITLE } from "@/lib/site";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${PERSON_NAME} — ${JOB_TITLE}`,
+    name: SITE_TITLE,
     short_name: PERSON_NAME,
     description: DEFAULT_DESCRIPTION,
     start_url: "/",

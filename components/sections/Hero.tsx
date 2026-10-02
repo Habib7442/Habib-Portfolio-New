@@ -15,7 +15,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export default function Hero({ settings }: { settings: SiteSettings }) {
   const fullName = settings.name || "Habib Tanwir";
   const [first, ...rest] = fullName.split(" ");
-  const tagline = settings.tagline || "I build fast products — and design the pages that sell them.";
+  const tagline = settings.tagline || "I help business owners get more customers — with websites that actually sell.";
   const portrait = settings.profileUrl ? imgUrl(settings.profileUrl, 900) : "/habib.webp";
 
   const socials = [
@@ -40,7 +40,7 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
 
         <p className="eyebrow mt-8 text-sun">Hello, I&apos;m</p>
         <h1 className="mt-3 font-serif text-5xl leading-none">{fullName}</h1>
-        <p className="eyebrow mt-4 text-on-forest-muted">Full-stack engineer &amp; visual designer</p>
+        <p className="eyebrow mt-4 text-on-forest-muted">Web developer &amp; designer</p>
 
         <p className="mt-6 max-w-xs text-lg leading-relaxed text-on-forest/85">{tagline}</p>
 
@@ -96,9 +96,9 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
             <div className="mt-8 flex items-start gap-3">
               <span className="mt-2 h-0.5 w-8 shrink-0 bg-accent" />
               <p className="eyebrow leading-relaxed text-on-forest-muted">
-                Full-stack engineer
+                Web developer
                 <br />
-                &amp; visual designer
+                &amp; designer
               </p>
             </div>
           </motion.div>
@@ -162,7 +162,7 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
         >
           <p className="eyebrow flex items-center gap-3 text-on-forest-muted">
             <span className="size-2 rounded-full bg-sun" />
-            Open for freelance &amp; full-time work — remote, worldwide
+            Taking on new client projects — Assam &amp; worldwide
           </p>
 
           {socials.length > 0 && (

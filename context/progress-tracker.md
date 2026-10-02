@@ -103,6 +103,14 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 - Tables are wrapped in `.table-wrap` (rounded card, horizontal scroll on phones);
   forest header row in the `.eyebrow` style, zebra rows, bold first column.
 
+## Business-owner positioning copy — 2026-10-02
+- Role is now "Web Developer & Designer" (`JOB_TITLE` in `lib/site.ts`): hero (mobile + desktop),
+  footer, FAQ, Person JSON-LD `jobTitle`, llms.txt heading.
+- New `SITE_TITLE` constant keeps the default page title ("Habib Tanwir — Full-Stack Engineer & Visual
+  Designer") stable; layout metadata, manifest name and WebSite/ProfilePage JSON-LD names use it.
+- `DEFAULT_DESCRIPTION`, hero tagline fallback and availability line rewritten for business owners.
+- Sanity `siteSettings.tagline` / `seoDescription` / `bio` override the code fallbacks — edit those in Studio.
+
 ## Next up
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.

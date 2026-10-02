@@ -28,7 +28,7 @@ export function buildFaqs({
   const faqs: Faq[] = [
     {
       question: `Who is ${name}?`,
-      answer: `${name} is a full-stack engineer and visual designer based in Silchar, Assam, India. He builds web apps, SaaS products and high-converting landing pages, and designs the posters, social media creatives and brand visuals that go with them. He is also the founder of ${LOCALLIFY.name}, a software studio serving clients worldwide.`,
+      answer: `${name} is a web developer and designer based in Silchar, Assam, India. He builds web apps, SaaS products and high-converting landing pages, and designs the posters, social media creatives and brand visuals that go with them. He is also the founder of ${LOCALLIFY.name}, a software studio serving clients worldwide.`,
     },
     {
       question: `What services does ${name} offer?`,

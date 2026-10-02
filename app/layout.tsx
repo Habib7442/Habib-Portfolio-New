@@ -4,7 +4,7 @@ import "./globals.css";
 import { getSiteSettings } from "@/lib/sanity";
 import JsonLd from "@/components/seo/JsonLd";
 import { siteGraph } from "@/lib/schema";
-import { DEFAULT_DESCRIPTION, JOB_TITLE, OG_IMAGE, PERSON_NAME, SITE_URL } from "@/lib/site";
+import { DEFAULT_DESCRIPTION, OG_IMAGE, PERSON_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -26,11 +26,9 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const DEFAULT_TITLE = `${PERSON_NAME} — ${JOB_TITLE}`;
-
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
-  const title = settings.seoTitle || DEFAULT_TITLE;
+  const title = settings.seoTitle || SITE_TITLE;
   const description = settings.seoDescription || settings.bio || DEFAULT_DESCRIPTION;
 
   return {
