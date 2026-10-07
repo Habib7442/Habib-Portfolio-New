@@ -20,6 +20,9 @@ import { getSiteSettings, getProjects, getDesigns, getLandingPages, getBlogs, ge
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
+// Rebuilt at most 60s after a content change; the admin also triggers /api/revalidate on every save.
+export const revalidate = 60;
+
 export default async function HomePage() {
   const [settings, projects, designs, landingPages, blogs, products, testimonials] = await Promise.all([
     getSiteSettings(),

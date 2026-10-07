@@ -139,6 +139,16 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
   (portrait from Sanity CDN; image itself loads in ~0.6s unthrottled), CLS 0, A11y 100,
   BP 100, SEO 92 (robots.txt audit). Not yet at the 95 target — main-thread JS is the lever.
 
+## On-demand revalidation — 2026-10-07
+- Every Sanity fetch is tagged `sanity` (`SANITY_TAG`, lib/sanity.ts); `/` has `revalidate = 60`.
+- `POST /api/revalidate` (Bearer `REVALIDATE_SECRET`) expires the tag and revalidates `/`, `/work`,
+  `/blogs`, `/hire`, sitemap, llms.txt, every detail route pattern, plus any `paths` sent.
+- The admin (separate Vercel project, so its own revalidatePath can't reach this cache) calls it
+  from every save/delete/status change via `revalidatePortfolio()` (habib_admin/src/lib/portfolio.ts).
+  Env on the admin: `PORTFOLIO_URL`, `PORTFOLIO_REVALIDATE_SECRET` (= this site's `REVALIDATE_SECRET`).
+- Studio publishes don't go through the admin: they still show within 60s (or add a Sanity webhook
+  to /api/revalidate).
+
 ## Next up
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.

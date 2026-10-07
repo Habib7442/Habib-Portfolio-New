@@ -8,14 +8,18 @@ const client = createClient({
   perspective: 'published', // never leak Studio drafts to the public site
 })
 
+/** Cache tag on every Sanity fetch; /api/revalidate expires it when the admin saves anything. */
+export const SANITY_TAG = 'sanity'
+
 /**
  * Public, read-only fetch with Next's ISR cache (no token). Private documents (contact messages,
  * unapproved reviews) use "private." ids, which Sanity never returns to anonymous requests.
+ * Refreshes at most 60s after a change, or immediately via on-demand revalidation.
  */
 function sanityFetch<T>(query: string, params: Record<string, unknown> = {}): Promise<T> {
   return client.fetch<T>(query, params, {
     cache: 'force-cache',
-    next: { revalidate: 60 },
+    next: { revalidate: 60, tags: [SANITY_TAG] },
   })
 }
 
