@@ -149,6 +149,14 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 - Studio publishes don't go through the admin: they still show within 60s (or add a Sanity webhook
   to /api/revalidate).
 
+## Analytics (PostHog) — 2026-10-07
+- `instrumentation-client.ts` inits posthog-js (US region, `defaults: "2026-05-30"`) only when
+  `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` is set. It's inlined at build time, so it must be set on
+  Vercel before the build.
+- Events go through `/ingest` (rewrites in next.config.ts, `skipTrailingSlashRedirect`), never
+  straight to posthog.com. PostHog ignores headless browsers, so Lighthouse/Playwright runs don't
+  pollute analytics.
+
 ## Next up
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.
