@@ -41,6 +41,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ],
     },
     {
+      url: absoluteUrl("/hire"),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
       url: absoluteUrl("/blogs"),
       lastModified: latest(posts.map((p) => p._updatedAt)),
       changeFrequency: "weekly",
@@ -53,6 +58,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
       images: [...img(p.thumbnailUrl), ...p.images.flatMap((i) => img(i.url))],
     })),
+    ...landingPages
+      .filter((l) => l.slug)
+      .map((l) => ({
+        url: absoluteUrl(`/work/landing/${l.slug}`),
+        lastModified: new Date(l._updatedAt),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+        images: img(l.imageUrl),
+      })),
     ...posts.map((p) => ({
       url: absoluteUrl(`/blogs/${p.slug}`),
       lastModified: new Date(p._updatedAt),

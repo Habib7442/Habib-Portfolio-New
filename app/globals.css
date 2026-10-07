@@ -39,6 +39,12 @@
 
   --animate-marquee: marquee 38s linear infinite;
   --animate-spin-slow: spin 14s linear infinite;
+  /* Hero entrance. Pure CSS so it starts with the first paint, not after hydration (LCP). */
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+  }
 
   @keyframes marquee {
     from { transform: translateX(0); }
@@ -63,7 +69,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .animate-marquee, .animate-spin-slow { animation: none !important; }
+  .animate-marquee, .animate-spin-slow, .animate-fade-up { animation: none !important; }
 }
 
 .eyebrow {

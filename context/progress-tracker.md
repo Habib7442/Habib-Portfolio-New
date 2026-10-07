@@ -28,22 +28,15 @@ Both are now resolved:
 
 ## Content model
 Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
-`landingPage` (rated by visitors via the admin's `/api/rate`), `project`,
+`landingPage` (video previews, featured flag, detail page at `/work/landing/[slug]`), `project`,
+`product`, `testimonial`,
 `design`, `blog` (Markdown body, rendered with `react-markdown`).
 
 `contactMessage` has no read path here — the contact form POSTs to the admin's
 `/api/contact` and messages are triaged in the admin's Messages inbox.
 
 ## Deliberately out of scope (this pass)
-- **Testimonials / `/leave-review`** — removed. No Sanity schema for testimonials
-  yet (also already listed as out-of-scope in `project-overview.md`). Re-add once
-  the admin has a testimonials type.
-- **Per-design and per-landing-page detail pages** — designs open in a lightbox,
-  landing pages link out to their live URL. Only projects get a full `/work/[slug]`
-  case-study page (they have `fullDescription` + a gallery in the schema).
-- **Cross-site "already voted" is soft** — the rating widget posts to a different
-  origin (the admin app), so the enforced cookie-based guard there can't apply
-  cross-site. The portfolio uses localStorage as a UX-level guard only.
+- **Per-design detail pages** — designs open in a lightbox.
 
 ## Environment
 - `NEXT_PUBLIC_SANITY_PROJECT_ID` / `_DATASET` / `_API_VERSION` — same project as
@@ -111,9 +104,46 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 - `DEFAULT_DESCRIPTION`, hero tagline fallback and availability line rewritten for business owners.
 - Sanity `siteSettings.tagline` / `seoDescription` / `bio` override the code fallbacks — edit those in Studio.
 
+## Home page restructure, video previews, products — 2026-10-07
+- **Sanity (habib_admin/studio)**: `landingPage` gained `slug`, `plainDescription`,
+  `previewVideo` (mp4), `previewVideoWebm`, `previewPoster`, `featured` + `featuredOrder`,
+  `techStack`; rating fields hidden. `project` gained `plainDescription`. New types
+  `product` (name, oneLiner, plainDescription, image, previewVideo, link, status
+  live|beta|hackathon, order) and `testimonial` (quote, name, role, business, image,
+  linkedProject → project|landingPage|product, order).
+- **Home order**: Hero → FeaturedLanding (top `featured` landing page, big video) →
+  LandingShowcase "Websites that move" → FeaturedWork (client work, compact 3-card row) →
+  Products → Testimonials (hidden when none) → Services → GalleryBand → Writing → FAQ
+  (all collapsed) → Contact. About, CategoryBar and the marquees were dropped from the
+  home page; the "About" nav/footer links went with them.
+- **Hero** is one DOM tree for every breakpoint (was two copies → two h1s, two priority
+  images) and a server component; entrance is a CSS `animate-fade-up`, not framer-motion,
+  so it paints without waiting for hydration. Portrait uses `fetchPriority="high"`
+  (`priority` is deprecated in Next 16).
+- **VideoPreview** (`components/ui/VideoPreview.tsx`): poster = next/image underneath,
+  `<video preload="none">` on top, plays at ≥40% visible, pauses otherwise; reduced
+  motion / Save-Data → poster only. Verified: zero video bytes on page load.
+- **WorkCard** (`components/ui/WorkCard.tsx`) is the one card used by landing, project and
+  product cards. Cards show `cardDescription()` (`lib/plain-text.ts`): plainDescription, or
+  the first sentence of the long description; text starting `[Placeholder]` is ignored.
+- **Ratings removed** from the public site (StarRating deleted). `/review` stays; approved
+  reviews are no longer shown on the home page — curated `testimonial`s replace them.
+- **/work grid** is single-DOM CSS columns (was 3 hidden copies of every card).
+- **/hire** for hiring teams; "Download resume" appears only if
+  `public/resume-habib-tanwir.pdf` exists at build time (`HAS_RESUME` in next.config.ts).
+- **Detail pages**: `/work/landing/[slug]` with "How it's built"; project pages now have
+  "About the project" + a "How it's built" aside (stack + source link).
+- `scripts/compress-preview.sh` makes 1280px, 12–15s, silent H.264 (CRF 26, auto-raised to
+  stay < 3 MB) + VP9 WebM + first-frame poster JPG.
+- Lighthouse mobile (local, simulated 4G): LCP ≈ 3.8–4.1s both before and after this change
+  (portrait from Sanity CDN; image itself loads in ~0.6s unthrottled), CLS 0, A11y 100,
+  BP 100, SEO 92 (robots.txt audit). Not yet at the 95 target — main-thread JS is the lever.
+
 ## Next up
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.
 2. Deploy, set the env vars above on Vercel, and set `PUBLIC_SITE_ORIGINS` on the
    admin's Vercel project to this site's production domain.
-3. Testimonials, once the admin has a schema for them.
+3. Publish the VAELORA draft and product drafts once video/poster/descriptions are in.
+4. Give the other landing pages slugs + plainDescriptions in Studio.
+5. Custom admin forms (habib_admin/src) don't expose the new fields yet — use Studio.

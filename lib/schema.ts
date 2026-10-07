@@ -1,4 +1,5 @@
-import type { Blog, BlogSummary, Project, SiteSettings } from "@/lib/sanity";
+import type { Blog, BlogSummary, LandingPage, Project, SiteSettings } from "@/lib/sanity";
+import { cardDescription } from "@/lib/plain-text";
 import type { Faq } from "@/lib/faq";
 import {
   DEFAULT_DESCRIPTION,
@@ -152,6 +153,38 @@ export function projectSchema(p: Project) {
       breadcrumbs([
         { name: "Work", path: "/work" },
         { name: p.title, path: `/work/${p.slug}` },
+      ]),
+    ],
+  };
+}
+
+export function landingPageSchema(l: LandingPage & { slug: string }) {
+  const path = `/work/landing/${l.slug}`;
+  const url = absoluteUrl(path);
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        "@id": `${url}#work`,
+        name: l.title,
+        headline: l.title,
+        description: cardDescription(l.plainDescription, l.description),
+        ...(l.description && { abstract: l.description }),
+        url,
+        ...(l.imageUrl && { image: l.imageUrl }),
+        ...(l.video.mp4 && { video: { "@type": "VideoObject", name: l.title, contentUrl: l.video.mp4, thumbnailUrl: l.video.poster || l.imageUrl, uploadDate: l._updatedAt } }),
+        ...(l.liveUrl && { sameAs: l.liveUrl }),
+        creator: { "@id": PERSON_ID },
+        author: { "@id": PERSON_ID },
+        ...(l.techStack.length && { keywords: l.techStack.join(", ") }),
+        genre: "Landing page",
+        dateModified: l._updatedAt,
+        isPartOf: { "@id": WEBSITE_ID },
+      },
+      breadcrumbs([
+        { name: "Work", path: "/work" },
+        { name: l.title, path },
       ]),
     ],
   };

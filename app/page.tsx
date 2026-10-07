@@ -1,39 +1,42 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
-import CategoryBar from "@/components/sections/CategoryBar";
-import About from "@/components/sections/About";
+import FeaturedLanding from "@/components/sections/FeaturedLanding";
 import FeaturedWork from "@/components/sections/FeaturedWork";
 import GalleryBand from "@/components/sections/GalleryBand";
 import Services, { type Service } from "@/components/sections/Services";
 import LandingShowcase from "@/components/sections/LandingShowcase";
+import Products from "@/components/sections/Products";
 import Testimonials from "@/components/sections/Testimonials";
 import Writing from "@/components/sections/Writing";
 import Contact from "@/components/sections/Contact";
 import Faq from "@/components/sections/Faq";
-import Marquee from "@/components/ui/Marquee";
 import { PendingScroll } from "@/components/ui/ScrollLink";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqs } from "@/lib/faq";
 import { homeSchema } from "@/lib/schema";
 import type { Metadata } from "next";
-import { getSiteSettings, getProjects, getDesigns, getLandingPages, getBlogs, getReviews } from "@/lib/sanity";
+import { getSiteSettings, getProjects, getDesigns, getLandingPages, getBlogs, getProducts, getTestimonials } from "@/lib/sanity";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function HomePage() {
-  const [settings, projects, designs, landingPages, blogs, reviews] = await Promise.all([
+  const [settings, projects, designs, landingPages, blogs, products, testimonials] = await Promise.all([
     getSiteSettings(),
     getProjects(),
     getDesigns(),
     getLandingPages(),
     getBlogs(),
-    getReviews(),
+    getProducts(),
+    getTestimonials(),
   ]);
 
   const faqs = buildFaqs({ name: settings.name, projects, designCount: designs.length, landingCount: landingPages.length });
 
   const featured = projects.some((p) => p.featured) ? projects.filter((p) => p.featured) : projects;
+  // Landing pages arrive featured-first; the top one gets its own section, the rest go in the grid.
+  const spotlight = landingPages.find((l) => l.featured);
+  const otherLandingPages = landingPages.filter((l) => l !== spotlight);
 
   // Each service shows a different design: first match by category preference, never reusing one.
   const usedDesigns = new Set<string>();
@@ -79,24 +82,13 @@ export default async function HomePage() {
       <Navbar name={settings.name} />
       <main id="main-content">
         <Hero settings={settings} />
-        <CategoryBar
-          items={[
-            { label: "Projects", count: projects.length, href: "/work?type=project" },
-            { label: "Designs", count: designs.length, href: "/work?type=design" },
-            { label: "Landing pages", shortLabel: "Landing", count: landingPages.length, href: "/work?type=landing" },
-          ]}
-        />
-        <Marquee items={["Beyond templates", "Built to convert", "Designed with care", "Shipped fast", "Pixel & code"]} />
-        <About settings={settings} />
+        <FeaturedLanding page={spotlight} />
+        <LandingShowcase pages={otherLandingPages} />
         <FeaturedWork projects={featured} />
-        <GalleryBand designs={designs} />
-        <Marquee
-          className="bg-bg-alt"
-          items={["Full-stack development", "Landing pages", "Posters", "Social media", "Branding"]}
-        />
+        <Products products={products} />
+        <Testimonials testimonials={testimonials} />
         <Services services={services} />
-        <LandingShowcase pages={landingPages} />
-        <Testimonials reviews={reviews} />
+        <GalleryBand designs={designs} />
         <Writing posts={blogs} />
         <Faq faqs={faqs} />
         <Contact settings={settings} />

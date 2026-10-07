@@ -1,6 +1,13 @@
+import { existsSync } from "node:fs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // /hire shows "Download resume" only if the PDF is in /public. Checked at build time: ISR
+  // re-renders run where /public isn't on disk, so a runtime fs check would hide the button.
+  env: {
+    HAS_RESUME: existsSync("public/resume-habib-tanwir.pdf") ? "1" : "",
+  },
+
   images: {
     // Sanity's CDN does the resizing (see lib/image-loader.ts).
     loader: "custom",

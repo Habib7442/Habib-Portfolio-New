@@ -18,7 +18,7 @@ export default function Services({ services }: { services: Service[] }) {
         <div className="mb-12 grid gap-6 md:grid-cols-2 md:items-end">
           <div>
             <p className="eyebrow mb-4 text-accent-hover">✦ Services</p>
-            <h2 className="font-display text-display-md font-bold leading-[1.02] tracking-tight">My service</h2>
+            <h2 className="font-display text-display-md font-bold leading-[1.02] tracking-tight">My services</h2>
           </div>
           <p className="max-w-md text-fg-muted md:justify-self-end">
             One person from idea to launch — the product, the page that sells it, and the visuals around it.

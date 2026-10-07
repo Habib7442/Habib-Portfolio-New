@@ -37,16 +37,48 @@ export type SiteSettings = {
 
 export type ImageDims = { width: number; height: number }
 
+/** Optional looping preview (see components/ui/VideoPreview). Raw Sanity file/image URLs. */
+export type PreviewVideo = { mp4?: string; webm?: string; poster?: string }
+
 export type LandingPage = {
   _id: string
+  _updatedAt: string
   title: string
+  slug?: string
+  plainDescription?: string
+  /** Build/tech details, shown under "How it's built" on the detail page. */
   description?: string
   liveUrl?: string
   imageUrl?: string
   imageAlt?: string
   imageDims?: ImageDims
-  ratingCount?: number
-  ratingTotal?: number
+  video: PreviewVideo
+  techStack: string[]
+  featured: boolean
+  featuredOrder: number
+}
+
+export type Product = {
+  _id: string
+  name: string
+  oneLiner: string
+  plainDescription?: string
+  imageUrl?: string
+  imageAlt?: string
+  video: PreviewVideo
+  link: string
+  status: 'live' | 'beta' | 'hackathon'
+}
+
+export type Testimonial = {
+  _id: string
+  quote: string
+  name: string
+  role?: string
+  business?: string
+  imageUrl?: string
+  /** The work it's about, already resolved to a title and a link. */
+  linked?: { title: string; href: string }
 }
 
 export type ProjectImage = { url: string }
@@ -57,6 +89,7 @@ export type Project = {
   title: string
   slug: string
   shortDescription: string
+  plainDescription?: string
   fullDescription?: string
   thumbnailUrl?: string
   thumbnailDims?: ImageDims
@@ -81,15 +114,6 @@ export type Design = {
   tools: string[]
   tags: string[]
   featured: boolean
-}
-
-export type Review = {
-  _id: string
-  name: string
-  role?: string
-  rating: number
-  review: string
-  photoUrl?: string
 }
 
 export type BlogSummary = {
@@ -124,19 +148,65 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   )
 }
 
+// GROQ returns null (not []) for fields never filled in; coalesce keeps the non-optional types honest.
+const LANDING_FIELDS = `
+  _id, _updatedAt, title, "slug": slug.current, plainDescription, description, liveUrl,
+  "techStack": coalesce(techStack, []),
+  "featured": coalesce(featured, false),
+  "featuredOrder": coalesce(featuredOrder, 0),
+  "imageUrl": image.asset->url, "imageAlt": image.alt,
+  "imageDims": image.asset->metadata.dimensions{width, height},
+  "video": {
+    "mp4": previewVideo.asset->url,
+    "webm": previewVideoWebm.asset->url,
+    "poster": previewPoster.asset->url
+  }
+`
+
+/** Featured pages first (by featuredOrder), then newest. */
 export async function getLandingPages(): Promise<LandingPage[]> {
   return sanityFetch<LandingPage[]>(
-    `*[_type == "landingPage"] | order(_createdAt desc) {
-      _id, title, description, liveUrl, ratingCount, ratingTotal,
-      "imageUrl": image.asset->url, "imageAlt": image.alt,
-      "imageDims": image.asset->metadata.dimensions{width, height}
+    `*[_type == "landingPage"] | order(coalesce(featured, false) desc, coalesce(featuredOrder, 0) asc, _createdAt desc) {
+      ${LANDING_FIELDS}
     }`
   )
 }
 
-// GROQ returns null (not []) for fields never filled in; coalesce keeps the non-optional types honest.
+export async function getLandingPageBySlug(slug: string): Promise<LandingPage | null> {
+  return sanityFetch<LandingPage | null>(`*[_type == "landingPage" && slug.current == $slug][0]{ ${LANDING_FIELDS} }`, { slug })
+}
+
+export async function getProducts(): Promise<Product[]> {
+  return sanityFetch<Product[]>(
+    `*[_type == "product" && defined(link)] | order(coalesce(order, 0) asc, _createdAt asc) {
+      _id, name, oneLiner, plainDescription, link,
+      "status": coalesce(status, "live"),
+      "imageUrl": image.asset->url, "imageAlt": image.alt,
+      "video": { "mp4": previewVideo.asset->url }
+    }`
+  )
+}
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+  const rows = await sanityFetch<(Omit<Testimonial, 'linked'> & { ref?: { _type: string; title?: string; slug?: string; link?: string } })[]>(
+    `*[_type == "testimonial" && defined(quote) && defined(name)] | order(coalesce(order, 0) asc, _createdAt desc) {
+      _id, quote, name, role, business,
+      "imageUrl": image.asset->url,
+      "ref": linkedProject->{ _type, "title": coalesce(title, name), "slug": slug.current, link }
+    }`
+  )
+  return rows.map(({ ref, ...t }) => {
+    const href =
+      ref?._type === 'project' && ref.slug ? `/work/${ref.slug}`
+      : ref?._type === 'landingPage' && ref.slug ? `/work/landing/${ref.slug}`
+      : ref?._type === 'product' ? ref.link
+      : undefined
+    return { ...t, linked: ref?.title && href ? { title: ref.title, href } : undefined }
+  })
+}
+
 const PROJECT_FIELDS = `
-  _id, _updatedAt, title, "slug": slug.current, shortDescription, fullDescription,
+  _id, _updatedAt, title, "slug": slug.current, shortDescription, plainDescription, fullDescription,
   liveUrl, githubUrl,
   "techStack": coalesce(techStack, []),
   "category": coalesce(category, "other"),
@@ -196,13 +266,4 @@ export async function getBlogBySlug(slug: string): Promise<Blog | null> {
 /** Appends Sanity's image-CDN resize params. `url` must be a raw asset->url. */
 export function imgUrl(url: string, width: number, quality = 80) {
   return `${url}?w=${width}&auto=format&q=${quality}`
-}
-
-/** Only reviews you've approved in the admin, from people who agreed to be shown. */
-export async function getReviews(): Promise<Review[]> {
-  return sanityFetch<Review[]>(
-    `*[_type == "review" && status == "approved" && consent == true] | order(_createdAt desc) {
-      _id, name, role, rating, review, "photoUrl": photo.asset->url
-    }`
-  )
 }

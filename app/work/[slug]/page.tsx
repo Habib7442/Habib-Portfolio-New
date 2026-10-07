@@ -9,6 +9,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import Tag from "@/components/ui/Tag";
 import JsonLd from "@/components/seo/JsonLd";
 import { projectSchema } from "@/lib/schema";
+import { cardDescription } from "@/lib/plain-text";
 import { getSiteSettings, getProjectBySlug, imgUrl } from "@/lib/sanity";
 import { OG_IMAGE } from "@/lib/site";
 
@@ -43,7 +44,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <JsonLd data={projectSchema(project)} />
       <Navbar name={settings.name} />
       <main id="main-content">
-        <PageHeader eyebrow={`${project.category} · ${STATUS_LABEL[project.status] ?? project.status}`} title={project.title} intro={project.shortDescription}>
+        <PageHeader eyebrow={`${project.category} · ${STATUS_LABEL[project.status] ?? project.status}`} title={project.title} intro={cardDescription(project.plainDescription, project.shortDescription)}>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             {project.liveUrl && (
               <a
@@ -83,22 +84,37 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <Link href="/work" className="eyebrow mb-8 inline-flex items-center gap-1.5 text-fg-muted hover:text-fg">
               <ArrowLeft className="size-4" /> All work
             </Link>
+            <h2 className="mb-6 font-serif text-display-md leading-[1.05]">About the project</h2>
             {project.fullDescription ? (
               <p className="prose-blog whitespace-pre-line">{project.fullDescription}</p>
             ) : (
               <p className="prose-blog">{project.shortDescription}</p>
             )}
           </div>
-          {project.techStack.length > 0 && (
-            <aside className="lg:col-span-4">
-              <div className="rounded-3xl bg-bg-alt p-6 md:p-8">
-                <p className="eyebrow mb-4 text-accent-hover">✦ Built with</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.techStack.map((t) => (
-                    <Tag key={t}>{t}</Tag>
-                  ))}
-                </div>
-              </div>
+          {(project.techStack.length > 0 || project.githubUrl) && (
+            <aside className="lg:col-span-4 lg:pt-14">
+              <section aria-labelledby="how-its-built" className="rounded-3xl bg-bg-alt p-6 md:p-8">
+                <h2 id="how-its-built" className="eyebrow mb-4 text-accent-hover">
+                  ✦ How it&apos;s built
+                </h2>
+                {project.techStack.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {project.techStack.map((t) => (
+                      <Tag key={t}>{t}</Tag>
+                    ))}
+                  </div>
+                )}
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-5 inline-flex items-center gap-1.5 text-sm text-fg-muted hover:text-fg"
+                  >
+                    <Github className="size-4" /> Source code
+                  </a>
+                )}
+              </section>
             </aside>
           )}
         </section>

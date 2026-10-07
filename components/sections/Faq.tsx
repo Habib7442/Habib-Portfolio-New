@@ -17,8 +17,8 @@ export default function Faq({ faqs }: { faqs: FaqItem[] }) {
         </Reveal>
 
         <div className="border-t border-border lg:col-span-8">
-          {faqs.map((f, i) => (
-            <details key={f.question} className="group border-b border-border" open={i === 0}>
+          {faqs.map((f) => (
+            <details key={f.question} className="group border-b border-border">
               <summary className="flex cursor-pointer list-none items-center gap-5 py-6 [&::-webkit-details-marker]:hidden">
                 <h3 className="flex-1 font-display text-lg font-semibold tracking-tight md:text-xl">{f.question}</h3>
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-border transition-all group-open:rotate-45 group-open:border-sun group-open:bg-sun">

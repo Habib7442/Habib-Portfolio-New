@@ -19,9 +19,7 @@ export default function Writing({ posts }: { posts: BlogSummary[] }) {
           <div>
             <p className="eyebrow mb-4 text-accent-hover">✦ Writing</p>
             <h2 className="font-display text-display-md font-bold leading-[1.02] tracking-tight">
-              Stay updated on
-              <br />
-              my progress
+              Notes for business owners
             </h2>
           </div>
           <Link href="/blogs" className="eyebrow inline-flex items-center gap-1.5 text-fg hover:text-accent-hover">

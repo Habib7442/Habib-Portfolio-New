@@ -1,5 +1,6 @@
 import { getBlogBySlug, getBlogs, getDesigns, getLandingPages, getProjects, getSiteSettings } from "@/lib/sanity";
 import { buildFaqs } from "@/lib/faq";
+import { cardDescription } from "@/lib/plain-text";
 import { designCategoryLabel } from "@/lib/design-categories";
 import { DEFAULT_DESCRIPTION, EXPERTISE, JOB_TITLE, LOCALLIFY, PERSON_NAME, SKILLS, absoluteUrl } from "@/lib/site";
 import { whatsappUrl } from "@/lib/contact";
@@ -35,6 +36,7 @@ export async function buildLlmsTxt({ full = false } = {}) {
   out.push(`- [Home](${absoluteUrl("/")}): About ${name}, services, selected work and FAQ`);
   out.push(`- [Work](${absoluteUrl("/work")}): Every project, landing page and design, with screenshots and live links`);
   out.push(`- [Writing](${absoluteUrl("/blogs")}): Articles and case studies`);
+  out.push(`- [For hiring teams](${absoluteUrl("/hire")}): Stack, products, best landing pages, GitHub and LinkedIn`);
   out.push(`- [Contact on WhatsApp](${whatsappUrl()}): Fastest way to start a project`, "");
 
   if (projects.length) {
@@ -48,7 +50,8 @@ export async function buildLlmsTxt({ full = false } = {}) {
   if (landingPages.length) {
     out.push("## Landing pages", "");
     for (const l of landingPages) {
-      out.push(`- [${l.title}](${l.liveUrl || absoluteUrl("/work?type=landing")}): ${oneLine(l.description) || "Landing page design and build."}`);
+      const url = l.slug ? absoluteUrl(`/work/landing/${l.slug}`) : l.liveUrl || absoluteUrl("/work?type=landing");
+      out.push(`- [${l.title}](${url}): ${cardDescription(l.plainDescription, l.description) || "Landing page design and build."}`);
     }
     out.push("");
   }

@@ -70,6 +70,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="en">
       <head>
+        {/* The hero portrait (the LCP image) and most screenshots come from Sanity's CDN. */}
+        <link rel="preconnect" href="https://cdn.sanity.io" />
         {/* Site-wide entity graph: Person (Habib), Organization (Locallify), WebSite */}
         <JsonLd data={siteGraph(settings)} />
       </head>

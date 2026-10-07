@@ -1,14 +1,16 @@
 import { siNextdotjs, siNodedotjs, siReact, siSupabase, siTypescript, type SimpleIcon } from "simple-icons";
 
 // Adobe had its logos removed from simple-icons, so Photoshop's badge is drawn by hand
-// in Adobe's own colours (navy square, blue "Ps").
+// in Adobe's own colours (navy square, blue "Ps"). The letters are strokes, not <text>:
+// SVG text is real page text, so "Ps" would leak into the label ("PsPhotoshop").
 function PhotoshopIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
       <rect width="24" height="24" rx="5" fill="#001E36" />
-      <text x="12" y="16.4" textAnchor="middle" fontFamily="Arial, Helvetica, sans-serif" fontWeight="700" fontSize="11" fill="#31A8FF">
-        Ps
-      </text>
+      <g fill="none" stroke="#31A8FF" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6.2 17V7h3.1a2.8 2.8 0 0 1 0 5.6H6.2" />
+        <path d="M17.6 11.5c-.5-.5-1.2-.8-2-.8-1.1 0-1.9.6-1.9 1.5 0 2 4 1.1 4 3.1 0 .9-.9 1.7-2.1 1.7-.8 0-1.6-.3-2.1-.9" />
+      </g>
     </svg>
   );
 }

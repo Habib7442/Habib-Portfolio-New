@@ -10,9 +10,9 @@ import { whatsappUrl } from "@/lib/contact";
 // `section` links scroll to a part of the home page without adding "#..." to the URL.
 const LINKS: { name: string; href?: string; section?: string }[] = [
   { name: "Work", href: "/work" },
-  { name: "About", section: "about" },
   { name: "Services", section: "services" },
   { name: "Writing", href: "/blogs" },
+  { name: "For hiring teams →", href: "/hire" },
   { name: "Leave a review", href: "/review" },
 ];
 
