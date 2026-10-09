@@ -22,6 +22,7 @@ export default function VideoPreview({
   sizes,
   priority,
   className,
+  fit = "cover",
 }: {
   video?: PreviewVideo;
   /** Screenshot used as the poster when the video has none, and alone when there's no video. */
@@ -31,6 +32,8 @@ export default function VideoPreview({
   priority?: boolean;
   /** Applied to both the poster and the video (e.g. object-position, hover zoom). */
   className?: string;
+  /** "cover" fills and crops; "contain" shows the whole shot on a blurred backdrop of itself. */
+  fit?: "cover" | "contain";
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
@@ -69,7 +72,8 @@ export default function VideoPreview({
     };
   }, [hasVideo]);
 
-  return (
+  const contain = fit === "contain";
+  const media = (
     <>
       {poster && (
         <Image
@@ -79,7 +83,7 @@ export default function VideoPreview({
           sizes={sizes}
           loading={priority ? "eager" : undefined}
           fetchPriority={priority ? "high" : undefined}
-          className={cn("object-cover object-top", className)}
+          className={contain ? "object-contain drop-shadow-[0_18px_30px_rgba(0,0,0,0.35)]" : cn("object-cover object-top", className)}
         />
       )}
       {hasVideo && (
@@ -94,9 +98,10 @@ export default function VideoPreview({
           tabIndex={-1}
           onPlaying={() => setPlaying(true)}
           className={cn(
-            "absolute inset-0 size-full object-cover transition-opacity duration-500",
+            "absolute inset-0 size-full transition-opacity duration-500",
+            contain ? "object-contain" : "object-cover",
             playing ? "opacity-100" : "opacity-0",
-            className
+            !contain && className
           )}
         >
           {/* WebM (VP9) is smaller; browsers that can't play it fall through to the MP4. */}
@@ -104,6 +109,18 @@ export default function VideoPreview({
           {video?.mp4 && <source src={video.mp4} type="video/mp4" />}
         </video>
       )}
+    </>
+  );
+
+  if (!contain || !poster) return media;
+
+  // Contain: the whole shot, never cropped, floating on a blurred glow of itself, so any
+  // aspect ratio sits in the fixed frame without empty bars.
+  return (
+    <>
+      <Image src={poster} alt="" aria-hidden="true" fill sizes="96px" className="scale-125 object-cover opacity-80 blur-2xl saturate-150" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/25" aria-hidden="true" />
+      <div className={cn("absolute inset-[6%]", className)}>{media}</div>
     </>
   );
 }

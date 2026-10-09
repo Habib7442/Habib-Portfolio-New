@@ -7,8 +7,9 @@ export const cardPill =
   "eyebrow inline-flex items-center gap-1 rounded-full bg-bg-elevated/95 px-3 py-1.5 text-[0.58rem] text-fg shadow-sm backdrop-blur transition-colors hover:bg-sun";
 
 /**
- * Shared frame for project, landing-page and product cards: white card, fixed 16:10 shot
- * (video preview or screenshot), title, one plain-language line, optional footer.
+ * Shared frame for project, landing-page and product cards: white card, fixed 16:10 frame
+ * with the whole shot (video preview or screenshot, never cropped) floating on a blurred glow
+ * of itself, title, one plain-language line, optional footer.
  */
 export default function WorkCard({
   href,
@@ -42,7 +43,8 @@ export default function WorkCard({
           image={image}
           alt={alt}
           sizes={sizes}
-          className="transition-transform duration-700 group-hover:scale-[1.03]"
+          fit="contain"
+          className="transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-[1.03]"
         />
       ) : (
         // No screenshot yet: the name on a forest panel, so the grid still lines up.

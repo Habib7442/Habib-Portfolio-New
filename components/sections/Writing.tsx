@@ -9,6 +9,11 @@ export function formatDate(iso?: string, month: "short" | "long" = "short") {
   return new Date(iso).toLocaleDateString("en-US", { month, day: "numeric", year: "numeric" });
 }
 
+/** The cover's own aspect ratio, so cards show the whole graphic. */
+export function coverRatio(dims?: { width: number; height: number }) {
+  return dims && dims.width && dims.height ? dims.width / dims.height : 16 / 9;
+}
+
 export default function Writing({ posts }: { posts: BlogSummary[] }) {
   if (posts.length === 0) return null;
 
@@ -31,14 +36,17 @@ export default function Writing({ posts }: { posts: BlogSummary[] }) {
           {posts.slice(0, 3).map((post, i) => (
             <Reveal key={post._id} delay={i * 0.06}>
               <Link href={`/blogs/${post.slug}`} className="group block">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-bg-muted">
+                <div
+                  className="relative overflow-hidden rounded-2xl bg-bg-muted shadow-sm transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-black/10"
+                  style={{ aspectRatio: coverRatio(post.coverDims) }}
+                >
                   {post.coverUrl && (
                     <Image
-                      src={imgUrl(post.coverUrl, 700)}
+                      src={imgUrl(post.coverUrl, 900)}
                       alt={post.title}
                       fill
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain"
                     />
                   )}
                 </div>

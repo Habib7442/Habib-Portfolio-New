@@ -68,7 +68,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const settings = await getSiteSettings();
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <head>
         {/* The hero portrait (the LCP image) and most screenshots come from Sanity's CDN. */}
         <link rel="preconnect" href="https://cdn.sanity.io" />

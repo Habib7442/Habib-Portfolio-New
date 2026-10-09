@@ -131,6 +131,7 @@ export type BlogSummary = {
   featured: boolean
   publishedAt?: string
   coverUrl?: string
+  coverDims?: ImageDims
 }
 
 export type Blog = BlogSummary & {
@@ -249,7 +250,8 @@ const BLOG_SUMMARY_FIELDS = `
   _id, _updatedAt, title, "slug": slug.current, excerpt, category, publishedAt,
   "tags": coalesce(tags, []),
   "featured": coalesce(featured, false),
-  "coverUrl": coverImage.asset->url
+  "coverUrl": coverImage.asset->url,
+  "coverDims": coverImage.asset->metadata.dimensions{width, height}
 `
 
 export async function getBlogs(): Promise<BlogSummary[]> {

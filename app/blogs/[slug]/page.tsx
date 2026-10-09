@@ -10,7 +10,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { blogPostSchema } from "@/lib/schema";
 import { OG_IMAGE, PERSON_NAME, SITE_URL } from "@/lib/site";
 import MarkdownContent from "@/components/ui/MarkdownContent";
-import { formatDate } from "@/components/sections/Writing";
+import { coverRatio, formatDate } from "@/components/sections/Writing";
 import { getSiteSettings, getBlogBySlug, imgUrl } from "@/lib/sanity";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -55,8 +55,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         {post.coverUrl && (
           <div className="bg-forest">
             <div className="container-app max-w-4xl">
-              <div className="relative aspect-video translate-y-10 overflow-hidden rounded-3xl shadow-2xl shadow-black/20 md:translate-y-14">
-                <Image src={imgUrl(post.coverUrl, 1400)} alt={post.title} fill sizes="(min-width: 896px) 816px, 100vw" priority className="object-cover" />
+              <div
+                className="relative translate-y-10 overflow-hidden rounded-3xl bg-bg-muted shadow-2xl shadow-black/20 md:translate-y-14"
+                style={{ aspectRatio: coverRatio(post.coverDims) }}
+              >
+                <Image src={imgUrl(post.coverUrl, 1400)} alt={post.title} fill sizes="(min-width: 896px) 816px, 100vw" priority className="object-contain" />
               </div>
             </div>
           </div>

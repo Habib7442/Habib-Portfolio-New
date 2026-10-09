@@ -139,6 +139,14 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
   (portrait from Sanity CDN; image itself loads in ~0.6s unthrottled), CLS 0, A11y 100,
   BP 100, SEO 92 (robots.txt audit). Not yet at the 95 target — main-thread JS is the lever.
 
+## Uncropped card thumbnails — 2026-10-09
+- `VideoPreview` has `fit="cover" | "contain"`. WorkCard (project, landing-page, product cards) uses
+  `contain`: the whole screenshot/video sits inset 6% in the 16:10 frame, on a blurred, saturated
+  copy of its own poster (loaded at `sizes="96px"`, so it costs almost nothing). Hover lifts the shot.
+- Blog covers are never cropped either: the query returns `coverDims`, and the home Writing cards,
+  /blogs list and post hero size their frame to the cover's own ratio (`coverRatio()`, fallback
+  16:9) with `object-contain`. Design cards and project detail heroes still use `cover`.
+
 ## On-demand revalidation — 2026-10-07
 - Every Sanity fetch is tagged `sanity` (`SANITY_TAG`, lib/sanity.ts); `/` has `revalidate = 60`.
 - `POST /api/revalidate` (Bearer `REVALIDATE_SECRET`) expires the tag and revalidates `/`, `/work`,

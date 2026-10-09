@@ -7,7 +7,7 @@ import Footer from "@/components/layout/Footer";
 import PageHeader from "@/components/layout/PageHeader";
 import JsonLd from "@/components/seo/JsonLd";
 import { blogListSchema } from "@/lib/schema";
-import { formatDate } from "@/components/sections/Writing";
+import { coverRatio, formatDate } from "@/components/sections/Writing";
 import { getSiteSettings, getBlogs, imgUrl } from "@/lib/sanity";
 
 export const metadata: Metadata = {
@@ -46,14 +46,17 @@ export default async function BlogsPage() {
                     href={`/blogs/${post.slug}`}
                     className="group grid gap-5 border-b border-border py-8 md:grid-cols-[240px_1fr_auto] md:items-center md:gap-10"
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-bg-muted">
+                    <div
+                      className="relative overflow-hidden rounded-2xl bg-bg-muted transition-transform duration-500 group-hover:-translate-y-0.5"
+                      style={{ aspectRatio: coverRatio(post.coverDims) }}
+                    >
                       {post.coverUrl && (
                         <Image
-                          src={imgUrl(post.coverUrl, 500)}
+                          src={imgUrl(post.coverUrl, 700)}
                           alt={post.title}
                           fill
                           sizes="(min-width: 768px) 240px, 100vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          className="object-contain"
                         />
                       )}
                     </div>
