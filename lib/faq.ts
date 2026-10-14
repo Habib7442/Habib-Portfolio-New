@@ -3,6 +3,11 @@ import { LOCALLIFY, PERSON_NAME } from "@/lib/site";
 
 export type Faq = { question: string; answer: string };
 
+/** "a", "a and b", "a, b and c". */
+function listJoin(items: string[]) {
+  return items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
+}
+
 /**
  * Answer-first, self-contained Q&As (what answer engines quote). Shown on the home page and
  * mirrored in FAQPage JSON-LD and llms.txt. Counts come live from Sanity.
@@ -19,10 +24,11 @@ export function buildFaqs({
   landingCount: number;
 }): Faq[] {
   const examples = projects.slice(0, 3).map((p) => p.title);
+  const count = (n: number, one: string, many: string) => n > 0 && `${n} ${n === 1 ? one : many}`;
   const shipped = [
-    projects.length && `${projects.length} web projects`,
-    landingCount && `${landingCount} landing pages`,
-    designCount && `${designCount} visual design campaigns`,
+    count(projects.length, "client project", "client projects"),
+    count(landingCount, "landing page", "landing pages"),
+    count(designCount, "design", "designs"),
   ].filter(Boolean);
 
   const faqs: Faq[] = [
@@ -39,7 +45,7 @@ export function buildFaqs({
   if (shipped.length) {
     faqs.push({
       question: `What has ${name} built?`,
-      answer: `So far he has shipped ${shipped.join(", ")}${examples.length ? `, including ${examples.join(", ")}` : ""}. Every piece is listed with screenshots, the tech stack used and a live link on the Work page of habibtanwir.com.`,
+      answer: `So far he has shipped ${listJoin(shipped as string[])}${examples.length ? `, including ${listJoin(examples)}` : ""}. Every piece is listed with screenshots, the tech stack used and a live link on the Work page of habibtanwir.com.`,
     });
   }
 

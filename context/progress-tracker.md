@@ -165,6 +165,23 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
   straight to posthog.com. PostHog ignores headless browsers, so Lighthouse/Playwright runs don't
   pollute analytics.
 
+## Home page: About back, editable services, admin for products/testimonials/videos — 2026-10-14
+- **Home order** now: Hero → About → FeaturedLanding → LandingShowcase → FeaturedWork (client work) →
+  Testimonials → Products → Services → GalleryBand → Writing → FAQ → Contact.
+- **About** (`components/sections/About.tsx`) is back as a short block: round photo (admin profile photo),
+  the admin bio, and a "Founder of Locallify Agency" link. `#about` anchor exists again.
+- **Services** text is editable: `siteSettings.services` (4 rows: title, one sentence, up to 3 bullets),
+  merged field-by-field over `DEFAULT_SERVICES` in `lib/services.ts`. 02–04 rewritten in plain language.
+  Admin defaults mirror that file (`SERVICE_DEFAULTS` in habib_admin SettingsForm) — keep them in sync.
+  Images are still picked from the work itself in `app/page.tsx`.
+- **FAQ** "What has … built?" says "N client projects, N landing pages and N designs" (live counts,
+  singular/plural handled).
+- **Admin (habib_admin)**: new Products and Testimonials pages (list/new/edit/delete); landing-page form
+  now uploads an MP4/WebM preview video + poster and a card description; `/api/upload` accepts MP4/WebM
+  up to 4MB as Sanity file assets, and unused video assets are cleaned up like images.
+- Verified at 390px and 1440px: no horizontal overflow, no console errors; Testimonials/Products checked
+  with temporary mock data (none published yet, so both stay hidden).
+
 ## Next up
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.
@@ -172,4 +189,5 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
    admin's Vercel project to this site's production domain.
 3. Publish the VAELORA draft and product drafts once video/poster/descriptions are in.
 4. Give the other landing pages slugs + plainDescriptions in Studio.
-5. Custom admin forms (habib_admin/src) don't expose the new fields yet — use Studio.
+5. Add MockMate, Sarah and Apprizely in admin → Products (links/images), and 2–3 testimonials.
+6. Upload preview videos for VAELORA, Ridgeline and NOIR//FORM in admin → Landing pages.

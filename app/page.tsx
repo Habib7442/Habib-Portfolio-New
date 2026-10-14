@@ -1,6 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
 import FeaturedLanding from "@/components/sections/FeaturedLanding";
 import FeaturedWork from "@/components/sections/FeaturedWork";
 import GalleryBand from "@/components/sections/GalleryBand";
@@ -14,6 +15,7 @@ import Faq from "@/components/sections/Faq";
 import { PendingScroll } from "@/components/ui/ScrollLink";
 import JsonLd from "@/components/seo/JsonLd";
 import { buildFaqs } from "@/lib/faq";
+import { mergeServices } from "@/lib/services";
 import { homeSchema } from "@/lib/schema";
 import type { Metadata } from "next";
 import { getSiteSettings, getProjects, getDesigns, getLandingPages, getBlogs, getProducts, getTestimonials } from "@/lib/sanity";
@@ -51,32 +53,14 @@ export default async function HomePage() {
     usedDesigns.add(match._id);
     return match.imageUrl;
   };
-  const services: Service[] = [
-    {
-      title: "Full-stack development",
-      description: "Web apps and SaaS products built end to end — database, API, auth, and a fast, polished front end.",
-      points: ["Next.js, React & TypeScript", "APIs, auth & databases", "Deployed, monitored, handed over cleanly"],
-      imageUrl: projects.find((p) => p.thumbnailUrl)?.thumbnailUrl,
-    },
-    {
-      title: "Landing pages",
-      description: "High-converting landing pages that load instantly, read clearly, and look great on every phone.",
-      points: ["Copy-first layout & design", "Built in code, not a page builder", "SEO & performance baked in"],
-      imageUrl: landingPages.find((l) => l.imageUrl)?.imageUrl,
-    },
-    {
-      title: "Posters & social media",
-      description: "Scroll-stopping posters, event creatives, and social media designs that stay on brand.",
-      points: ["Event & promo posters", "Instagram & LinkedIn creatives", "Carousel & story formats"],
-      imageUrl: pickDesign("social_media", "photoshoot", "poster"),
-    },
-    {
-      title: "Branding & visual identity",
-      description: "Logos, colour, and type systems so everything you ship looks like it belongs together.",
-      points: ["Logo & identity", "Brand colours & typography", "Templates your team can reuse"],
-      imageUrl: pickDesign("branding", "ui", "illustration", "photoshoot", "poster"),
-    },
+  // Text comes from the admin's Settings (falling back to lib/services.ts); images from the work itself.
+  const serviceImages = [
+    projects.find((p) => p.thumbnailUrl)?.thumbnailUrl,
+    landingPages.find((l) => l.imageUrl)?.imageUrl,
+    pickDesign("social_media", "photoshoot", "poster"),
+    pickDesign("branding", "ui", "illustration", "photoshoot", "poster"),
   ];
+  const services: Service[] = mergeServices(settings.services).map((s, i) => ({ ...s, imageUrl: serviceImages[i] }));
 
   return (
     <>
@@ -85,11 +69,12 @@ export default async function HomePage() {
       <Navbar name={settings.name} />
       <main id="main-content">
         <Hero settings={settings} />
+        <About settings={settings} />
         <FeaturedLanding page={spotlight} />
         <LandingShowcase pages={otherLandingPages} />
         <FeaturedWork projects={featured} />
-        <Products products={products} />
         <Testimonials testimonials={testimonials} />
+        <Products products={products} />
         <Services services={services} />
         <GalleryBand designs={designs} />
         <Writing posts={blogs} />

@@ -37,7 +37,11 @@ export type SiteSettings = {
   seoDescription?: string
   profileUrl?: string
   shareUrl?: string
+  /** "My services" rows edited in the admin; merged over the built-in text by lib/services.ts. */
+  services?: SiteServiceText[]
 }
+
+export type SiteServiceText = { title?: string; description?: string; points?: string[] }
 
 export type ImageDims = { width: number; height: number }
 
@@ -145,7 +149,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     (await sanityFetch<SiteSettings | null>(
       `*[_id == "siteSettings"][0]{
         name, tagline, bio, email, resumeUrl, githubUrl, linkedinUrl, twitterUrl, instagramUrl,
-        seoTitle, seoDescription,
+        seoTitle, seoDescription, "services": coalesce(services[]{ title, description, points }, []),
         "profileUrl": profileImage.asset->url,
         "shareUrl": shareImage.asset->url
       }`

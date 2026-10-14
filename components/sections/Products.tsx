@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 const STATUS: Record<Product["status"], { label: string; className: string }> = {
   live: { label: "Live", className: "bg-sun text-fg" },
   beta: { label: "Beta", className: "bg-bg-elevated/95 text-fg" },
-  hackathon: { label: "Hackathon", className: "bg-forest text-on-forest" },
+  hackathon: { label: "Hackathon", className: "bg-forest text-on-forest ring-1 ring-on-forest/40" },
 };
 
 function hostname(url: string) {
