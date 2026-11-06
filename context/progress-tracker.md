@@ -30,7 +30,7 @@ Both are now resolved:
 Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 `landingPage` (video previews, featured flag, detail page at `/work/landing/[slug]`), `project`,
 `product`, `testimonial`,
-`design`, `blog` (Markdown body, rendered with `react-markdown`).
+`design`, `blog` (Markdown body, rendered with `react-markdown`), `carouselTemplate` (see "Carousel templates" below).
 
 `contactMessage` has no read path here — the contact form POSTs to the admin's
 `/api/contact` and messages are triaged in the admin's Messages inbox.
@@ -182,7 +182,28 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 - Verified at 390px and 1440px: no horizontal overflow, no console errors; Testimonials/Products checked
   with temporary mock data (none published yet, so both stay hidden).
 
+## Carousel templates — 2026-11-06
+- **Content type** `carouselTemplate` (habib_admin `studio/schemaTypes/carouselTemplate.ts`): title, slug,
+  description, category (fashion / personal-brand / business / tech / other), ordered `slides[]` images, size
+  label, `isFree`, price label, `buyLink` (Etsy/Gumroad), `canvaLink` (Canva template link), `featured`, `order`.
+  Category labels are mirrored in `lib/template-categories.ts` here and `src/lib/template-categories.ts` in the admin.
+- **Admin**: Templates section (list/new/edit/delete) like Products. Slides upload one by one through
+  `/api/upload`, ordered by file name (slide-2 before slide-10). Free needs a Canva link, paid needs a buy link.
+- **Portfolio**: `/templates` (grid, `?category=` filter chips only for categories in use), `/templates/[slug]`
+  (full slide strip, "What's included", hire CTA, Product JSON-LD with an Offer when the price label parses as
+  ₹/$/€/£ + number), home `TemplatesTeaser` after GalleryBand (featured only, max 3, hidden if none), Navbar +
+  Footer links, sitemap entries, `/api/revalidate` covers both routes.
+- `getTemplates` only returns templates with a slug, ≥1 slide and a usable link (Canva link if free, buy link
+  if paid). The Canva link is never sent to the page for paid templates.
+- `SlideStrip` (client): native scroll-snap swipe + prev/next buttons + counter. Card variant shows one slide,
+  counter top-right (slides print their own counter bottom-right); full variant peeks the next slide.
+- PostHog events via `TrackedLink`: `template_buy_clicked`, `template_canva_clicked` (slug, title, category, free).
+- Verified with temporary mock data (since removed) at 390px and 1440px: no horizontal overflow, no console
+  errors, swipe buttons advance the counter, filter + home teaser render. No templates are published yet, so
+  `/templates` shows its empty state until the first one is added in the admin.
+
 ## Next up
+0. Add the SAVRÉ fashion carousel in admin → Templates (slides + Etsy/Gumroad link), tick "Show on home page".
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
    fully wired but has no content until then.
 2. Deploy, set the env vars above on Vercel, and set `PUBLIC_SITE_ORIGINS` on the

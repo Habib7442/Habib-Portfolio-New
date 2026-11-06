@@ -30,6 +30,8 @@ A redesign of Habib Tanwir's portfolio from a creative-agency aesthetic to a ref
 - New writing/blog section (`/writing`).
 - Theme toggle implementation.
 - Technical "/uses" page.
+- Carousel templates (`/templates`, added 2026-11-06): Canva carousel templates Habib designs, free (open in
+  Canva) or paid (linked out to Etsy/Gumroad). No checkout on this site; it's a showcase that links out.
 
 ## Out-of-Scope
 - Freelancer-marketplace elements (e.g., "Hire Me" buttons, "Leave a Review").

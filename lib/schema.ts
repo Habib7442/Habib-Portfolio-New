@@ -1,4 +1,4 @@
-import type { Blog, BlogSummary, LandingPage, Project, SiteSettings } from "@/lib/sanity";
+import type { Blog, BlogSummary, CarouselTemplate, LandingPage, Project, SiteSettings } from "@/lib/sanity";
 import { cardDescription } from "@/lib/plain-text";
 import type { Faq } from "@/lib/faq";
 import {
@@ -240,6 +240,71 @@ export function blogPostSchema(post: Blog) {
       breadcrumbs([
         { name: "Writing", path: "/blogs" },
         { name: post.title, path: `/blogs/${post.slug}` },
+      ]),
+    ],
+  };
+}
+
+const CURRENCIES: Record<string, string> = { "₹": "INR", $: "USD", "€": "EUR", "£": "GBP" };
+
+/** "₹499" / "$9.99" → { price: "499", priceCurrency: "INR" }. Labels it can't read get no Offer. */
+function parsePrice(label?: string) {
+  const match = label?.trim().match(/^([₹$€£])\s?(\d+(?:[.,]\d{1,2})?)$/);
+  return match ? { price: match[2].replace(",", "."), priceCurrency: CURRENCIES[match[1]] } : null;
+}
+
+function templateOffer(t: CarouselTemplate) {
+  if (t.isFree) return { "@type": "Offer", price: "0", priceCurrency: "USD", url: t.canvaLink, availability: "https://schema.org/InStock" };
+  const parsed = parsePrice(t.price);
+  return parsed && t.buyLink ? { "@type": "Offer", ...parsed, url: t.buyLink, availability: "https://schema.org/InStock" } : null;
+}
+
+export function templateListSchema(templates: CarouselTemplate[]) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        url: absoluteUrl("/templates"),
+        name: `Carousel templates — ${PERSON_NAME}`,
+        isPartOf: { "@id": WEBSITE_ID },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: templates.map((t, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            url: absoluteUrl(`/templates/${t.slug}`),
+            name: t.title,
+          })),
+        },
+      },
+      breadcrumbs([{ name: "Templates", path: "/templates" }]),
+    ],
+  };
+}
+
+export function templateSchema(t: CarouselTemplate) {
+  const path = `/templates/${t.slug}`;
+  const url = absoluteUrl(path);
+  const offer = templateOffer(t);
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": `${url}#product`,
+        name: t.title,
+        description: t.description,
+        url,
+        image: t.slides.slice(0, 5).map((s) => s.url),
+        category: "Canva carousel template",
+        brand: { "@type": "Brand", name: PERSON_NAME },
+        creator: { "@id": PERSON_ID },
+        ...(offer && { offers: offer }),
+      },
+      breadcrumbs([
+        { name: "Templates", path: "/templates" },
+        { name: t.title, path },
       ]),
     ],
   };

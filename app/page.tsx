@@ -8,6 +8,7 @@ import GalleryBand from "@/components/sections/GalleryBand";
 import Services, { type Service } from "@/components/sections/Services";
 import LandingShowcase from "@/components/sections/LandingShowcase";
 import Products from "@/components/sections/Products";
+import TemplatesTeaser from "@/components/sections/TemplatesTeaser";
 import Testimonials from "@/components/sections/Testimonials";
 import Writing from "@/components/sections/Writing";
 import Contact from "@/components/sections/Contact";
@@ -18,7 +19,7 @@ import { buildFaqs } from "@/lib/faq";
 import { mergeServices } from "@/lib/services";
 import { homeSchema } from "@/lib/schema";
 import type { Metadata } from "next";
-import { getSiteSettings, getProjects, getDesigns, getLandingPages, getBlogs, getProducts, getTestimonials } from "@/lib/sanity";
+import { getSiteSettings, getProjects, getDesigns, getLandingPages, getBlogs, getProducts, getTestimonials, getTemplates } from "@/lib/sanity";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
@@ -26,7 +27,7 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const [settings, projects, designs, landingPages, blogs, products, testimonials] = await Promise.all([
+  const [settings, projects, designs, landingPages, blogs, products, testimonials, templates] = await Promise.all([
     getSiteSettings(),
     getProjects(),
     getDesigns(),
@@ -34,6 +35,7 @@ export default async function HomePage() {
     getBlogs(),
     getProducts(),
     getTestimonials(),
+    getTemplates(),
   ]);
 
   const faqs = buildFaqs({ name: settings.name, projects, designCount: designs.length, landingCount: landingPages.length });
@@ -77,6 +79,7 @@ export default async function HomePage() {
         <Products products={products} />
         <Services services={services} />
         <GalleryBand designs={designs} />
+        <TemplatesTeaser templates={templates} />
         <Writing posts={blogs} />
         <Faq faqs={faqs} />
         <Contact settings={settings} />

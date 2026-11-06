@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getBlogs, getDesigns, getLandingPages, getProjects, getSiteSettings } from "@/lib/sanity";
+import { getBlogs, getDesigns, getLandingPages, getProjects, getSiteSettings, getTemplates } from "@/lib/sanity";
 import { absoluteUrl } from "@/lib/site";
 
 // Rebuilt at most once an hour, so new projects and posts from the admin show up automatically.
@@ -11,12 +11,13 @@ export const revalidate = 3600;
 const img = (url?: string) => (url ? [url] : []);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [settings, projects, designs, landingPages, posts] = await Promise.all([
+  const [settings, projects, designs, landingPages, posts, templates] = await Promise.all([
     getSiteSettings(),
     getProjects(),
     getDesigns(),
     getLandingPages(),
     getBlogs(),
+    getTemplates(),
   ]);
   const latest = (dates: string[]) =>
     dates.length ? new Date(Math.max(...dates.map((d) => new Date(d).getTime()))) : undefined;
@@ -67,6 +68,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
         images: img(l.imageUrl),
       })),
+    ...(templates.length
+      ? [
+          {
+            url: absoluteUrl("/templates"),
+            lastModified: latest(templates.map((t) => t._updatedAt)),
+            changeFrequency: "weekly" as const,
+            priority: 0.7,
+          },
+        ]
+      : []),
+    ...templates.map((t) => ({
+      url: absoluteUrl(`/templates/${t.slug}`),
+      lastModified: new Date(t._updatedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+      images: t.slides.map((s) => s.url),
+    })),
     ...posts.map((p) => ({
       url: absoluteUrl(`/blogs/${p.slug}`),
       lastModified: new Date(p._updatedAt),

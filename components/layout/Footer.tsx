@@ -11,6 +11,7 @@ import { whatsappUrl } from "@/lib/contact";
 const LINKS: { name: string; href?: string; section?: string }[] = [
   { name: "Work", href: "/work" },
   { name: "Services", section: "services" },
+  { name: "Templates", href: "/templates" },
   { name: "Writing", href: "/blogs" },
   { name: "For hiring teams →", href: "/hire" },
   { name: "Leave a review", href: "/review" },

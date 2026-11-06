@@ -250,6 +250,49 @@ export async function getDesigns(): Promise<Design[]> {
   )
 }
 
+export type CarouselTemplate = {
+  _id: string
+  _updatedAt: string
+  title: string
+  slug: string
+  description: string
+  category: string
+  size?: string
+  isFree: boolean
+  price?: string
+  buyLink?: string
+  /** Only returned for free templates; paid ones are bought on Etsy/Gumroad. */
+  canvaLink?: string
+  featured: boolean
+  slides: { url: string; dims?: ImageDims }[]
+}
+
+const TEMPLATE_FIELDS = `
+  _id, _updatedAt, title, "slug": slug.current, description, size, price, buyLink,
+  "category": coalesce(category, "other"),
+  "isFree": coalesce(isFree, false),
+  "canvaLink": select(isFree == true => canvaLink),
+  "featured": coalesce(featured, false),
+  "slides": coalesce(slides[defined(asset)]{ "url": asset->url, "dims": asset->metadata.dimensions{width, height} }, [])
+`
+
+// Only templates that are complete enough to show: a slug, at least one slide and somewhere to send people.
+const TEMPLATE_FILTER = `_type == "carouselTemplate" && defined(slug.current) && count(slides) > 0
+  && select(isFree == true => defined(canvaLink), defined(buyLink))`
+
+export async function getTemplates(): Promise<CarouselTemplate[]> {
+  return sanityFetch<CarouselTemplate[]>(
+    `*[${TEMPLATE_FILTER}] | order(coalesce(order, 0) asc, _createdAt desc) { ${TEMPLATE_FIELDS} }`
+  )
+}
+
+export async function getTemplateBySlug(slug: string): Promise<CarouselTemplate | null> {
+  return sanityFetch<CarouselTemplate | null>(
+    `*[${TEMPLATE_FILTER} && slug.current == $slug][0]{ ${TEMPLATE_FIELDS} }`,
+    { slug }
+  )
+}
+
 const BLOG_SUMMARY_FIELDS = `
   _id, _updatedAt, title, "slug": slug.current, excerpt, category, publishedAt,
   "tags": coalesce(tags, []),

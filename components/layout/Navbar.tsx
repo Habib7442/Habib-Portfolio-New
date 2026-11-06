@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 const LINKS: { name: string; href?: string; section?: string }[] = [
   { name: "Work", href: "/work" },
   { name: "Services", section: "services" },
+  { name: "Templates", href: "/templates" },
   { name: "Writing", href: "/blogs" },
   { name: "Review", href: "/review" },
 ];
