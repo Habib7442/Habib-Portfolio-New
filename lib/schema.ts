@@ -254,10 +254,35 @@ function parsePrice(label?: string) {
   return match ? { price: match[2].replace(",", "."), priceCurrency: CURRENCIES[match[1]] } : null;
 }
 
+// Templates are digital downloads: nothing ships and there is nothing to return. Google's merchant listings still
+// ask for both fields, so state that explicitly: free, instant delivery and no returns, in the main markets.
+const TEMPLATE_MARKETS = ["US", "IN", "GB", "CA", "AU"];
+
+function digitalDelivery(priceCurrency: string) {
+  return {
+    shippingDetails: {
+      "@type": "OfferShippingDetails",
+      shippingRate: { "@type": "MonetaryAmount", value: "0", currency: priceCurrency },
+      shippingDestination: TEMPLATE_MARKETS.map((addressCountry) => ({ "@type": "DefinedRegion", addressCountry })),
+      deliveryTime: {
+        "@type": "ShippingDeliveryTime",
+        handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+        transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 0, unitCode: "DAY" },
+      },
+    },
+    hasMerchantReturnPolicy: {
+      "@type": "MerchantReturnPolicy",
+      applicableCountry: TEMPLATE_MARKETS,
+      returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+    },
+  };
+}
+
 function templateOffer(t: CarouselTemplate) {
-  if (t.isFree) return { "@type": "Offer", price: "0", priceCurrency: "USD", url: t.canvaLink, availability: "https://schema.org/InStock" };
+  const base = { "@type": "Offer", availability: "https://schema.org/InStock" };
+  if (t.isFree) return { ...base, price: "0", priceCurrency: "USD", url: t.canvaLink, ...digitalDelivery("USD") };
   const parsed = parsePrice(t.price);
-  return parsed && t.buyLink ? { "@type": "Offer", ...parsed, url: t.buyLink, availability: "https://schema.org/InStock" } : null;
+  return parsed && t.buyLink ? { ...base, ...parsed, url: t.buyLink, ...digitalDelivery(parsed.priceCurrency) } : null;
 }
 
 /**
