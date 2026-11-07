@@ -216,6 +216,15 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 - Admin: Type picker (sets the default size: carousel 1080×1440, reel/story 1080×1920, post 1080×1350);
   `generateSlug` now strips accents (SAVRÉ → savre) instead of dropping the letter.
 
+## Website templates — 2026-11-07
+- New template type `website` → `/templates/websites` (unit "previews", default size "1440 px wide" in the admin).
+  Slides for a website are landscape section previews (1440×1080); `SlideStrip` shows landscape slides as wider tiles
+  on the detail page, and the detail page uses larger image `sizes` for them.
+- Hub copy is no longer Instagram-only ("Canva Templates for Instagram & Websites"); llms.txt section renamed
+  "Canva templates". Detail page: website-specific "What's included", hire box and "All <singular> templates" link.
+- First entry: ORVO — Sneaker Store Landing Page (`orvo-sneaker-landing-page`, Sanity `jO2F5vwG6bRNFfc5FKUyHX`).
+  Free, but stays hidden until a Canva **template link** is added in the admin (free templates need `canvaLink`).
+
 ## Next up
 0. Add the SAVRÉ fashion carousel in admin → Templates (slides + Etsy/Gumroad link), tick "Show on home page".
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is

@@ -12,9 +12,9 @@ import { TEMPLATE_TYPES } from "@/lib/template-types";
 import { getSiteSettings, getTemplates } from "@/lib/sanity";
 
 export const metadata: Metadata = {
-  title: "Instagram Templates for Canva",
+  title: "Canva Templates for Instagram & Websites",
   description:
-    "Editable Instagram templates for Canva by Habib Tanwir: carousels, reels, stories and posts for brands, boutiques and creators. Swap in your photos and words and post the same day.",
+    "Editable Canva templates by Habib Tanwir: Instagram carousels, reels, stories and posts, plus website landing pages for brands, boutiques and creators. Swap in your photos and words and go live the same day.",
   alternates: { canonical: "/templates" },
   openGraph: { type: "website", url: "/templates" },
 };
@@ -35,10 +35,10 @@ export default async function TemplatesHub() {
           eyebrow="Templates"
           title={
             <>
-              Instagram templates, <span className="italic text-sun">ready to post</span>
+              Canva templates, <span className="italic text-sun">ready to post</span>
             </>
           }
-          intro="Carousels, reels, stories and posts I designed in Canva. Swap in your photos and words, and post the same day."
+          intro="Instagram carousels, reels, stories and posts, plus website landing pages, designed in Canva. Swap in your photos and words, and go live the same day."
         >
           {sections.length > 1 && (
             <nav aria-label="Template types" className="mt-8 flex flex-wrap gap-2">

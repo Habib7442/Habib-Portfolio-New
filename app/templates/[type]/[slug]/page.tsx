@@ -42,6 +42,14 @@ function includedList(t: CarouselTemplate, type: TemplateTypeInfo) {
       return [count, size ? `${size}, vertical for Reels` : "Vertical, sized for Reels", ...common, "No music included — add trending audio in Instagram when you post"];
     case "story":
       return [count, size ? `${size}, full-screen for Stories` : "Full-screen, sized for Stories", ...common];
+    case "website":
+      return [
+        "1 long-scroll landing page, every section included",
+        size ? `${size}, desktop width` : "Desktop width (1440 px)",
+        ...common,
+        "Use it as a mockup or publish it with Canva Websites",
+        "Placeholder text for your brand, products, prices and links",
+      ];
     case "post":
       return [count, size ? `${size}, ready for the Instagram feed` : "Sized for the Instagram feed", ...common];
     default:
@@ -116,7 +124,11 @@ export default async function TemplateDetail({ params }: Params) {
               slides={t.slides}
               title={t.title}
               variant="full"
-              sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 78vw"
+              sizes={
+                type.value === "website"
+                  ? "(min-width: 1568px) 860px, (min-width: 1024px) 58vw, (min-width: 640px) 72vw, 88vw"
+                  : "(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 78vw"
+              }
               priority
             />
           </div>
@@ -125,7 +137,7 @@ export default async function TemplateDetail({ params }: Params) {
         <section className="container-app grid gap-12 border-t border-border py-20 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Link href={`/templates/${type.path}`} className="eyebrow mb-8 inline-flex items-center gap-1.5 text-fg-muted hover:text-fg">
-              <ArrowLeft className="size-4" /> All {type.label.toLowerCase()} templates
+              <ArrowLeft className="size-4" /> All {type.singular.toLowerCase()} templates
             </Link>
             <h2 className="mb-6 font-display text-display-md font-bold leading-[1.05] tracking-tight">What&apos;s included</h2>
             <ul className="space-y-4">
@@ -140,9 +152,13 @@ export default async function TemplateDetail({ params }: Params) {
 
           <aside className="rounded-3xl bg-forest p-8 text-on-forest lg:col-span-5 lg:self-start">
             <p className="eyebrow mb-4 text-sun">Designed by Habib</p>
-            <p className="font-serif text-3xl leading-tight">Want a {type.singular.toLowerCase()} series made for your brand?</p>
+            <p className="font-serif text-3xl leading-tight">
+              {type.value === "website"
+                ? "Want a website designed for your brand?"
+                : `Want a ${type.singular.toLowerCase()} series made for your brand?`}
+            </p>
             <p className="mt-4 text-on-forest-muted">
-              I design custom carousels, reels, posts and launch visuals in your colours and voice.
+              I design custom carousels, reels, posts, websites and launch visuals in your colours and voice.
             </p>
             <Link
               href="/hire"

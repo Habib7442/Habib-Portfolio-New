@@ -67,6 +67,19 @@ export const TEMPLATE_TYPES: TemplateTypeInfo[] = [
       "Editable single-image Instagram post templates for Canva — announcements, offers, quotes and product posts for brands and creators.",
     intro: "Single-image posts for announcements, offers and quotes. Edit in Canva, export and post.",
   },
+  {
+    value: "website",
+    path: "websites",
+    label: "Websites",
+    singular: "Website",
+    unit: "previews",
+    seoTitle: "Website & Landing Page Templates for Canva",
+    heading: "Website & landing page templates",
+    description:
+      "Editable website and landing page templates for Canva — full long-scroll pages for shops and brands. Use them as a mockup or publish with Canva Websites.",
+    intro:
+      "Full long-scroll landing pages, designed section by section. Swap in your products and copy in Canva, then use it as a mockup or publish it with Canva Websites.",
+  },
 ];
 
 const DEFAULT_TYPE = TEMPLATE_TYPES[0];

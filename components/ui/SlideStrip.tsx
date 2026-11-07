@@ -30,6 +30,8 @@ export default function SlideStrip({
   const track = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const ratio = slideRatio(slides[0]?.dims);
+  // Website sections are landscape: show fewer, wider tiles so the layout is readable.
+  const landscape = (slides[0]?.dims?.width ?? 0) > (slides[0]?.dims?.height ?? 0);
 
   // The visible slide is whichever one's left edge is closest to the track's scroll position.
   const onScroll = useCallback(() => {
@@ -77,7 +79,11 @@ export default function SlideStrip({
             key={slide.url}
             className={cn(
               "relative shrink-0 snap-start overflow-hidden bg-bg-muted",
-              variant === "card" ? "w-full" : "w-[78%] rounded-2xl sm:w-[46%] lg:w-[31%]"
+              variant === "card"
+                ? "w-full"
+                : landscape
+                  ? "w-[88%] rounded-2xl sm:w-[72%] lg:w-[58%]"
+                  : "w-[78%] rounded-2xl sm:w-[46%] lg:w-[31%]"
             )}
             style={{ aspectRatio: ratio }}
             aria-label={`Slide ${i + 1} of ${slides.length}`}
