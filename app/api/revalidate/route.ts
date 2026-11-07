@@ -4,7 +4,7 @@ import { SANITY_TAG } from "@/lib/sanity";
 
 // Pages built from Sanity content. Literal paths, plus every detail page via its route pattern.
 const PAGES = ["/", "/work", "/blogs", "/templates", "/hire", "/sitemap.xml", "/llms.txt", "/llms-full.txt"];
-const DETAIL_ROUTES = ["/work/[slug]", "/work/landing/[slug]", "/blogs/[slug]", "/templates/[slug]"];
+const DETAIL_ROUTES = ["/work/[slug]", "/work/landing/[slug]", "/blogs/[slug]", "/templates/[type]", "/templates/[type]/[slug]"];
 
 function authorized(request: Request) {
   const secret = process.env.REVALIDATE_SECRET;

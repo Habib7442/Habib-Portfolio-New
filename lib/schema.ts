@@ -1,6 +1,7 @@
 import type { Blog, BlogSummary, CarouselTemplate, LandingPage, Project, SiteSettings } from "@/lib/sanity";
 import { cardDescription } from "@/lib/plain-text";
 import type { Faq } from "@/lib/faq";
+import { templatePath, templateTypeInfo, type TemplateTypeInfo } from "@/lib/template-types";
 import {
   DEFAULT_DESCRIPTION,
   EXPERTISE,
@@ -259,32 +260,43 @@ function templateOffer(t: CarouselTemplate) {
   return parsed && t.buyLink ? { "@type": "Offer", ...parsed, url: t.buyLink, availability: "https://schema.org/InStock" } : null;
 }
 
-export function templateListSchema(templates: CarouselTemplate[]) {
+/**
+ * /templates (hub) or a type section like /templates/carousels. `section` is the type's info, or
+ * omitted for the hub.
+ */
+export function templateListSchema(templates: CarouselTemplate[], section?: TemplateTypeInfo) {
+  const path = section ? `/templates/${section.path}` : "/templates";
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "CollectionPage",
-        url: absoluteUrl("/templates"),
-        name: `Carousel templates — ${PERSON_NAME}`,
+        url: absoluteUrl(path),
+        name: section ? section.seoTitle : `Canva social media templates — ${PERSON_NAME}`,
+        description: section ? section.description : undefined,
         isPartOf: { "@id": WEBSITE_ID },
+        author: { "@id": PERSON_ID },
         mainEntity: {
           "@type": "ItemList",
           itemListElement: templates.map((t, i) => ({
             "@type": "ListItem",
             position: i + 1,
-            url: absoluteUrl(`/templates/${t.slug}`),
+            url: absoluteUrl(templatePath(t)),
             name: t.title,
           })),
         },
       },
-      breadcrumbs([{ name: "Templates", path: "/templates" }]),
+      breadcrumbs([
+        { name: "Templates", path: "/templates" },
+        ...(section ? [{ name: section.label, path }] : []),
+      ]),
     ],
   };
 }
 
 export function templateSchema(t: CarouselTemplate) {
-  const path = `/templates/${t.slug}`;
+  const type = templateTypeInfo(t.templateType);
+  const path = templatePath(t);
   const url = absoluteUrl(path);
   const offer = templateOffer(t);
   return {
@@ -297,13 +309,14 @@ export function templateSchema(t: CarouselTemplate) {
         description: t.description,
         url,
         image: t.slides.slice(0, 5).map((s) => s.url),
-        category: "Canva carousel template",
+        category: `Canva ${type.singular.toLowerCase()} template`,
         brand: { "@type": "Brand", name: PERSON_NAME },
         creator: { "@id": PERSON_ID },
         ...(offer && { offers: offer }),
       },
       breadcrumbs([
         { name: "Templates", path: "/templates" },
+        { name: type.label, path: `/templates/${type.path}` },
         { name: t.title, path },
       ]),
     ],

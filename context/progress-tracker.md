@@ -202,6 +202,20 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
   errors, swipe buttons advance the counter, filter + home teaser render. No templates are published yet, so
   `/templates` shows its empty state until the first one is added in the admin.
 
+## Template types + SEO URLs — 2026-11-07
+- `carouselTemplate` gained `templateType` (carousel / reel / story / post; missing = carousel). Studio title is now
+  "Template"; the document name stays `carouselTemplate` so existing entries keep working.
+- **URLs**: `/templates` (hub, one band per type that has templates) → `/templates/<type>` (`carousels`, `reels`,
+  `stories`, `posts`; category chips via `?category=`, nofollow, canonical stays the clean section URL) →
+  `/templates/<type>/<slug>`. A section with no templates 404s (no thin pages). `/templates/<slug>` and a wrong type
+  segment 308-redirect to the canonical URL. Type info + SEO copy live in `lib/template-types.ts`; the admin mirrors
+  value/path in `src/lib/template-categories.ts`.
+- SEO: per-section title/description/OG, CollectionPage + ItemList JSON-LD, 4-level BreadcrumbList, Product JSON-LD
+  on detail pages, visible breadcrumb nav, "More <type> templates" internal links, sitemap entries per section,
+  llms.txt lists the sections and templates.
+- Admin: Type picker (sets the default size: carousel 1080×1440, reel/story 1080×1920, post 1080×1350);
+  `generateSlug` now strips accents (SAVRÉ → savre) instead of dropping the letter.
+
 ## Next up
 0. Add the SAVRÉ fashion carousel in admin → Templates (slides + Etsy/Gumroad link), tick "Show on home page".
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is

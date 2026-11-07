@@ -15,8 +15,8 @@ export default function TemplatesTeaser({ templates }: { templates: CarouselTemp
         <Reveal className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow mb-4 text-accent-hover">✦ Templates</p>
-            <h2 className="font-display text-display-md font-bold leading-[1.05] tracking-tight">Carousels you can post today</h2>
-            <p className="mt-4 max-w-md text-fg-muted">Canva carousel templates I designed. Swap in your photos and words.</p>
+            <h2 className="font-display text-display-md font-bold leading-[1.05] tracking-tight">Instagram templates you can post today</h2>
+            <p className="mt-4 max-w-md text-fg-muted">Carousels, reels, stories and posts I designed in Canva. Swap in your photos and words.</p>
           </div>
           <Link
             href="/templates"

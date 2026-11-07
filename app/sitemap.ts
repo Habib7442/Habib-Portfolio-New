@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getBlogs, getDesigns, getLandingPages, getProjects, getSiteSettings, getTemplates } from "@/lib/sanity";
 import { absoluteUrl } from "@/lib/site";
+import { TEMPLATE_TYPES, templatePath } from "@/lib/template-types";
 
 // Rebuilt at most once an hour, so new projects and posts from the admin show up automatically.
 // /review is left out on purpose: it's a form page marked noindex.
@@ -78,8 +79,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           },
         ]
       : []),
+    // One page per template type that has templates (empty sections 404 on purpose).
+    ...TEMPLATE_TYPES.filter((type) => templates.some((t) => t.templateType === type.value)).map((type) => ({
+      url: absoluteUrl(`/templates/${type.path}`),
+      lastModified: latest(templates.filter((t) => t.templateType === type.value).map((t) => t._updatedAt)),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
     ...templates.map((t) => ({
-      url: absoluteUrl(`/templates/${t.slug}`),
+      url: absoluteUrl(templatePath(t)),
       lastModified: new Date(t._updatedAt),
       changeFrequency: "monthly" as const,
       priority: 0.6,

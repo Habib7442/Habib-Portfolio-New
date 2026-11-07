@@ -254,6 +254,8 @@ export type CarouselTemplate = {
   _id: string
   _updatedAt: string
   title: string
+  /** carousel | reel | story | post — see lib/template-types.ts */
+  templateType: string
   slug: string
   description: string
   category: string
@@ -269,6 +271,7 @@ export type CarouselTemplate = {
 
 const TEMPLATE_FIELDS = `
   _id, _updatedAt, title, "slug": slug.current, description, size, price, buyLink,
+  "templateType": coalesce(templateType, "carousel"),
   "category": coalesce(category, "other"),
   "isFree": coalesce(isFree, false),
   "canvaLink": select(isFree == true => canvaLink),
