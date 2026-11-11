@@ -10,5 +10,7 @@ if (token) {
     api_host: "/ingest",
     ui_host: "https://us.posthog.com",
     defaults: "2026-05-30",
+    // Core Web Vitals (LCP, INP, CLS) from real visitors, on regardless of the PostHog project setting.
+    capture_performance: { web_vitals: true },
   });
 }

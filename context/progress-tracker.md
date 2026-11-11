@@ -164,6 +164,7 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 - Events go through `/ingest` (rewrites in next.config.ts, `skipTrailingSlashRedirect`), never
   straight to posthog.com. PostHog ignores headless browsers, so Lighthouse/Playwright runs don't
   pollute analytics.
+- `capture_performance: { web_vitals: true }` sends `$web_vitals` (LCP, INP, CLS) from real visitors (2026-11-11).
 
 ## Home page: About back, editable services, admin for products/testimonials/videos — 2026-10-14
 - **Home order** now: Hero → About → FeaturedLanding → LandingShowcase → FeaturedWork (client work) →
