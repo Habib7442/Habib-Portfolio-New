@@ -10,8 +10,17 @@ import JsonLd from "@/components/seo/JsonLd";
 import { blogPostSchema } from "@/lib/schema";
 import { OG_IMAGE, PERSON_NAME, SITE_URL } from "@/lib/site";
 import MarkdownContent from "@/components/ui/MarkdownContent";
+import RelatedLinks, { nextInList } from "@/components/ui/RelatedLinks";
 import { coverRatio, formatDate } from "@/components/sections/Writing";
-import { getSiteSettings, getBlogBySlug, imgUrl } from "@/lib/sanity";
+import { getSiteSettings, getBlogBySlug, getBlogs, imgUrl } from "@/lib/sanity";
+
+// Served from the cache, so crawlers get a fast response. /api/revalidate refreshes it on every admin save.
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const posts = await getBlogs();
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -38,8 +47,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [settings, post] = await Promise.all([getSiteSettings(), getBlogBySlug(slug)]);
+  const [settings, post, posts] = await Promise.all([getSiteSettings(), getBlogBySlug(slug), getBlogs()]);
   if (!post) notFound();
+  const related = nextInList(posts, post._id).map((p) => ({
+    href: `/blogs/${p.slug}`,
+    title: p.title,
+    description: p.excerpt,
+  }));
 
   return (
     <>
@@ -70,11 +84,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <ArrowLeft className="size-4" /> All writing
           </Link>
           {post.content ? (
-            <MarkdownContent content={post.content} />
+            <MarkdownContent content={post.content} title={post.title} />
           ) : (
             <p className="text-fg-muted">This post doesn&apos;t have any content yet.</p>
           )}
         </article>
+        <RelatedLinks heading="Keep reading" links={related} />
       </main>
       <Footer settings={settings} />
     </>

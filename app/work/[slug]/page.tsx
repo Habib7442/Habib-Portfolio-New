@@ -7,13 +7,22 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHeader from "@/components/layout/PageHeader";
 import Tag from "@/components/ui/Tag";
+import RelatedLinks, { nextInList } from "@/components/ui/RelatedLinks";
 import JsonLd from "@/components/seo/JsonLd";
 import { projectSchema } from "@/lib/schema";
 import { cardDescription } from "@/lib/plain-text";
-import { getSiteSettings, getProjectBySlug, imgUrl } from "@/lib/sanity";
+import { getSiteSettings, getProjectBySlug, getProjects, imgUrl } from "@/lib/sanity";
 import { OG_IMAGE } from "@/lib/site";
 
 const STATUS_LABEL: Record<string, string> = { completed: "Shipped", in_progress: "In progress", planning: "Planning" };
+
+// Served from the cache, so crawlers get a fast response. /api/revalidate refreshes it on every admin save.
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ slug: project.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -36,8 +45,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [settings, project] = await Promise.all([getSiteSettings(), getProjectBySlug(slug)]);
+  const [settings, project, projects] = await Promise.all([getSiteSettings(), getProjectBySlug(slug), getProjects()]);
   if (!project) notFound();
+  const related = nextInList(projects, project._id).map((p) => ({
+    href: `/work/${p.slug}`,
+    title: p.title,
+    description: cardDescription(p.plainDescription, p.shortDescription),
+  }));
 
   return (
     <>
@@ -130,6 +144,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             </div>
           </section>
         )}
+        <RelatedLinks heading="More client work" links={related} />
       </main>
       <Footer settings={settings} />
     </>

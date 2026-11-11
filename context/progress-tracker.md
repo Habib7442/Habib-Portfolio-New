@@ -226,6 +226,15 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 - First entry: ORVO — Sneaker Store Landing Page (`orvo-sneaker-landing-page`, Sanity `jO2F5vwG6bRNFfc5FKUyHX`).
   Free, but stays hidden until a Canva **template link** is added in the admin (free templates need `canvaLink`).
 
+## Crawling and indexing fixes — 2026-11-11
+Search Console listed 4 pages as "Discovered – currently not indexed" (2 of them work pages, 1 post, /hire).
+- `/work/[slug]` and `/blogs/[slug]` are now ISR (`generateStaticParams` + `revalidate = 60`); they were rendered on
+  every request with `no-store`. `/api/revalidate` already covers both route patterns.
+- `RelatedLinks` adds "More client work" / "Keep reading" to those pages. `nextInList` picks the next 3 with wraparound
+  so every project and post gets links from sibling pages (before, most were linked only from their index page).
+- Blog posts have one h1: `MarkdownContent` drops a leading `# Title` that repeats the post title and renders any other
+  Markdown h1 as h2.
+
 ## Next up
 0. Add the SAVRÉ fashion carousel in admin → Templates (slides + Etsy/Gumroad link), tick "Show on home page".
 1. Add real content via `/admin` (Sanity Studio or the custom admin) — the site is
