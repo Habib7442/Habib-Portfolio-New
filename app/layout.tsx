@@ -68,7 +68,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const settings = await getSiteSettings();
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    // suppressHydrationWarning: extensions such as QuillBot add attributes to <html> before React hydrates
+    // (e.g. data-qb-installed). Like on <body> below, this only silences attribute diffs on this one element.
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* The hero portrait (the LCP image) and most screenshots come from Sanity's CDN. */}
         <link rel="preconnect" href="https://cdn.sanity.io" />
