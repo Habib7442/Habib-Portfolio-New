@@ -1,9 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
+import { imgUrl } from "@/lib/sanity";
 
 export interface RelatedLink {
   href: string;
   title: string;
   description?: string;
+  /** Raw Sanity image URL, shown as a portrait thumbnail above the title. */
+  image?: string;
 }
 
 /**
@@ -32,6 +36,17 @@ export default function RelatedLinks({ heading, links }: { heading: string; link
               href={link.href}
               className="group rounded-2xl bg-bg-alt p-6 transition-transform hover:-translate-y-0.5 md:p-8"
             >
+              {link.image && (
+                <div className="relative mb-5 aspect-[4/5] overflow-hidden rounded-xl bg-bg-muted">
+                  <Image
+                    src={imgUrl(link.image, 600)}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1568px) 420px, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                </div>
+              )}
               <h3 className="font-serif text-2xl leading-tight group-hover:text-accent-hover">{link.title}</h3>
               {link.description && <p className="mt-3 line-clamp-3 text-fg-muted">{link.description}</p>}
             </Link>

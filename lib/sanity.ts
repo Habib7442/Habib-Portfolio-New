@@ -111,13 +111,18 @@ export type Project = {
   sortOrder: number
 }
 
+export type DesignImage = { url: string; dims?: ImageDims }
+
 export type Design = {
   _id: string
+  _updatedAt: string
   title: string
+  /** Missing on designs saved before slugs existed: those open in the lightbox instead of a page. */
+  slug?: string
   category: string
   imageUrl?: string
   imageDims?: ImageDims
-  images: ProjectImage[]
+  images: DesignImage[]
   description?: string
   tools: string[]
   tags: string[]
@@ -235,19 +240,23 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
   return sanityFetch<Project | null>(`*[_type == "project" && slug.current == $slug][0]{ ${PROJECT_FIELDS} }`, { slug })
 }
 
+const DESIGN_FIELDS = `
+  _id, _updatedAt, title, "slug": slug.current, description,
+  "category": coalesce(category, "other"),
+  "tools": coalesce(tools, []),
+  "tags": coalesce(tags, []),
+  "featured": coalesce(featured, false),
+  "imageUrl": image.asset->url,
+  "imageDims": image.asset->metadata.dimensions{width, height},
+  "images": coalesce(images[defined(asset)]{ "url": asset->url, "dims": asset->metadata.dimensions{width, height} }, [])
+`
+
 export async function getDesigns(): Promise<Design[]> {
-  return sanityFetch<Design[]>(
-    `*[_type == "design"] | order(_createdAt desc) {
-      _id, title, description,
-      "category": coalesce(category, "other"),
-      "tools": coalesce(tools, []),
-      "tags": coalesce(tags, []),
-      "featured": coalesce(featured, false),
-      "imageUrl": image.asset->url,
-      "imageDims": image.asset->metadata.dimensions{width, height},
-      "images": coalesce(images[defined(asset)]{ "url": asset->url }, [])
-    }`
-  )
+  return sanityFetch<Design[]>(`*[_type == "design"] | order(_createdAt desc) { ${DESIGN_FIELDS} }`)
+}
+
+export async function getDesignBySlug(slug: string): Promise<Design | null> {
+  return sanityFetch<Design | null>(`*[_type == "design" && slug.current == $slug][0]{ ${DESIGN_FIELDS} }`, { slug })
 }
 
 export type CarouselTemplate = {

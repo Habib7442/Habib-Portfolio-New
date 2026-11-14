@@ -38,7 +38,7 @@ export default async function WorkPage({ searchParams }: { searchParams: Promise
               Projects, landing pages &amp; <span className="italic text-sun">visual design</span>
             </>
           }
-          intro="Everything I've built and designed, in one place. Filter by type, tap a design to see it full size."
+          intro="Everything I've built and designed, in one place. Filter by type, then open any piece for the full story."
         />
         <section className="py-14 md:py-20">
           <div className="container-app">

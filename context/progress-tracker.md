@@ -35,8 +35,6 @@ Everything is fetched from Sanity (`lib/sanity.ts`): `siteSettings` (singleton),
 `contactMessage` has no read path here — the contact form POSTs to the admin's
 `/api/contact` and messages are triaged in the admin's Messages inbox.
 
-## Deliberately out of scope (this pass)
-- **Per-design detail pages** — designs open in a lightbox.
 
 ## Environment
 - `NEXT_PUBLIC_SANITY_PROJECT_ID` / `_DATASET` / `_API_VERSION` — same project as
@@ -234,6 +232,16 @@ Search Console listed 4 pages as "Discovered – currently not indexed" (2 of th
   so every project and post gets links from sibling pages (before, most were linked only from their index page).
 - Blog posts have one h1: `MarkdownContent` drops a leading `# Title` that repeats the post title and renders any other
   Markdown h1 as h2.
+
+## Design detail pages — 2026-11-14
+- `design` gained a `slug` (habib_admin: Studio schema, DesignForm "Slug" field, generated from the title and checked
+  for uniqueness in the create/update actions, which also revalidate `/work/design/<slug>`). The 5 existing designs
+  were given slugs from their titles.
+- `/work/design/[slug]` (ISR): every image at its own aspect ratio, uncropped; breadcrumb; full description; aside with
+  category, image count, tools and tags; "More designs" (`RelatedLinks` now takes an optional image); VisualArtwork +
+  BreadcrumbList JSON-LD. Covered by `/api/revalidate`, the sitemap (with image entries) and llms-full.txt.
+- Design cards on /work and the home GalleryBand link to the page. A design without a slug still opens in
+  `DesignLightbox`.
 
 ## Next up
 0. Add the SAVRÉ fashion carousel in admin → Templates (slides + Etsy/Gumroad link), tick "Show on home page".

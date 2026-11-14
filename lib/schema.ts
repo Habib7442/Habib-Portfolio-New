@@ -1,5 +1,6 @@
-import type { Blog, BlogSummary, CarouselTemplate, LandingPage, Project, SiteSettings } from "@/lib/sanity";
-import { cardDescription } from "@/lib/plain-text";
+import type { Blog, BlogSummary, CarouselTemplate, Design, LandingPage, Project, SiteSettings } from "@/lib/sanity";
+import { cardDescription, firstSentence } from "@/lib/plain-text";
+import { designCategoryLabel } from "@/lib/design-categories";
 import type { Faq } from "@/lib/faq";
 import { templatePath, templateTypeInfo, type TemplateTypeInfo } from "@/lib/template-types";
 import {
@@ -186,6 +187,38 @@ export function landingPageSchema(l: LandingPage & { slug: string }) {
       breadcrumbs([
         { name: "Work", path: "/work" },
         { name: l.title, path },
+      ]),
+    ],
+  };
+}
+
+export function designSchema(d: Design & { slug: string }) {
+  const path = `/work/design/${d.slug}`;
+  const url = absoluteUrl(path);
+  const images = [d.imageUrl, ...d.images.map((i) => i.url)].filter((u): u is string => !!u);
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VisualArtwork",
+        "@id": `${url}#work`,
+        name: d.title,
+        headline: d.title,
+        ...(d.description && { description: firstSentence(d.description), abstract: d.description }),
+        url,
+        image: images,
+        artform: designCategoryLabel(d.category),
+        genre: designCategoryLabel(d.category),
+        creator: { "@id": PERSON_ID },
+        author: { "@id": PERSON_ID },
+        ...(d.tags.length && { keywords: d.tags.join(", ") }),
+        dateModified: d._updatedAt,
+        isPartOf: { "@id": WEBSITE_ID },
+      },
+      breadcrumbs([
+        { name: "Work", path: "/work" },
+        { name: "Designs", path: "/work?type=design" },
+        { name: d.title, path },
       ]),
     ],
   };

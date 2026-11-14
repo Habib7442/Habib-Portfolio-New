@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight, Github } from "lucide-react";
 import { imgUrl, type Design, type LandingPage, type Project } from "@/lib/sanity";
 import { cn } from "@/lib/utils";
@@ -57,24 +58,36 @@ function ProjectCard({ p }: { p: Project }) {
 }
 
 function DesignCard({ d }: { d: Design }) {
-  const allImages = [d.imageUrl, ...d.images.map((i) => i.url)].filter((u): u is string => !!u);
   if (!d.imageUrl) return null;
+  const thumb = (
+    <div className="relative overflow-hidden rounded-2xl bg-bg-muted" style={{ aspectRatio: ratio(d.imageDims) }}>
+      <Image
+        src={imgUrl(d.imageUrl, 900)}
+        alt={d.title}
+        fill
+        sizes={SIZES}
+        className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+      />
+      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/75 via-black/0 to-black/0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <p className="text-sm font-medium text-white line-clamp-1">{d.title}</p>
+        <p className="eyebrow text-[0.6rem] text-white/75">{designCategoryLabel(d.category)}</p>
+      </div>
+    </div>
+  );
+
+  // Designs with a slug open their own page; older ones without one still open full size in the lightbox.
+  if (d.slug) {
+    return (
+      <Link href={`/work/design/${d.slug}`} className="group block">
+        {thumb}
+      </Link>
+    );
+  }
+  const allImages = [d.imageUrl, ...d.images.map((i) => i.url)];
   return (
     <div className="group">
       <DesignLightbox images={allImages} title={d.title}>
-        <div className="relative overflow-hidden rounded-2xl bg-bg-muted" style={{ aspectRatio: ratio(d.imageDims) }}>
-          <Image
-            src={imgUrl(d.imageUrl, 900)}
-            alt={d.title}
-            fill
-            sizes={SIZES}
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-          />
-          <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/75 via-black/0 to-black/0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <p className="text-sm font-medium text-white line-clamp-1">{d.title}</p>
-            <p className="eyebrow text-[0.6rem] text-white/75">{designCategoryLabel(d.category)}</p>
-          </div>
-        </div>
+        {thumb}
       </DesignLightbox>
     </div>
   );

@@ -89,7 +89,10 @@ export async function buildLlmsTxt({ full = false } = {}) {
     }
     if (designs.length) {
       out.push("## Visual design", "");
-      for (const d of designs) out.push(`- ${d.title} (${designCategoryLabel(d.category)})${d.description ? `: ${oneLine(d.description)}` : ""}`);
+      for (const d of designs) {
+        const name = d.slug ? `[${d.title}](${absoluteUrl(`/work/design/${d.slug}`)})` : d.title;
+        out.push(`- ${name} (${designCategoryLabel(d.category)})${d.description ? `: ${oneLine(d.description)}` : ""}`);
+      }
       out.push("");
     }
     if (posts.length) {

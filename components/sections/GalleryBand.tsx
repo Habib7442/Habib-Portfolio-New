@@ -33,7 +33,7 @@ export default function GalleryBand({ designs }: { designs: Design[] }) {
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
           {pics.map((d, i) => (
             <Reveal key={d._id} delay={i * 0.05}>
-              <Link href="/work?type=design" className="group block">
+              <Link href={d.slug ? `/work/design/${d.slug}` : "/work?type=design"} className="group block">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-forest-deep transition-transform duration-500 group-hover:-translate-y-1.5">
                   <Image
                     src={imgUrl(d.imageUrl!, 600)}
