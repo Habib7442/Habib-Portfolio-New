@@ -37,6 +37,7 @@ export async function buildLlmsTxt({ full = false } = {}) {
   out.push("## Main pages", "");
   out.push(`- [Home](${absoluteUrl("/")}): About ${name}, services, selected work and FAQ`);
   out.push(`- [Work](${absoluteUrl("/work")}): Every project, landing page and design, with screenshots and live links`);
+  if (designs.length) out.push(`- [Designs](${absoluteUrl("/work/design")}): Posters, social campaigns and AI key art, each with its own page`);
   out.push(`- [Writing](${absoluteUrl("/blogs")}): Articles and case studies`);
   if (templates.length) out.push(`- [Templates](${absoluteUrl("/templates")}): Canva templates (Instagram carousels, reels, stories, posts and website landing pages)`);
   out.push(`- [For hiring teams](${absoluteUrl("/hire")}): Stack, products, best landing pages, GitHub and LinkedIn`);

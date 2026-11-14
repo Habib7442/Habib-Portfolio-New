@@ -192,6 +192,36 @@ export function landingPageSchema(l: LandingPage & { slug: string }) {
   };
 }
 
+export function designListSchema(designs: Design[]) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        url: absoluteUrl("/work/design"),
+        name: `Designs — ${PERSON_NAME}`,
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": PERSON_ID },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: designs
+            .filter((d) => d.slug)
+            .map((d, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              url: absoluteUrl(`/work/design/${d.slug}`),
+              name: d.title,
+            })),
+        },
+      },
+      breadcrumbs([
+        { name: "Work", path: "/work" },
+        { name: "Designs", path: "/work/design" },
+      ]),
+    ],
+  };
+}
+
 export function designSchema(d: Design & { slug: string }) {
   const path = `/work/design/${d.slug}`;
   const url = absoluteUrl(path);
@@ -217,7 +247,7 @@ export function designSchema(d: Design & { slug: string }) {
       },
       breadcrumbs([
         { name: "Work", path: "/work" },
-        { name: "Designs", path: "/work?type=design" },
+        { name: "Designs", path: "/work/design" },
         { name: d.title, path },
       ]),
     ],

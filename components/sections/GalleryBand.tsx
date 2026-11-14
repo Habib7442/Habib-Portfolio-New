@@ -23,7 +23,7 @@ export default function GalleryBand({ designs }: { designs: Design[] }) {
             </p>
           </div>
           <Link
-            href="/work?type=design"
+            href="/work/design"
             className="eyebrow inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-sun px-6 py-3.5 text-fg transition-transform hover:-translate-y-0.5 md:self-auto"
           >
             Explore gallery <ArrowUpRight className="size-4" />
@@ -33,7 +33,7 @@ export default function GalleryBand({ designs }: { designs: Design[] }) {
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
           {pics.map((d, i) => (
             <Reveal key={d._id} delay={i * 0.05}>
-              <Link href={d.slug ? `/work/design/${d.slug}` : "/work?type=design"} className="group block">
+              <Link href={d.slug ? `/work/design/${d.slug}` : "/work/design"} className="group block">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-forest-deep transition-transform duration-500 group-hover:-translate-y-1.5">
                   <Image
                     src={imgUrl(d.imageUrl!, 600)}

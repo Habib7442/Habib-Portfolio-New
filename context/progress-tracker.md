@@ -242,6 +242,8 @@ Search Console listed 4 pages as "Discovered – currently not indexed" (2 of th
   BreadcrumbList JSON-LD. Covered by `/api/revalidate`, the sitemap (with image entries) and llms-full.txt.
 - Design cards on /work and the home GalleryBand link to the page. A design without a slug still opens in
   `DesignLightbox`.
+- `/work/design` lists every design (WorkGrid with only designs, no filters; CollectionPage JSON-LD; in the sitemap,
+  /api/revalidate and llms.txt). Breadcrumbs, "All designs" links and the home "Explore gallery" button point to it.
 
 ## Next up
 0. Add the SAVRÉ fashion carousel in admin → Templates (slides + Etsy/Gumroad link), tick "Show on home page".

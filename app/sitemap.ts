@@ -69,6 +69,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
         images: img(l.imageUrl),
       })),
+    ...(designs.length
+      ? [
+          {
+            url: absoluteUrl("/work/design"),
+            lastModified: latest(designs.map((d) => d._updatedAt)),
+            changeFrequency: "weekly" as const,
+            priority: 0.7,
+          },
+        ]
+      : []),
     ...designs
       .filter((d) => d.slug && d.imageUrl)
       .map((d) => ({

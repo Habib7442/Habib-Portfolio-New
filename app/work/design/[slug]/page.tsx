@@ -82,7 +82,7 @@ export default async function DesignDetail({ params }: { params: Promise<{ slug:
             <nav aria-label="Breadcrumb" className="eyebrow mb-8 flex flex-wrap items-center gap-2 text-fg-subtle">
               <Link href="/work" className="hover:text-fg">Work</Link>
               <span aria-hidden>/</span>
-              <Link href="/work?type=design" className="hover:text-fg">Designs</Link>
+              <Link href="/work/design" className="hover:text-fg">Designs</Link>
               <span aria-hidden>/</span>
               <span className="text-fg-muted" aria-current="page">{design.title}</span>
             </nav>
@@ -109,7 +109,7 @@ export default async function DesignDetail({ params }: { params: Promise<{ slug:
 
         <section className="container-app grid gap-12 border-t border-border py-20 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <Link href="/work?type=design" className="eyebrow mb-8 inline-flex items-center gap-1.5 text-fg-muted hover:text-fg">
+            <Link href="/work/design" className="eyebrow mb-8 inline-flex items-center gap-1.5 text-fg-muted hover:text-fg">
               <ArrowLeft className="size-4" /> All designs
             </Link>
             <h2 className="mb-6 font-serif text-display-md leading-[1.05]">About this design</h2>
